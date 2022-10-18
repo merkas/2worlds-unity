@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
+
     public string SampleScene;
 
 
@@ -16,6 +17,7 @@ public class SceneManagerScript : MonoBehaviour
 
     void Awake()
     {
+        //Current Scene Log
         Debug.Log("Awake:" + SceneManager.GetActiveScene().name);
     }
 
@@ -42,22 +44,22 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    
+    //Lädt Spielscene
     public void StartGame()
     {
         SceneManager.LoadScene("SampleScene");
     }
-
+    //Lädt Startmenü
     public void OpenStartMenu()
     {
         SceneManager.LoadScene("StartMenu");
     }
-
+    //Lädt Settingsmenü
     public void OpenSettings()
     {
         SceneManager.LoadScene("SettingsMenu");
     }
-
+    //Schließt Spiel
     public void Exit()
     {
         Debug.Log("Exit");
@@ -67,6 +69,7 @@ public class SceneManagerScript : MonoBehaviour
 
 #if UNITY_EDITOR
 
+    //Für Editor only, da Esc evtl. Game Fenster schließt
     public void AlphaOnePress()
     {
         Scene scene = SceneManager.GetActiveScene();
