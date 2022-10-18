@@ -26,11 +26,6 @@ public class SceneManagerScript : MonoBehaviour
             {
                 EscPress();
             }
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                AlphaOnePress();
-            }
     }
 
     public void EscPress()
@@ -38,7 +33,7 @@ public class SceneManagerScript : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == SampleScene)
         {
-            SceneManager.LoadScene("StartMenu");
+            SceneManager.LoadScene("PauseMenu");
         }
     }
 
@@ -63,16 +58,17 @@ public class SceneManagerScript : MonoBehaviour
     }
 
 
-#if UNITY_EDITOR
-
-    public void AlphaOnePress()
+    public void Esc2()
     {
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == SampleScene)
+        {
+            SceneManager.LoadScene("PauseMenu");
+        }
+        else
         {
             SceneManager.LoadScene("StartMenu");
         }
     }
 
-#endif
 }
