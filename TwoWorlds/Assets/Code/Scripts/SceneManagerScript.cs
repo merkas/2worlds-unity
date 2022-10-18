@@ -46,16 +46,14 @@ public class SceneManagerScript : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("SampleScene");
-    }
-
-    public void OpenStartMenu()
-    {
-        SceneManager.LoadScene("StartMenu");
-    }
-
+    }       
     public void OpenSettings()
     {
         SceneManager.LoadScene("SettingsMenu");
+    }
+    public void OpenStartMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
     }
 
     public void Exit()
