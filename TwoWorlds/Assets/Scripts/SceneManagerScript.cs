@@ -45,7 +45,7 @@ public class SceneManagerScript : MonoBehaviour
     }
 
     //L‰dt Spielscene
-    public void StartGame()
+    public void Start2Game()
     {
         SceneManager.LoadScene("SampleScene");
     }
@@ -60,7 +60,7 @@ public class SceneManagerScript : MonoBehaviour
         SceneManager.LoadScene("SettingsMenu");
     }
     //Schlieﬂt Spiel
-    public void Exit()
+    public void Exit200()
     {
         Debug.Log("Exit");
         Application.Quit();
