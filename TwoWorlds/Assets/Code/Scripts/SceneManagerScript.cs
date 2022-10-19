@@ -59,6 +59,10 @@ public class SceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene("PauseMenu");
     }
+    public void OpenCredits()
+    {
+        SceneManager.LoadScene("CreditScene");
+    }
     public void Exit()
     {
         Debug.Log("Exit");
