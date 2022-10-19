@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource _musicSource, _effectsSource;
 
+
+    //SoundManager always exists once and if more than 1, 1 gets deleted
     private void Awake()
     {
         if(instance == null)
@@ -23,13 +25,13 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
+    //Plays sound from the Audioclip dragged in the inspector of an object
     public void PlaySound(AudioClip clip)
     {
         _effectsSource.PlayOneShot(clip);
     }
 
-
+    //Master volume value for the Settings slider
     public void ChangeMasterVolume(float value)
     {
         AudioListener.volume = value;
