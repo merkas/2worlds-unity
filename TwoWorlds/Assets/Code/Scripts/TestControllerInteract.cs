@@ -15,11 +15,20 @@ public class TestControllerInteract : MonoBehaviour
         {
             isOpen = true;
             Debug.Log("Chest is open");
+            
 
         }
+
+        
     }
 
-
+    public void destroyObstacle()
+    {
+        if(this.gameObject.CompareTag("Obstacle"))
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
 

@@ -11,12 +11,12 @@ public class Interactable : MonoBehaviour
     public KeyCode interactKey;
     public UnityEvent interactionAction;
 
-
+    public GameObject Notif;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+            Notif.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,6 +38,7 @@ public class Interactable : MonoBehaviour
         {
             isInRange = true;
             Debug.Log("Player in Range");
+            Notif.SetActive(true);
         }
     }
     //Is not interactable when exiting the trigger
@@ -47,6 +48,7 @@ public class Interactable : MonoBehaviour
         {
             isInRange = false;
             Debug.Log("Player not in Range");
+            Notif.SetActive(false);
         }
     }
 }
