@@ -44,19 +44,4 @@ public class TestControllerInteract : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    public void PickUp()
-    {
-
-        if (this.gameObject.CompareTag("PickUp"))
-        {
-
-            PlayManager manager = GetComponent<PlayManager>();
-
-
-
-            gameObject.transform.position = manager.PickUpPoint.transform.position;
-        }
-
-    }
 }
