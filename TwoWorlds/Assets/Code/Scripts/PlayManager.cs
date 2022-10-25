@@ -6,6 +6,7 @@ public class PlayManager : MonoBehaviour
 {
 
     public int keyCount;
+    public Transform PickUpPoint;
 
     public void PickUpKey()
     {
@@ -13,8 +14,18 @@ public class PlayManager : MonoBehaviour
         Debug.Log("Key found!");
     }
 
+    public void UseKey()
+    {
+        keyCount--;
+        Debug.Log("Key used!");
+    }
 
+    public void pickUPP()
+    {
+        //gameObject.transform.position = PickUpPoint.transform.position;
 
+    }
+   
 
 
 
