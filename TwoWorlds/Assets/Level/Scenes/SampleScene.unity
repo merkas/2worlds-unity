@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyCount: 0
-  PickUpPoint: {fileID: 1085086081}
 --- !u!1001 &172036033
 PrefabInstance:
   m_ObjectHideFlags: 0
