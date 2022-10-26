@@ -12,7 +12,6 @@ public class PlayManager : MonoBehaviour
         keyCount++;
         Debug.Log("Key found!");
     }
-
     public void UseKey()
     {
         keyCount--;

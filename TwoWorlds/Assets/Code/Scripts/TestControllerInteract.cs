@@ -12,7 +12,7 @@ public class TestControllerInteract : MonoBehaviour
     {
         if (!isDoorOpen)
         {
-            PlayManager manager = obj.GetComponent<PlayManager>();
+            PlayManager manager = obj.GetComponent<PlayManager>();   
             if (manager)
             {
                 if (manager.keyCount > 0)
