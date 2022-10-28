@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36cd58416a02c5e4bbdc362ef8c412fa, type: 3}
-  m_Name: FirstDialoguePart1Answer1
+  m_Name: FirstDialoguePart1Answer2
   m_EditorClassIdentifier: 
-  answer: "It\xB4s beautiful."
+  answer: You are so ugly
   endConversation: 0
-  corruptionStatChange: 0
+  corruptionStatChange: 1
   questTrigger: 0
+  questName: 
   questProgress: 0
   questComplete: 0
+  startAFight: 0
   getAnItem: 0
   giveAnItem: 0
+  getItem: {fileID: 0}
+  getItemName: 
+  giveItem: {fileID: 0}
+  giveItemName: 

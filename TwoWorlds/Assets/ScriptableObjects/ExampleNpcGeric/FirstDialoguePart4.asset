@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16f05274eb3c1e489109797b6050c3e, type: 3}
-  m_Name: GeneralDialogue
+  m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
+  m_Name: FirstDialoguePart4
   m_EditorClassIdentifier: 
-  minCorruption: 0
-  maxCorruption: 5
-  minNumberOfTalks: 1
-  maxNumber: 0
-  maxNumberOfTalks: 0
-  dialogueParts:
-  - {fileID: 11400000, guid: cdbcdc206661b7940844644ed25e20cc, type: 2}
+  reusable: 0
+  playerChoice: 0
+  responseNumbers: 0
+  npcText:
+  - BECAUSE!
+  playerResponse: []
+  nextNpcText: []

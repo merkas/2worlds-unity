@@ -10,19 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
-  m_Name: FirstDialoguePart2
+  m_Name: FirstDialogueAcceptQuestChoice
   m_EditorClassIdentifier: 
   reusable: 0
   playerChoice: 1
   responseNumbers: 2
   npcText:
-  - Right? I have to get some more soon.
+  - Oh would you? I need some Adalis root for the base.
   playerResponse:
-  - answer: Need help?
+  - answer: Yeah, I'll find some for you.
     endConversation: 0
     corruptionStatChange: 0
-    questTrigger: 0
+    questTrigger: 1
     abandonedQuest: 0
+    questComplete: 0
+    changedQuest:
+      title: 
+      description: 
+      reward: {fileID: 0}
+      acceptQuestChoice: {fileID: 0}
+      questDialogue: {fileID: 0}
+    questTitle: Shampoo Power!
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
+  - answer: Nah, don't wanna.
+    endConversation: 1
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 1
     questComplete: 0
     changedQuest:
       title: 
@@ -39,26 +60,5 @@ MonoBehaviour:
     getItemName: 
     giveItem: {fileID: 0}
     giveItemName: 
-  - answer: Mhm, good luck with that, see ya.
-    endConversation: 1
-    corruptionStatChange: 0
-    questTrigger: 0
-    abandonedQuest: 1
-    questComplete: 0
-    changedQuest:
-      title: Shampoo Power!
-      description: 
-      reward: {fileID: 0}
-      acceptQuestChoice: {fileID: 0}
-      questDialogue: {fileID: 0}
-    questTitle: 
-    questProgress: 0
-    startAFight: 0
-    getAnItem: 0
-    giveAnItem: 0
-    getItem: {fileID: 0}
-    getItemName: 
-    giveItem: {fileID: 0}
-    giveItemName: 
   nextNpcText:
-  - {fileID: 11400000, guid: 39b58dedb38fcc647bb97892db20d811, type: 2}
+  - {fileID: 11400000, guid: 89966ed0efbf7f04fbf943085487f26b, type: 2}

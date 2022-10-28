@@ -16,12 +16,39 @@ MonoBehaviour:
   playerChoice: 1
   responseNumbers: 2
   npcText:
-  - Oh, hello there!
-  - Have you tied this new shampoo?
+  - Have you tried this new shampoo?
   - My hair became blinding like the sun!
   playerResponse:
-  - {fileID: 11400000, guid: 8dd4ddcb46bca0e499dd730d0458b07d, type: 2}
-  - {fileID: 11400000, guid: 0962411d9e517984f8e26c67855ef075, type: 2}
+  - answer: It is indeed beautiful.
+    endConversation: 0
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 1
+    giveAnItem: 0
+    getItem: {fileID: 21300000, guid: 148c9d245f94ac3498e2c9d861d02be7, type: 3}
+    getItemName: super shiny sun shampoo
+    giveItem: {fileID: 0}
+    giveItemName: 
+  - answer: It's so ugly.
+    endConversation: 0
+    corruptionStatChange: 1
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
   nextNpcText:
   - {fileID: 11400000, guid: 4a80ebeb33e6d9046b54c448283d0b84, type: 2}
   - {fileID: 11400000, guid: d48e0993d8cacb241831c00dde360ab1, type: 2}

@@ -16,6 +16,6 @@ MonoBehaviour:
   playerChoice: 0
   responseNumbers: 0
   npcText:
-  - "What? I\xB4m busy."
+  - This shampoo takes a lot of time to make...
   playerResponse: []
   nextNpcText: []

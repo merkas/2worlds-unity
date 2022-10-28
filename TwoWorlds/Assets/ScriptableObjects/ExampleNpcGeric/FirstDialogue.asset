@@ -15,11 +15,12 @@ MonoBehaviour:
   minCorruption: 0
   maxCorruption: 3
   minNumberOfTalks: 0
-  maxNumber: 1
+  maxNumber: 0
   maxNumberOfTalks: 0
   dialogueParts:
-  - {fileID: 11400000, guid: 101eb8b82aa5ab64d82be9f270a2d580, type: 2}
-  - {fileID: 11400000, guid: 4a80ebeb33e6d9046b54c448283d0b84, type: 2}
-  - {fileID: 11400000, guid: d48e0993d8cacb241831c00dde360ab1, type: 2}
-  - {fileID: 11400000, guid: 89966ed0efbf7f04fbf943085487f26b, type: 2}
-  - {fileID: 11400000, guid: 39b58dedb38fcc647bb97892db20d811, type: 2}
+  - {fileID: 11400000, guid: cf21802f4ff48ce4da8bfd2a6b9d2a35, type: 2}
+  - {fileID: 11400000, guid: aaca0b1cf651dc4429920d561e2c7364, type: 2}
+  - {fileID: 11400000, guid: 9e00c61f3bedcb143955a47a7297e4fa, type: 2}
+  - {fileID: 11400000, guid: 6ef685f84fde81d4fb9f50352811e1ae, type: 2}
+  - {fileID: 11400000, guid: 769413fc11f571440a8d5d6dcbe0b479, type: 2}
+  - {fileID: 11400000, guid: 97efd98615b4f5a41bf90e270e24d9c0, type: 2}

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
-  m_Name: FirstDialoguePart2
+  m_Name: FirstDialoguePart1
   m_EditorClassIdentifier: 
   reusable: 0
   playerChoice: 1
   responseNumbers: 2
   npcText:
-  - Right? I have to get some more soon.
+  - "Don\xB4t get on my nerves, you won\xB4t get any alcohol from me."
   playerResponse:
-  - answer: Need help?
+  - answer: Woah, calm down!
     endConversation: 0
     corruptionStatChange: 0
     questTrigger: 0
@@ -39,14 +39,14 @@ MonoBehaviour:
     getItemName: 
     giveItem: {fileID: 0}
     giveItemName: 
-  - answer: Mhm, good luck with that, see ya.
-    endConversation: 1
+  - answer: I don't like alcohol either way.
+    endConversation: 0
     corruptionStatChange: 0
     questTrigger: 0
-    abandonedQuest: 1
+    abandonedQuest: 0
     questComplete: 0
     changedQuest:
-      title: Shampoo Power!
+      title: 
       description: 
       reward: {fileID: 0}
       acceptQuestChoice: {fileID: 0}
@@ -61,4 +61,5 @@ MonoBehaviour:
     giveItem: {fileID: 0}
     giveItemName: 
   nextNpcText:
-  - {fileID: 11400000, guid: 39b58dedb38fcc647bb97892db20d811, type: 2}
+  - {fileID: 11400000, guid: aaca0b1cf651dc4429920d561e2c7364, type: 2}
+  - {fileID: 11400000, guid: 9e00c61f3bedcb143955a47a7297e4fa, type: 2}

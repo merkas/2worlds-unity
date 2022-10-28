@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36cd58416a02c5e4bbdc362ef8c412fa, type: 3}
-  m_Name: GeneralDialoguePartAnswer
+  m_Name: FirstDialoguePart1Answer1
   m_EditorClassIdentifier: 
-  answer: See you.
-  endConversation: 1
+  answer: "It\xB4s beautiful."
+  endConversation: 0
   corruptionStatChange: 0
   questTrigger: 0
+  questName: 
   questProgress: 0
   questComplete: 0
-  getAnItem: 0
+  startAFight: 0
+  getAnItem: 1
   giveAnItem: 0
+  getItem: {fileID: 21300000, guid: 148c9d245f94ac3498e2c9d861d02be7, type: 3}
+  getItemName: Sun Shampoo
+  giveItem: {fileID: 0}
+  giveItemName: 

@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36cd58416a02c5e4bbdc362ef8c412fa, type: 3}
-  m_Name: FirstDialoguePart1Answer2
+  m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
+  m_Name: FirstDialoguePart6
   m_EditorClassIdentifier: 
-  answer: You are so ugly
-  endConversation: 0
-  corruptionStatChange: 1
-  questTrigger: 0
-  questProgress: 0
-  questComplete: 0
-  getAnItem: 0
-  giveAnItem: 0
+  reusable: 0
+  playerChoice: 0
+  responseNumbers: 0
+  npcText:
+  - You have no idea.
+  playerResponse: []
+  nextNpcText: []

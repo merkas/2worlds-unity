@@ -17,13 +17,51 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 04083ac88a027874d9cad2a0e290894a, type: 2}
   NpcWithMenu: 0
   dialogueMenu: {fileID: 0}
-  Greeting: []
-  AdditionalGreeting: []
-  GetItem: 0
-  Item: {fileID: 0}
-  getCondition: 0
+  greeting:
+  - greetingText: Hi, I'm Laila. Nice to meet you.
+    minCorruption: 0
+    maxCorruption: 2
+    minNumberOfTalks: 0
+    maxNumberOfTalks: 0
+    maxTalks: 1
+    maxCor: 1
+    triggerItem: {fileID: 0}
+  - greetingText: Hi, again.
+    minCorruption: 0
+    maxCorruption: 4
+    minNumberOfTalks: 1
+    maxNumberOfTalks: 0
+    maxTalks: 0
+    maxCor: 0
+    triggerItem: {fileID: 0}
+  - greetingText: "Don\xB4t come near me!"
+    minCorruption: 5
+    maxCorruption: 0
+    minNumberOfTalks: 1
+    maxNumberOfTalks: 0
+    maxTalks: 0
+    maxCor: 0
+    triggerItem: {fileID: 0}
+  additionalGreeting: []
+  itemSprite: {fileID: 21300000, guid: 148c9d245f94ac3498e2c9d861d02be7, type: 3}
+  itemText:
+  - This is for you. A little something.
+  - You got normal shampoo!
+  getCondition: 1
   wantedMinCorruption: 0
   wantedMaxCorruption: 0
   wantedNumberOfTalks: 0
   questGiver: 0
-  questDialogue: []
+  quest:
+  - title: Shampoo Power!
+    description: Find the root for the super secret special shapoo base!
+    reward: {fileID: 0}
+    acceptQuestChoice: {fileID: 11400000, guid: 39b58dedb38fcc647bb97892db20d811, type: 2}
+    questDialogue: {fileID: 0}
+    minCorruption: 0
+    maxCorruption: 0
+    minNumberOfTalks: 0
+    wantedObject: {fileID: 0}
+    triggerObject: {fileID: 0}
+    questProgress: 0
+    reactionToProgress: []
