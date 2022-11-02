@@ -14,7 +14,7 @@ public class Answer // check if problems appear
     public bool questTrigger;
     public bool abandonedQuest;
     public bool questComplete;
-    //public Quest changedQuest;
+    public Quest changedQuest;
     public string questTitle;
     public int questProgress;
     public bool startAFight;

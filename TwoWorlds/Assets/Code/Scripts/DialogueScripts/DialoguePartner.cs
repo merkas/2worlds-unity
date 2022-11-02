@@ -37,11 +37,15 @@ public class DialoguePartner : MonoBehaviour
 
     private void Start()
     {
-        //thisNPC.name = npcName;
-        // check quests, which are active/finished/not active
-        allQuests = thisNpcDialogue.quest;
+        foreach (Quest quest in thisNpcDialogue.quest)
+        {
+            allQuests = thisNpcDialogue.quest;
+            //reset quests?
+            //quest.formerQuestProgress = 0;
+            //quest.questProgress = 0;
+        }
     }
-    
+
     public void ChooseGreeting(int corruptionStat)//still empty
     {
         foreach (Greeting greeting in thisNpcDialogue.greeting)
@@ -121,7 +125,6 @@ public class DialoguePartner : MonoBehaviour
 
     public bool CheckIfConversationEnded(int chosenIndex)
     {
-        //noDialogueLeft = activeDialoguePart.playerResponse[chosenIndex].endConversation;
         if (activeDialoguePart.playerResponse[chosenIndex].endConversation == true) noDialogueLeft = true;
         else noDialogueLeft = false;
         return noDialogueLeft;
@@ -142,26 +145,23 @@ public class DialoguePartner : MonoBehaviour
         }
     }
 
-    public void ChangedQuestStatus(string changedQuestName, string status)
+    public void ChangedQuestStatus(Quest changedQuest, string questStatus)
     {
-        Quest changedQuest;
         foreach (Quest quest in thisNpcDialogue.quest)
         {
-            if (quest.title == changedQuestName)
+            if (quest == changedQuest)
             {
                 changedQuest = quest;
-                if (status == "abandoned")
+                if (questStatus == "abandoned")
                 {
-                    Debug.Log(changedQuest.title + " abandoned");
                     //receivableQuests.Remove(changedQuest);
                     abandonedQuests.Add(changedQuest);
                 }
-                else if (status == "triggered")
+                else if (questStatus == "triggered")
                 {
-                    Debug.Log(changedQuest.title + "accepted");
                     activeQuests.Add(changedQuest);
                 }
-                else if (status == "completed")
+                else if (questStatus == "completed")
                 {
                     activeQuests.Remove(changedQuest);
                     completedQuests.Add(changedQuest);
@@ -190,12 +190,12 @@ public class DialoguePartner : MonoBehaviour
     }
 
 
-    //public void LoadQuestDialogue()
-    //{
+    public void LoadQuestDialogue() // menu npc
+    {
         //check for active quest
         //check for questprogress
         //check for item to activate / move progress of quest
-    //}
+    }
 
     public void SaveNewInfo()
     {

@@ -9,6 +9,8 @@ public class PlayerStandIn : MonoBehaviour
     //GameObject[] Items(string name, bool questItem);
     bool canStartConversation = false;
     GameObject npc;
+    public List<Quest> activeQuests;
+    // List with completed and List with failed quests
 
     void Start()
     {
@@ -23,6 +25,11 @@ public class PlayerStandIn : MonoBehaviour
             dialogueManager.StartConversation();
             canStartConversation = false;
         }
+    }
+
+    public void ChangeQuestProgress(Quest quest, int progress)
+    {
+        quest.questProgress += progress;
     }
 
     public void ConversationEnded()

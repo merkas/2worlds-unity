@@ -11,7 +11,7 @@ public class CompleteDialogue : ScriptableObject
     public DialogueMenu dialogueMenu;
 
     public List<Greeting> greeting;
-    public List<Greeting> additionalGreeting;
+    //public List<Greeting> additionalGreeting;
 
     //public GameObject Item;
     //ändern, wenn Item script eingefügt wird
@@ -24,5 +24,7 @@ public class CompleteDialogue : ScriptableObject
 
     public bool questGiver;
     public List<Quest> quest;
-    //public List<SingleDialogue> questDialogue;
+    public bool questOptionNotEmpty;
+    public string[] questOption;
+    //public List<SingleDialogue> questDialogue; // nur bei menu npc benötigt?
 }

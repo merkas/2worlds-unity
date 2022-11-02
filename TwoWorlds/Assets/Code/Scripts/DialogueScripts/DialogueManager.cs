@@ -20,9 +20,10 @@ public class DialogueManager : MonoBehaviour
     DialogueState state;
 
     GameObject npc;
-    GameObject player;
+    GameObject playerObject;
 
     DialoguePartner dialoguePartner;
+    PlayerStandIn player;
 
     //everything needed of the UI
     public GameObject dialogueWindow;
@@ -50,29 +51,30 @@ public class DialogueManager : MonoBehaviour
     public void NewConversation(GameObject Npc, GameObject Player)
     {
         npc = Npc;
-        player = Player;
+        playerObject = Player;
     }
 
     public void StartConversation()//called by player
     {
         dialoguePartner = npc.GetComponent<DialoguePartner>();
+        player = playerObject.GetComponent<PlayerStandIn>();
         npcSentences = new Queue<string>();
 
         // check for quest item in player inventory
         // check for active Quests
-        if (dialoguePartner.activeQuests.Count != 0)
-        {
-            foreach(Quest activeQuest in dialoguePartner.activeQuests)
-            {
-                if (activeQuest.questNpcName == dialoguePartner.npcName)
-                {
-                    //check progress and/or activeQuest.wantedItem
-                }
-            }
-        }
+        //if (dialoguePartner.activeQuests.Count != 0)
+        //{
+        //    foreach(Quest activeQuest in dialoguePartner.activeQuests)
+        //    {
+        //        if (activeQuest.questNpcName == dialoguePartner.npcName)
+        //        {
+        //            //check progress and/or activeQuest.wantedItem
+        //        }
+        //    }
+        //}
 
         Greeting();
-
+        CheckQuestProgress();
         if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true)
         {
             CreateMenu();
@@ -80,7 +82,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            dialoguePartner.GetData(player.GetComponent<PlayerStandIn>().corruptionStat); // get dialogue
+            dialoguePartner.GetData(player.corruptionStat); // get dialogue
             if (dialoguePartner.corruptionOutOfRange == true)
             {
                 state = DialogueState.NODIALOGUE; //falls Probleme, ConversationEnd();
@@ -95,7 +97,7 @@ public class DialogueManager : MonoBehaviour
 
     void GetItemCheck()
     {
-        if (dialoguePartner.CheckForItemConditions(player.GetComponent<PlayerStandIn>().corruptionStat) == true)
+        if (dialoguePartner.CheckForItemConditions(player.corruptionStat) == true)
         {
             Sprite sprite = dialoguePartner.itemSprite;
             string[] message = dialoguePartner.itemText;
@@ -103,6 +105,40 @@ public class DialogueManager : MonoBehaviour
             //get inventory of player and add item
         }
         else NpcTalking();
+    }
+
+    void CheckQuestProgress()
+    {
+        // check for wanted item to trigger or end a quest
+
+        foreach (Quest playerQuest in player.activeQuests)
+        {
+            foreach (Quest npcQuest in dialoguePartner.activeQuests)
+            {
+                if (playerQuest == npcQuest)
+                {
+                    if (playerQuest.questProgress >= playerQuest.formerQuestProgress)
+                    {
+                        playerQuest.questProgress = npcQuest.questProgress;
+                        playerQuest.formerQuestProgress = npcQuest.formerQuestProgress;
+                        npcSentences.Enqueue(npcQuest.reactionToProgress[npcQuest.questProgress]);
+                        NextText();
+                    }
+                    if (npcQuest.completedQuest == true)
+                    {
+                        int index = npcQuest.reactionToProgress.Length;
+                        npcSentences.Enqueue(npcQuest.reactionToProgress[index]);
+                        NextText();
+
+                        // get reward + check
+
+                        message[0] = dialoguePartner.npcName + " gave you " + 
+                            dialoguePartner.activeDialoguePart.playerResponse[index].getItemName + "!";
+                        SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+                    }
+                }
+            }
+        }
     }
 
     void OpenDialogueWindow()
@@ -157,7 +193,7 @@ public class DialogueManager : MonoBehaviour
 
     void Greeting()
     {
-        dialoguePartner.ChooseGreeting(player.GetComponent<PlayerStandIn>().corruptionStat);
+        dialoguePartner.ChooseGreeting(player.corruptionStat);
         
         npcSentences.Enqueue(dialoguePartner.chosenGreeting);
         NextText();
@@ -268,7 +304,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true) // choice
         {
-            player.GetComponent<PlayerStandIn>().corruptionStat +=
+            player.corruptionStat +=
                     dialoguePartner.activeDialoguePart.playerResponse[chosenIndex].corruptionStatChange;
             // visual reaction
 
@@ -293,7 +329,6 @@ public class DialogueManager : MonoBehaviour
                     if (dialoguePartner.activeDialoguePart == null) ConversationEnd();
                     if (messageBeforeNpc == false)
                     {
-                        Debug.Log("No reaction");
                         NpcTalking();
                     }
                 }
@@ -321,7 +356,6 @@ public class DialogueManager : MonoBehaviour
         messageBeforeNpc = false;
         if (dialoguePartner.activeDialoguePart.playerResponse[index].getAnItem == true)
         {
-            Debug.Log("Got item");
             message[0] = dialoguePartner.npcName + " gave you " +
                 dialoguePartner.activeDialoguePart.playerResponse[index].getItemName + "!";
             SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
@@ -339,28 +373,25 @@ public class DialogueManager : MonoBehaviour
         }
         if (dialoguePartner.activeDialoguePart.playerResponse[index].questTrigger == true) // = accept quest
         {
-            Debug.Log("Quest activated");
-            
-            dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].questTitle, "accepted");
-            messageBeforeNpc = true;
+            player.activeQuests.Add(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest);
+            dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest, "triggered");
+            messageBeforeNpc = false;
         }
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].abandonedQuest == true) // = accept quest
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].abandonedQuest == true)
         {
-            Debug.Log("Quest abandoned");
-
-            dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].questTitle, "abandoned");
-            messageBeforeNpc = true;
+            dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest, "abandoned");
+            messageBeforeNpc = false;
         }
         if (dialoguePartner.activeDialoguePart.playerResponse[index].questComplete == true)
         {
             Debug.Log("Quest ended");
 
-            dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].questTitle, "completed");
+            dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest, "completed");
             // get reward
             // Npc Dialogue
-            messageBeforeNpc = true;
+            messageBeforeNpc = false;
         }
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].questProgress != 0)
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].questProgress != 0) // progress within the dialogue
         {
             foreach(Quest quest in dialoguePartner.thisNpcDialogue.quest)
             {
@@ -369,7 +400,7 @@ public class DialogueManager : MonoBehaviour
                     message[0] = quest.reactionToProgress[quest.questProgress];
                     quest.questProgress += dialoguePartner.activeDialoguePart.playerResponse[index].questProgress;
                     SystemMessage(message); //Npc reaction to current quest progress
-                    // noch unvollständig
+                    // noch unvollständig?
                 }
             }
         }
@@ -415,7 +446,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePartner.noDialogueLeft = false;
         
         Destroy(ButtonPrefab);
-        player.GetComponent<PlayerStandIn>().ConversationEnded();
+        player.ConversationEnded();
     }
 
     void CheckForQuestItem()

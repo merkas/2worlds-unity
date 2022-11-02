@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Dialogue/SingleDialogue")]
 public class SingleDialogue : ScriptableObject
 {
-    // = listed Dialogue
-
     public int minCorruption;
     public int maxCorruption;
     public int minNumberOfTalks;
