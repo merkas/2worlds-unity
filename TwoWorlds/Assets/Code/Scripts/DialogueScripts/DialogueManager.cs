@@ -75,10 +75,10 @@ public class DialogueManager : MonoBehaviour
 
         Greeting();
         CheckQuestProgress();
+
         if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true)
         {
             CreateMenu();
-            NpcMenu();
         }
         else
         {
@@ -91,8 +91,7 @@ public class DialogueManager : MonoBehaviour
             else NpcTalking();
         }
 
-        OpenDialogueWindow();
-        
+        OpenDialogueWindow(); 
     }
 
     void GetItemCheck()
@@ -193,10 +192,21 @@ public class DialogueManager : MonoBehaviour
 
     void Greeting()
     {
-        dialoguePartner.ChooseGreeting(player.corruptionStat);
-        
-        npcSentences.Enqueue(dialoguePartner.chosenGreeting);
-        NextText();
+        if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true)
+        {
+            dialoguePartner.ChooseGreeting(player.corruptionStat);
+
+            npcSentences.Enqueue(dialoguePartner.chosenGreeting);
+            NextText();
+        }  
+
+        else if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true)
+        {
+            state = DialogueState.NPCTALKING;
+            responseField.SetActive(false);
+            npcSentences.Enqueue(dialoguePartner.thisNpcDialogue.dialogueMenu.npcMainText);
+            NextText();
+        }
     }
 
     void NpcTalking(int index = default)
@@ -463,7 +473,6 @@ public class DialogueManager : MonoBehaviour
         //show item Sprite
     }
 
-    //langsamer machen
     IEnumerator TypeSentence(string sentence) //animate every letter to appear one after one
     {
         dialogueText.text = "";
