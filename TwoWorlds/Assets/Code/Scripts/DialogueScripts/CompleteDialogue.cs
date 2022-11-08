@@ -7,7 +7,6 @@ public class CompleteDialogue : ScriptableObject
 {
     public List<SingleDialogue> completeDialogue;
 
-    public bool NpcWithMenu;
     public DialogueMenu dialogueMenu;
 
     public List<Greeting> greeting;
@@ -26,5 +25,4 @@ public class CompleteDialogue : ScriptableObject
     public List<Quest> quest;
     public bool questOptionNotEmpty;
     public string[] questOption;
-    //public List<SingleDialogue> questDialogue; // nur bei menu npc benötigt?
 }

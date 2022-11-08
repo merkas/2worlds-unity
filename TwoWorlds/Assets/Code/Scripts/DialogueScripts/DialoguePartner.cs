@@ -13,12 +13,15 @@ public class DialoguePartner : MonoBehaviour
 
     int activeIndex = 0;
 
+    public bool changeToMenuNpc = false;
+    public bool NpcWithMenu;
+
     [System.NonSerialized]
     public DialoguePart activeDialoguePart;
 
     public bool noDialogueLeft;
     public bool corruptionOutOfRange = false;
-    //public bool activeQuest;
+    
     [System.NonSerialized]
     public List<Quest> activeQuests; // only of this npc
 
@@ -165,7 +168,6 @@ public class DialoguePartner : MonoBehaviour
                 {
                     activeQuests.Remove(changedQuest);
                     completedQuests.Add(changedQuest);
-                    // give reward
                 }
                 break;
             }
@@ -200,7 +202,10 @@ public class DialoguePartner : MonoBehaviour
     public void SaveNewInfo()
     {
         thisNPC.numberOfTalks++;
-        
+        if (changeToMenuNpc == true)
+        {
+            NpcWithMenu = true;
+        }
         //QuestInfo + used onetime and reusable DialogueParts
         //used dialogue
     }

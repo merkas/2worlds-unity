@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
+//using System.Linq;
 
 public enum DialogueState
 {
@@ -25,7 +25,7 @@ public class DialogueManager : MonoBehaviour
     DialoguePartner dialoguePartner;
     PlayerStandIn player;
 
-    //everything needed of the UI
+    //UI
     public GameObject dialogueWindow;
     public Text npcNameText;
     public Text dialogueText;
@@ -35,10 +35,10 @@ public class DialogueManager : MonoBehaviour
     public Button ContinueButton;
 
     public GameObject[] response; //Button-Prefabs
-    GameObject ButtonPrefab;
-    Button[] choices;
+    GameObject ButtonPrefab; // loaded Prefab
+    Button[] choices; // all Buttons in ButtonPrefab
     int chosenIndex;
-    Queue<string> npcSentences;
+    Queue<string> sentences;
     string[] message = new string[1];
 
     bool messageBeforeNpc;
@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePartner = npc.GetComponent<DialoguePartner>();
         player = playerObject.GetComponent<PlayerStandIn>();
-        npcSentences = new Queue<string>();
+        sentences = new Queue<string>();
 
         // check for quest item in player inventory
         // check for active Quests
@@ -76,7 +76,7 @@ public class DialogueManager : MonoBehaviour
         Greeting();
         CheckQuestProgress();
 
-        if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true)
+        if (dialoguePartner.NpcWithMenu == true)
         {
             CreateMenu();
         }
@@ -118,23 +118,27 @@ public class DialogueManager : MonoBehaviour
                 {
                     if (playerQuest.questProgress >= playerQuest.formerQuestProgress)
                     {
-                        playerQuest.questProgress = npcQuest.questProgress;
-                        playerQuest.formerQuestProgress = npcQuest.formerQuestProgress;
-                        npcSentences.Enqueue(npcQuest.reactionToProgress[npcQuest.questProgress]);
-                        NextText();
-                    }
-                    if (npcQuest.completedQuest == true)
-                    {
-                        int index = npcQuest.reactionToProgress.Length;
-                        npcSentences.Enqueue(npcQuest.reactionToProgress[index]);
-                        NextText();
+                        if (playerQuest.questProgress == playerQuest.maxProgress)
+                        {
+                            int index = npcQuest.reactionToProgress.Length;
+                            sentences.Enqueue(npcQuest.reactionToProgress[index]);
+                            NextText();
 
-                        // get reward + check
+                            // get reward + check
 
-                        message[0] = dialoguePartner.npcName + " gave you " + 
-                            dialoguePartner.activeDialoguePart.playerResponse[index].getItemName + "!";
-                        SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+                            message[0] = dialoguePartner.npcName + " gave you " +
+                                dialoguePartner.activeDialoguePart.playerResponse[index].getItemName + "!";
+                            SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+                        }
+                        else
+                        {
+                            playerQuest.questProgress = npcQuest.questProgress;
+                            playerQuest.formerQuestProgress = npcQuest.formerQuestProgress;
+                            sentences.Enqueue(npcQuest.reactionToProgress[npcQuest.questProgress]);
+                            NextText();
+                        }
                     }
+                    
                 }
             }
         }
@@ -163,13 +167,11 @@ public class DialogueManager : MonoBehaviour
         {
             responseField.SetActive(true);
             dialogueText.enabled = false;
-            //itemImage.enabled = false;
         }
 
         if (state == DialogueState.ENDDIALOGUE || state == DialogueState.NODIALOGUE)
         {
             dialogueWindow.SetActive(false);
-            //itemImage.enabled = false;
         }
 
         if (state != DialogueState.SYSTEMMESSAGE)
@@ -181,7 +183,7 @@ public class DialogueManager : MonoBehaviour
         state = DialogueState.SYSTEMMESSAGE;
         foreach (string text in message)
         {
-            npcSentences.Enqueue(text);
+            sentences.Enqueue(text);
         }
         NextText();
         
@@ -190,21 +192,21 @@ public class DialogueManager : MonoBehaviour
         itemImage.enabled = true;
     }
 
-    void Greeting()
+    void Greeting() //npc greeting
     {
-        if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true)
+        if (dialoguePartner.NpcWithMenu != true)
         {
             dialoguePartner.ChooseGreeting(player.corruptionStat);
 
-            npcSentences.Enqueue(dialoguePartner.chosenGreeting);
+            sentences.Enqueue(dialoguePartner.chosenGreeting);
             NextText();
         }  
 
-        else if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true)
+        else if (dialoguePartner.NpcWithMenu == true)
         {
             state = DialogueState.NPCTALKING;
             responseField.SetActive(false);
-            npcSentences.Enqueue(dialoguePartner.thisNpcDialogue.dialogueMenu.npcMainText);
+            sentences.Enqueue(dialoguePartner.thisNpcDialogue.dialogueMenu.npcMainText);
             NextText();
         }
     }
@@ -213,42 +215,36 @@ public class DialogueManager : MonoBehaviour
     {
         state = DialogueState.NPCTALKING;
         messageBeforeNpc = false;
-        if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true)
+        if (dialoguePartner.NpcWithMenu == true)
         {
             responseField.SetActive(false);
-            npcSentences.Enqueue(dialoguePartner.thisNpcDialogue.dialogueMenu.menuOption[index].npcAnswer);
+            sentences.Enqueue(dialoguePartner.thisNpcDialogue.dialogueMenu.menuOption[index].npcAnswer);
             NextText();
         }
-        else if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true)
+        else if (dialoguePartner.NpcWithMenu != true)
         {
             foreach (string text in dialoguePartner.activeDialoguePart.npcText)
             {
-                npcSentences.Enqueue(text);
+                sentences.Enqueue(text);
             }
 
             NextText();
         }
-    }
-
-    void NpcMenu()
-    {
-        state = DialogueState.PLAYERTURN;
-        PlayerTurn();
     }
 
     public void NextText() //ContinueButton
     {
         if (state == DialogueState.NPCTALKING || state == DialogueState.SYSTEMMESSAGE)
         {
-            if (npcSentences.Count == 0)
+            if (sentences.Count == 0)
             {
-                npcSentences.Clear();
+                sentences.Clear();
                 if (state == DialogueState.NPCTALKING) PlayerTurn();
                 else if (state == DialogueState.SYSTEMMESSAGE) NpcTalking();
                 return;
             }
 
-            string sentence = npcSentences.Dequeue();
+            string sentence = sentences.Dequeue();
             StartCoroutine(TypeSentence(sentence));
         }
         else if (state == DialogueState.AUTOPLAYERRESPONSE)
@@ -259,23 +255,23 @@ public class DialogueManager : MonoBehaviour
     {
         state = DialogueState.PLAYERTURN;
 
-        if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true) // menu
+        if (dialoguePartner.NpcWithMenu == true) // menu
         {
             state = DialogueState.PLAYERTURN;
             responseField.SetActive(true);
         }
-        if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true
+        if (dialoguePartner.NpcWithMenu != true
             && dialoguePartner.activeDialoguePart.playerChoice != true) // automatic response
         {
             state = DialogueState.AUTOPLAYERRESPONSE;
             if (dialoguePartner.activeDialoguePart.playerResponse.Length == 0) ConversationEnd();
             else
             {
-                npcSentences.Enqueue(dialoguePartner.activeDialoguePart.playerResponse[0].answer);
+                sentences.Enqueue(dialoguePartner.activeDialoguePart.playerResponse[0].answer);
                 NextText();
             }
         }
-        else if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true
+        else if (dialoguePartner.NpcWithMenu != true
             && dialoguePartner.activeDialoguePart.playerChoice == true)// choice
         {
             state = DialogueState.PLAYERRESPONSE;
@@ -306,13 +302,13 @@ public class DialogueManager : MonoBehaviour
     public void ResponseButton() //get method on Prefab or delete prefab
     {
         SelectedResponse();
-        if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true)
+        if (dialoguePartner.NpcWithMenu != true)
             Destroy(ButtonPrefab);
     }
 
     void SelectedResponse() //response chosen, NPC reaction awaited
     {
-        if (dialoguePartner.thisNpcDialogue.NpcWithMenu != true) // choice
+        if (dialoguePartner.NpcWithMenu != true) // choice
         {
             player.corruptionStat +=
                     dialoguePartner.activeDialoguePart.playerResponse[chosenIndex].corruptionStatChange;
@@ -333,7 +329,6 @@ public class DialogueManager : MonoBehaviour
                 if (dialoguePartner.noDialogueLeft != true) // = Dialogue continues
                 {
                     state = DialogueState.NPCTALKING;
-                    //CheckReactionToPlayerResponse(chosenIndex);
 
                     dialoguePartner.LoadNextDialoguePart(chosenIndex);
                     if (dialoguePartner.activeDialoguePart == null) ConversationEnd();
@@ -345,7 +340,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        else if (dialoguePartner.thisNpcDialogue.NpcWithMenu == true) // menu
+        else if (dialoguePartner.NpcWithMenu == true) // menu
         {
             if (dialoguePartner.thisNpcDialogue.dialogueMenu.menuOption[chosenIndex].endConversation == true)
                 ConversationEnd();
@@ -364,14 +359,14 @@ public class DialogueManager : MonoBehaviour
     void CheckReactionToPlayerResponse(int index) //questtrigger / progress / abandonded
     {
         messageBeforeNpc = false;
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].getAnItem == true)
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].getAnItem == true) // get an item through response
         {
             message[0] = dialoguePartner.npcName + " gave you " +
                 dialoguePartner.activeDialoguePart.playerResponse[index].getItemName + "!";
             SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
             messageBeforeNpc = true;
         }
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].giveAnItem == true)
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].giveAnItem == true) // give npc an item
         {
             Debug.Log("player gives an item");
             message[0] = "You gave " + dialoguePartner.npcName + " " +
@@ -387,12 +382,12 @@ public class DialogueManager : MonoBehaviour
             dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest, "triggered");
             messageBeforeNpc = false;
         }
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].abandonedQuest == true)
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].abandonedQuest == true) // = abandoned quest
         {
             dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest, "abandoned");
             messageBeforeNpc = false;
         }
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].questComplete == true)
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].questComplete == true) // = completed quest
         {
             Debug.Log("Quest ended");
 
@@ -413,6 +408,10 @@ public class DialogueManager : MonoBehaviour
                     // noch unvollständig?
                 }
             }
+        }
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].changeToMenuInNextConversation == true)
+        {
+            dialoguePartner.changeToMenuNpc = true;
         }
     }
 

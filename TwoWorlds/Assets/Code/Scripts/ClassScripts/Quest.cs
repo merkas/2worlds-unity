@@ -8,8 +8,8 @@ public class Quest: ScriptableObject
 {
     public string title;
     public string description;
-    public GameObject reward; // get from item database later
-    public bool completedQuest;
+    public GameObject reward; // get from item database later?
+
     public string questNpcName;
 
     public DialoguePart acceptQuestChoice;
@@ -23,5 +23,6 @@ public class Quest: ScriptableObject
 
     public int formerQuestProgress;
     public int questProgress;
+    public int maxProgress; // if questProgress = maxProgress -> Quest completed
     public string[] reactionToProgress;
 }

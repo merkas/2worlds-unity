@@ -14,10 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completeDialogue:
   - {fileID: 11400000, guid: 1f07aa44f64cdea4d91950d61e1e8a14, type: 2}
-  NpcWithMenu: 0
-  dialogueMenu: {fileID: 0}
-  Greeting: []
-  AdditionalGreeting: []
+  dialogueMenu: {fileID: 11400000, guid: d71bac91519f1684aaf320a5eefb0c56, type: 2}
+  greeting:
+  - greetingText: Oh, good, another rat.
+    minCorruption: 0
+    maxCorruption: 0
+    minNumberOfTalks: 0
+    maxNumberOfTalks: 0
+    maxTalks: 1
+    maxCor: 0
+    triggerItem: {fileID: 0}
+  - greetingText: Again?
+    minCorruption: 0
+    maxCorruption: 0
+    minNumberOfTalks: 1
+    maxNumberOfTalks: 0
+    maxTalks: 0
+    maxCor: 0
+    triggerItem: {fileID: 0}
   itemSprite: {fileID: 0}
   itemText: []
   getCondition: 0
@@ -25,4 +39,7 @@ MonoBehaviour:
   wantedMaxCorruption: 0
   wantedNumberOfTalks: 0
   questGiver: 0
-  quest: []
+  quest:
+  - {fileID: 0}
+  questOptionNotEmpty: 0
+  questOption: []

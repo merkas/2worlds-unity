@@ -24,12 +24,7 @@ MonoBehaviour:
     questTrigger: 0
     abandonedQuest: 0
     questComplete: 0
-    changedQuest:
-      title: 
-      description: 
-      reward: {fileID: 0}
-      acceptQuestChoice: {fileID: 0}
-      questDialogue: {fileID: 0}
+    changedQuest: {fileID: 0}
     questTitle: 
     questProgress: 0
     startAFight: 0
@@ -39,4 +34,5 @@ MonoBehaviour:
     getItemName: 
     giveItem: {fileID: 0}
     giveItemName: 
+    changeToMenuInNextConversation: 1
   nextNpcText: []

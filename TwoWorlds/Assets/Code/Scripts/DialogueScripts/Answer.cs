@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[CreateAssetMenu(menuName = "Dialogue/Answer")]
 [System.Serializable]
-public class Answer // check if problems appear
+public class Answer
 {
     public string answer;
 
@@ -28,7 +27,6 @@ public class Answer // check if problems appear
     public Sprite giveItem;
     public string giveItemName;
 
-    //public bool answerCondition;
-    //public string neededItemForAnswer;
-    //public int neededCorruptionStat;
+    public bool changeToMenuInNextConversation;
+    
 }

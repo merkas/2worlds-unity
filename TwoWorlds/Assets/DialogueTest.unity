@@ -399,6 +399,8 @@ MonoBehaviour:
   nameShield: {fileID: 0}
   getItem: 0
   thisNpcDialogue: {fileID: 11400000, guid: 1f59cf499f331d74398ee948959ab5ac, type: 2}
+  changeToMenuNpc: 0
+  NpcWithMenu: 0
   noDialogueLeft: 0
   corruptionOutOfRange: 0
   chosenGreeting: 
@@ -844,7 +846,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153377219}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.52, y: -0.4, z: 0}
+  m_LocalPosition: {x: -1.01, y: -1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -933,6 +935,8 @@ MonoBehaviour:
   nameShield: {fileID: 0}
   getItem: 1
   thisNpcDialogue: {fileID: 11400000, guid: 6d85ff56bce46a84ca5069f0ba5728ee, type: 2}
+  changeToMenuNpc: 0
+  NpcWithMenu: 1
   noDialogueLeft: 0
   corruptionOutOfRange: 0
   chosenGreeting: 
@@ -1199,6 +1203,8 @@ MonoBehaviour:
   nameShield: {fileID: 0}
   getItem: 0
   thisNpcDialogue: {fileID: 11400000, guid: e4f0478ed18bd4247a9cbf0c7e1a610c, type: 2}
+  changeToMenuNpc: 0
+  NpcWithMenu: 0
   noDialogueLeft: 0
   corruptionOutOfRange: 0
   chosenGreeting: 
