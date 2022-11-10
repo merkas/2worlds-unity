@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
+  m_Name: FirstDialoguePart2
+  m_EditorClassIdentifier: 
+  reusable: 0
+  playerChoice: 1
+  responseNumbers: 2
+  npcText:
+  - Right? I have to get some more soon.
+  playerResponse:
+  - answer: Need help?
+    endConversation: 0
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    changedQuest:
+      title: 
+      description: 
+      reward: {fileID: 0}
+      acceptQuestChoice: {fileID: 0}
+      questDialogue: {fileID: 0}
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
+  - answer: Mhm, good luck with that, see ya.
+    endConversation: 1
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 1
+    questComplete: 0
+    changedQuest:
+      title: Shampoo Power!
+      description: 
+      reward: {fileID: 0}
+      acceptQuestChoice: {fileID: 0}
+      questDialogue: {fileID: 0}
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
+  nextNpcText:
+  - {fileID: 11400000, guid: 39b58dedb38fcc647bb97892db20d811, type: 2}

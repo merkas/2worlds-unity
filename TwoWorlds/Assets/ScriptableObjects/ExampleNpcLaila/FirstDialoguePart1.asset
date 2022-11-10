@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
+  m_Name: FirstDialoguePart1
+  m_EditorClassIdentifier: 
+  reusable: 0
+  playerChoice: 1
+  responseNumbers: 2
+  npcText:
+  - Have you tried this new shampoo?
+  - My hair became blinding like the sun!
+  playerResponse:
+  - answer: It is indeed beautiful.
+    endConversation: 0
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 1
+    giveAnItem: 0
+    getItem: {fileID: 21300000, guid: 148c9d245f94ac3498e2c9d861d02be7, type: 3}
+    getItemName: super shiny sun shampoo
+    giveItem: {fileID: 0}
+    giveItemName: 
+  - answer: It's so ugly.
+    endConversation: 0
+    corruptionStatChange: 1
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
+  nextNpcText:
+  - {fileID: 11400000, guid: 4a80ebeb33e6d9046b54c448283d0b84, type: 2}
+  - {fileID: 11400000, guid: d48e0993d8cacb241831c00dde360ab1, type: 2}
