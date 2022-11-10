@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16f05274eb3c1e489109797b6050c3e, type: 3}
+  m_Name: FirstDialogue
+  m_EditorClassIdentifier: 
+  minCorruption: 0
+  maxCorruption: 3
+  minNumberOfTalks: 0
+  maxNumber: 0
+  maxNumberOfTalks: 0
+  dialogueParts:
+  - {fileID: 11400000, guid: cf21802f4ff48ce4da8bfd2a6b9d2a35, type: 2}
+  - {fileID: 11400000, guid: aaca0b1cf651dc4429920d561e2c7364, type: 2}
+  - {fileID: 11400000, guid: 9e00c61f3bedcb143955a47a7297e4fa, type: 2}
+  - {fileID: 11400000, guid: 6ef685f84fde81d4fb9f50352811e1ae, type: 2}
+  - {fileID: 11400000, guid: 769413fc11f571440a8d5d6dcbe0b479, type: 2}
+  - {fileID: 11400000, guid: 97efd98615b4f5a41bf90e270e24d9c0, type: 2}

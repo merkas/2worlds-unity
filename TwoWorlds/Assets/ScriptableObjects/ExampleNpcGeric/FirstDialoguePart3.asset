@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
+  m_Name: FirstDialoguePart3
+  m_EditorClassIdentifier: 
+  reusable: 0
+  playerChoice: 1
+  responseNumbers: 2
+  npcText:
+  - Oh, good. Don't know why, but everyone keeps asking.
+  playerResponse:
+  - answer: I heard some people in the last place talking about it.
+    endConversation: 0
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    changedQuest:
+      title: 
+      description: 
+      reward: {fileID: 0}
+      acceptQuestChoice: {fileID: 0}
+      questDialogue: {fileID: 0}
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
+  - answer: Must be hard
+    endConversation: 0
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    changedQuest:
+      title: 
+      description: 
+      reward: {fileID: 0}
+      acceptQuestChoice: {fileID: 0}
+      questDialogue: {fileID: 0}
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
+  nextNpcText:
+  - {fileID: 11400000, guid: 769413fc11f571440a8d5d6dcbe0b479, type: 2}
+  - {fileID: 11400000, guid: 97efd98615b4f5a41bf90e270e24d9c0, type: 2}

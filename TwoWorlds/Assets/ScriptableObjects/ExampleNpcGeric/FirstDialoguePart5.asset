@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
+  m_Name: FirstDialoguePart5
+  m_EditorClassIdentifier: 
+  reusable: 0
+  playerChoice: 0
+  responseNumbers: 1
+  npcText:
+  - Tch.
+  playerResponse:
+  - answer: Sorry, I'll go.
+    endConversation: 1
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    changedQuest: {fileID: 0}
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem: {fileID: 0}
+    getItemName: 
+    giveItem: {fileID: 0}
+    giveItemName: 
+    changeToMenuInNextConversation: 1
+  nextNpcText: []
