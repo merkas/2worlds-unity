@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 492452357}
   m_Layer: 0
   m_Name: ChoiceNpc
-  m_TagString: DialogueNpc
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -914,7 +914,7 @@ GameObject:
   - component: {fileID: 1161624942}
   m_Layer: 0
   m_Name: MenuNpc
-  m_TagString: DialogueNpc
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1182,7 +1182,7 @@ GameObject:
   - component: {fileID: 1893187582}
   m_Layer: 0
   m_Name: ChoiceNpc2
-  m_TagString: DialogueNpc
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
