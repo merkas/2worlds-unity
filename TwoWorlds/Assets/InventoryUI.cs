@@ -17,6 +17,7 @@ public class InventoryUI : MonoBehaviour
         inventory.onItemChangedCallback += UpdateUI; //?
 
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+        inventoryWindow.SetActive(false);
     }
 
     private void Update()
@@ -34,6 +35,10 @@ public class InventoryUI : MonoBehaviour
             if (i < inventory.items.Count)
             {
                 slots[i].AddItem(inventory.items[i]);
+                if (inventory.items[i].isStackable)
+                {
+                    slots[i].AddToStack(inventory.items[i].stack);
+                }
             }
             else
             {

@@ -2,20 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler,
+     IPointerMoveHandler
 {
     public Image icon;
+    public Text stackNumber;
     Item item;
+    
+    int numberOfItems;
 
-    public Button clickOnItem;
+    public void OnPointerClick(PointerEventData pointerEventData) // player clicks on inventory slot
+    {
+        if (item != null) // slot is filled
+        {
+            if (item.isConsumable)
+            {
+                if (item.isStackable)
+                {
+                    if (numberOfItems > 1)
+                    {
+                        numberOfItems -= 1;
+                        if (numberOfItems < 2) stackNumber.enabled = false;
+
+                        return;
+                    }
+                }
+                ClearSlot();
+            }
+        }
+    }
+    public void OnPointerMove(PointerEventData pointerEventData)
+    {
+        
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+
+    }
 
     public void AddItem(Item newItem)
     {
         item = newItem;
         icon.sprite = newItem.icon;
         icon.enabled = true;
-        clickOnItem.enabled = true;
     }
 
     public void ClearSlot()
@@ -23,17 +60,15 @@ public class InventorySlot : MonoBehaviour
         item = null;
         icon.sprite = null;
         icon.enabled = false;
-        clickOnItem.enabled = false;
     }
 
-    public void ClickedOnItem()
+    public void AddToStack(int added)
     {
-        // move object to mouse
-        icon.transform.position = Input.mousePosition;
-
-        if (Input.GetMouseButton(0))
+        numberOfItems += added;
+        if (numberOfItems > 1)
         {
-            
+            stackNumber.text = numberOfItems.ToString();
+            stackNumber.enabled = true;
         }
     }
 }

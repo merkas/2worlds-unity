@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f8460033051554eb460b46f35e93cb, type: 3}
   m_Name: TestItem
   m_EditorClassIdentifier: 
-  name: Test
+  itemName: 
   icon: {fileID: 7482667652216324306, guid: 7c2d6af1d7274c941b749e3c45569c5c, type: 3}
   isConsumable: 0
   isQuestItem: 0
-  isStackable: 0
+  isStackable: 1
+  stack: 2

@@ -6,6 +6,13 @@ public class Inventory : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
 
+    List<int> itemAmount = new List<int>();
+    List<int> numberOfItems = new List<int>();
+    //int[] numberOfItems;
+    int allItems;
+    int itemNumber;
+    bool addedToStack;
+
     public int space = 10;
 
     #region Singleton
@@ -28,13 +35,33 @@ public class Inventory : MonoBehaviour
 
     public bool AddItem(Item item)
     {
-        //if (item != item.isDefaultItem)
-        if (items.Count >= space)
+        addedToStack = false;
+        
+        int itemNumber = 0;
+        foreach (Item obj in items)
         {
-            Debug.Log("Not enough room");
-            return false;
+            if (item == obj && item.isStackable == true)
+            {
+                Debug.Log("Have: " + item.stack + ", new: " + obj.stack);
+                numberOfItems[itemNumber] += obj.stack;
+                addedToStack = true;
+                break;
+            }
+            itemNumber += 1;
         }
-        items.Add(item);
+        
+        if (addedToStack != true)
+        {
+            if (items.Count >= space)
+            {
+                Debug.Log("Not enough room");
+                return false;
+            }
+
+            numberOfItems.Add(item.stack);
+            items.Add(item);
+        }
+        
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
