@@ -8,7 +8,7 @@ public class Quest: ScriptableObject
 {
     public string title;
     public string description;
-    public GameObject reward; // get from item database later?
+    public Item reward;
 
     public string questNpcName;
 

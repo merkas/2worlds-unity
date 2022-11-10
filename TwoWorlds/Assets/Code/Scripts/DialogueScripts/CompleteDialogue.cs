@@ -14,7 +14,7 @@ public class CompleteDialogue : ScriptableObject
 
     //public GameObject Item;
     //ändern, wenn Item script eingefügt wird
-    public Sprite itemSprite;
+    public Item item;
     public string[] itemText;
     public bool getCondition;
     public int wantedMinCorruption;

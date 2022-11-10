@@ -74,7 +74,7 @@ public class DialogueManager : MonoBehaviour
         //}
 
         Greeting();
-        CheckQuestProgress();
+        //CheckQuestProgress();
 
         if (dialoguePartner.NpcWithMenu == true)
         {
@@ -98,10 +98,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialoguePartner.CheckForItemConditions(player.corruptionStat) == true)
         {
-            Sprite sprite = dialoguePartner.itemSprite;
+            Sprite sprite = dialoguePartner.item.icon;
             string[] message = dialoguePartner.itemText;
-            SystemMessage(dialoguePartner.itemText, dialoguePartner.itemSprite);
-            //get inventory of player and add item
+            SystemMessage(dialoguePartner.itemText, dialoguePartner.item);
+            
+            Inventory.instance.AddItem(dialoguePartner.item);
         }
         else NpcTalking();
     }
@@ -124,10 +125,10 @@ public class DialogueManager : MonoBehaviour
                             sentences.Enqueue(npcQuest.reactionToProgress[index]);
                             NextText();
 
-                            // get reward + check
+                            Inventory.instance.AddItem(playerQuest.reward); // get reward
 
                             message[0] = dialoguePartner.npcName + " gave you " +
-                                dialoguePartner.activeDialoguePart.playerResponse[index].getItemName + "!";
+                                dialoguePartner.activeDialoguePart.playerResponse[index].getItem.itemName + "!";
                             SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
                         }
                         else
@@ -152,6 +153,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Update() //UI (de)activation
     {
+        if (Input.GetKey(KeyCode.Space)) NextText();
+
         if (state == DialogueState.PLAYERTURN)
             ContinueButton.interactable = false;
         else
@@ -178,7 +181,7 @@ public class DialogueManager : MonoBehaviour
             itemImage.enabled = false;
     }
 
-    void SystemMessage(string[] message, Sprite item = default)
+    void SystemMessage(string[] message, Item item = default)
     {
         state = DialogueState.SYSTEMMESSAGE;
         foreach (string text in message)
@@ -188,8 +191,8 @@ public class DialogueManager : MonoBehaviour
         NextText();
         
         //show animation of Sprite moving to screen center?
-        itemImage.sprite = item;
-        itemImage.enabled = true;
+        itemImage.sprite = item.icon;
+        if (item != default) itemImage.enabled = true; // test
     }
 
     void Greeting() //npc greeting
@@ -347,7 +350,7 @@ public class DialogueManager : MonoBehaviour
             else
                 NpcTalking(chosenIndex);
 
-            //dialoguePartner.thisNpcDialogue.dialogueMenu.menuOption[chosenIndex].usedQuestion = true;
+            
         }
 
         if (dialoguePartner.noDialogueLeft == true)
@@ -356,30 +359,37 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void CheckReactionToPlayerResponse(int index) //questtrigger / progress / abandonded
+    void CheckReactionToPlayerResponse(int index)
     {
         messageBeforeNpc = false;
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].getAnItem == true) // get an item through response
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].getAnItem == true) // get item
         {
             message[0] = dialoguePartner.npcName + " gave you " +
-                dialoguePartner.activeDialoguePart.playerResponse[index].getItemName + "!";
+                dialoguePartner.activeDialoguePart.playerResponse[index].getItem.itemName + "!";
             SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+
+            Inventory.instance.AddItem(dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+
             messageBeforeNpc = true;
         }
         if (dialoguePartner.activeDialoguePart.playerResponse[index].giveAnItem == true) // give npc an item
         {
             Debug.Log("player gives an item");
             message[0] = "You gave " + dialoguePartner.npcName + " " +
-                dialoguePartner.activeDialoguePart.playerResponse[index].giveItemName + ".";
+                dialoguePartner.activeDialoguePart.playerResponse[index].giveItem.itemName + ".";
             SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].giveItem);
-            // check if quest gets triggered
-            // get item out of inventory
+
+            // check if quest gets triggered?
+
+            Inventory.instance.RemoveItem(dialoguePartner.activeDialoguePart.playerResponse[index].giveItem);
+
             messageBeforeNpc = true;
         }
         if (dialoguePartner.activeDialoguePart.playerResponse[index].questTrigger == true) // = accept quest
         {
-            player.activeQuests.Add(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest);
-            dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest, "triggered");
+            Quest newQuest = dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest;
+            player.activeQuests.Add(newQuest);
+            dialoguePartner.ChangedQuestStatus(newQuest, "triggered");
             messageBeforeNpc = false;
         }
         if (dialoguePartner.activeDialoguePart.playerResponse[index].abandonedQuest == true) // = abandoned quest
@@ -466,9 +476,10 @@ public class DialogueManager : MonoBehaviour
         // select npc reaction
     }
 
-    void GiveItem()
+    void GiveItem(Item item)
     {
-        //remove item in inventory
+        Inventory.instance.RemoveItem(item);
+        itemImage.sprite = item.icon;
         //show item Sprite
     }
 
@@ -479,7 +490,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(0.02f);
-            yield return null; // wait for next frame
+            yield return null; // = wait for next frame
         }
     }
 }

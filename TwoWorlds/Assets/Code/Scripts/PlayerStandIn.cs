@@ -12,6 +12,9 @@ public class PlayerStandIn : MonoBehaviour
     public List<Quest> activeQuests;
     // List with completed and List with failed quests
 
+    bool canTakeItem;
+    GameObject otherObject;
+
     void Start()
     {
         corruptionStat = 0;
@@ -25,6 +28,8 @@ public class PlayerStandIn : MonoBehaviour
             dialogueManager.StartConversation();
             canStartConversation = false;
         }
+        if (canTakeItem == true && Input.GetKey(KeyCode.E))
+            Pickup();
     }
 
     public void ChangeQuestProgress(Quest quest, int progress)
@@ -41,15 +46,32 @@ public class PlayerStandIn : MonoBehaviour
     {
         if (other.tag == "DialogueNpc")
         {
-            ;
             npc = other.gameObject;
             canStartConversation = true;
             //show animated sign, that you can interact
         }
+        if (other.tag == "PickUp")
+        {
+            otherObject = other.gameObject;
+            canTakeItem = true;
+        }
     }
-
+    
     private void OnTriggerExit2D(Collider2D other)
     {
-        canStartConversation = false;
+        if (other.tag == "DialogueNpc") canStartConversation = false;
+
+        if (other.tag == "PickUp")
+        {
+            canTakeItem = false;
+        }
+    }
+
+    void Pickup()
+    {
+        bool pickedUp = Inventory.instance.AddItem(otherObject.GetComponent<ItemPickup>().item);
+
+        if (pickedUp)
+            Destroy(otherObject);
     }
 }

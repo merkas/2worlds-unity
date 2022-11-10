@@ -24,41 +24,29 @@ MonoBehaviour:
     questTrigger: 1
     abandonedQuest: 0
     questComplete: 0
-    changedQuest:
-      title: 
-      description: 
-      reward: {fileID: 0}
-      acceptQuestChoice: {fileID: 0}
-      questDialogue: {fileID: 0}
+    changedQuest: {fileID: 11400000, guid: e8d0e8adf555f9740ac1e423f007e463, type: 2}
     questTitle: Shampoo Power!
     questProgress: 0
     startAFight: 0
     getAnItem: 0
     giveAnItem: 0
     getItem: {fileID: 0}
-    getItemName: 
     giveItem: {fileID: 0}
-    giveItemName: 
+    changeToMenuInNextConversation: 0
   - answer: Nah, don't wanna.
     endConversation: 1
     corruptionStatChange: 0
     questTrigger: 0
     abandonedQuest: 1
     questComplete: 0
-    changedQuest:
-      title: 
-      description: 
-      reward: {fileID: 0}
-      acceptQuestChoice: {fileID: 0}
-      questDialogue: {fileID: 0}
+    changedQuest: {fileID: 0}
     questTitle: 
     questProgress: 0
     startAFight: 0
     getAnItem: 0
     giveAnItem: 0
     getItem: {fileID: 0}
-    getItemName: 
     giveItem: {fileID: 0}
-    giveItemName: 
+    changeToMenuInNextConversation: 0
   nextNpcText:
   - {fileID: 11400000, guid: 89966ed0efbf7f04fbf943085487f26b, type: 2}

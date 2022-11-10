@@ -34,7 +34,7 @@ public class DialoguePartner : MonoBehaviour
     public string additionalGreeting;
 
     [System.NonSerialized]
-    public Sprite itemSprite;
+    public Item item;
     [System.NonSerialized]
     public string[] itemText;
 
@@ -42,7 +42,8 @@ public class DialoguePartner : MonoBehaviour
     {
         foreach (Quest quest in thisNpcDialogue.quest)
         {
-            allQuests = thisNpcDialogue.quest;
+            //allQuests.Add(quest);
+            //allQuests = thisNpcDialogue.quest;
             //reset quests?
             //quest.formerQuestProgress = 0;
             //quest.questProgress = 0;
@@ -62,11 +63,19 @@ public class DialoguePartner : MonoBehaviour
                 {
                     if (greeting.triggerItem != null)
                     {
-                        // check if player has triggerItem
+                        foreach (Item playerItem in Inventory.instance.items)
+                        {
+                            if (playerItem == greeting.triggerItem)
+                            {
+                                chosenGreeting = greeting.greetingText;
+                                break;
+                            }
+                        }
                     }
                     else
                     {
                         chosenGreeting = greeting.greetingText;
+                        break;
                     }
                 }
             }
@@ -162,7 +171,7 @@ public class DialoguePartner : MonoBehaviour
                 }
                 else if (questStatus == "triggered")
                 {
-                    activeQuests.Add(changedQuest);
+                    //activeQuests.Add(changedQuest); // not working
                 }
                 else if (questStatus == "completed")
                 {
@@ -181,7 +190,7 @@ public class DialoguePartner : MonoBehaviour
             if (thisNPC.numberOfTalks == thisNpcDialogue.wantedNumberOfTalks)
             {
                 //get item
-                itemSprite = thisNpcDialogue.itemSprite;
+                item = thisNpcDialogue.item;
                 itemText = thisNpcDialogue.itemText;
                 getItem = false; //check
                 return true;

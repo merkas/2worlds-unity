@@ -15,7 +15,6 @@ MonoBehaviour:
   completeDialogue:
   - {fileID: 11400000, guid: b84494c0cccd71b4a9153f4f03901021, type: 2}
   - {fileID: 11400000, guid: 04083ac88a027874d9cad2a0e290894a, type: 2}
-  NpcWithMenu: 0
   dialogueMenu: {fileID: 0}
   greeting:
   - greetingText: Hi, I'm Laila. Nice to meet you.
@@ -42,7 +41,7 @@ MonoBehaviour:
     maxTalks: 0
     maxCor: 0
     triggerItem: {fileID: 0}
-  itemSprite: {fileID: 21300000, guid: 148c9d245f94ac3498e2c9d861d02be7, type: 3}
+  item: {fileID: 11400000, guid: fc2284f1833f44149b7c69a7d6198ac2, type: 2}
   itemText:
   - This is for you. A little something.
   - You got normal shampoo!
@@ -53,3 +52,5 @@ MonoBehaviour:
   questGiver: 0
   quest:
   - {fileID: 11400000, guid: e8d0e8adf555f9740ac1e423f007e463, type: 2}
+  questOptionNotEmpty: 0
+  questOption: []

@@ -22,10 +22,8 @@ public class Answer
     //public bool itemCondition;
     public bool getAnItem;
     public bool giveAnItem;
-    public Sprite getItem;
-    public string getItemName;
-    public Sprite giveItem;
-    public string giveItemName;
+    public Item getItem;
+    public Item giveItem;
 
     public bool changeToMenuInNextConversation;
     

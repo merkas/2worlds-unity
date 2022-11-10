@@ -11,8 +11,6 @@ public class DialogueMenuOption : ScriptableObject
     public bool oneTime;
     public bool endConversation;
 
-    public bool usedQuestion;
-
     //Color unused = Color.white;
     //Color used = Color.gray;
 }

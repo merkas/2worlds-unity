@@ -15,7 +15,7 @@ public class DialoguePart : ScriptableObject
     // playerResponse und damit verbundener nextNpcText haben den gleichen Index
 
     public DialoguePart[] nextNpcText;
-    DialoguePart chosenNpcText;
+    //DialoguePart chosenNpcText;
 
     private void OnValidate()
     {
