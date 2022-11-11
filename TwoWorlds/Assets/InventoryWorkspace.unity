@@ -888,6 +888,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: fc2284f1833f44149b7c69a7d6198ac2, type: 2}
+  quest: {fileID: 0}
+  questProgress: 0
 --- !u!58 &672300956
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1332,6 +1334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: fc2284f1833f44149b7c69a7d6198ac2, type: 2}
+  quest: {fileID: 0}
+  questProgress: 0
 --- !u!1001 &879795161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2833,9 +2837,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1836375316}
   - component: {fileID: 1836375315}
-  - component: {fileID: 1836375314}
   - component: {fileID: 1836375313}
   - component: {fileID: 1836375312}
+  - component: {fileID: 1836375317}
   m_Layer: 0
   m_Name: PlayerStandIn
   m_TagString: Player
@@ -2890,21 +2894,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1836375314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1836375311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffce7de480322ab49be9b8b9dd6cfede, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  corruptionStat: 0
-  dialogueManager: {fileID: 1994231899}
-  activeQuests: []
 --- !u!212 &1836375315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2965,13 +2954,29 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836375311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.29, y: 0.15, z: 0}
+  m_LocalPosition: {x: 1.01, y: -0.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1836375317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836375311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b12188c1cc9c141a1e9aa199c540fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1
+  corruptionStat: 0
+  dialogueManager: {fileID: 1994231899}
+  activeQuests: []
 --- !u!1001 &1960901601
 PrefabInstance:
   m_ObjectHideFlags: 0

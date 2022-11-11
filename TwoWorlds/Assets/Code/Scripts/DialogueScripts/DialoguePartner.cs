@@ -21,14 +21,12 @@ public class DialoguePartner : MonoBehaviour
 
     public bool noDialogueLeft;
     public bool corruptionOutOfRange = false;
-    
-    [System.NonSerialized]
+
     public List<Quest> activeQuests; // only of this npc
 
-    List<Quest> allQuests;
+    public List<Quest> allQuests; // that can be received
     List<Quest> completedQuests;
     List<Quest> abandonedQuests;
-    List<Quest> receivableQuests;
 
     public string chosenGreeting;
     public string additionalGreeting;
@@ -40,17 +38,16 @@ public class DialoguePartner : MonoBehaviour
 
     private void Start()
     {
-        foreach (Quest quest in thisNpcDialogue.quest)
-        {
-            //allQuests.Add(quest);
-            //allQuests = thisNpcDialogue.quest;
+        allQuests = thisNpcDialogue.quest;
+        //foreach (Quest quest in allQuests)
+        //{
             //reset quests?
             //quest.formerQuestProgress = 0;
             //quest.questProgress = 0;
-        }
+        //}
     }
 
-    public void ChooseGreeting(int corruptionStat)//still empty
+    public void ChooseGreeting(int corruptionStat)
     {
         foreach (Greeting greeting in thisNpcDialogue.greeting)
         {
@@ -166,12 +163,11 @@ public class DialoguePartner : MonoBehaviour
                 changedQuest = quest;
                 if (questStatus == "abandoned")
                 {
-                    //receivableQuests.Remove(changedQuest);
                     abandonedQuests.Add(changedQuest);
                 }
                 else if (questStatus == "triggered")
                 {
-                    //activeQuests.Add(changedQuest); // not working
+                    activeQuests.Add(changedQuest);
                 }
                 else if (questStatus == "completed")
                 {
@@ -189,10 +185,9 @@ public class DialoguePartner : MonoBehaviour
         {
             if (thisNPC.numberOfTalks == thisNpcDialogue.wantedNumberOfTalks)
             {
-                //get item
                 item = thisNpcDialogue.item;
                 itemText = thisNpcDialogue.itemText;
-                getItem = false; //check
+                getItem = false;
                 return true;
             }
             else return false;
@@ -215,7 +210,5 @@ public class DialoguePartner : MonoBehaviour
         {
             NpcWithMenu = true;
         }
-        //QuestInfo + used onetime and reusable DialogueParts
-        //used dialogue
     }
 }

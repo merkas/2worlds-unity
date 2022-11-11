@@ -32,14 +32,13 @@ MonoBehaviour:
     maxTalks: 0
     maxCor: 0
     triggerItem: {fileID: 0}
-  itemSprite: {fileID: 0}
+  item: {fileID: 0}
   itemText: []
   getCondition: 0
   wantedMinCorruption: 0
   wantedMaxCorruption: 0
   wantedNumberOfTalks: 0
   questGiver: 0
-  quest:
-  - {fileID: 0}
+  quest: []
   questOptionNotEmpty: 0
   questOption: []

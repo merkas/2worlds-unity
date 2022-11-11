@@ -25,6 +25,7 @@ MonoBehaviour:
   triggerObject: {fileID: 0}
   formerQuestProgress: 0
   questProgress: 0
+  maxProgress: 2
   reactionToProgress:
   - Still nothing?
   - You found roots, but didn't take them? I don't have to understand this, right?

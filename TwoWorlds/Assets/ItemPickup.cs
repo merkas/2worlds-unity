@@ -4,6 +4,9 @@ public class ItemPickup : MonoBehaviour
 {
     public Item item;
 
+    public Quest quest;
+    public int questProgress;
+
     // method interact of interactable base with Pickup() added; or event?
 
     //void Pickup()

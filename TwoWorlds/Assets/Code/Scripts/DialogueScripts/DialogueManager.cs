@@ -23,7 +23,7 @@ public class DialogueManager : MonoBehaviour
     GameObject playerObject;
 
     DialoguePartner dialoguePartner;
-    PlayerStandIn player;
+    PlayerController player;
 
     //UI
     public GameObject dialogueWindow;
@@ -46,6 +46,7 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         state = DialogueState.NODIALOGUE;
+        UpdateUI();
     }
 
     public void NewConversation(GameObject Npc, GameObject Player)
@@ -57,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     public void StartConversation()//called by player
     {
         dialoguePartner = npc.GetComponent<DialoguePartner>();
-        player = playerObject.GetComponent<PlayerStandIn>();
+        player = playerObject.GetComponent<PlayerController>();
         sentences = new Queue<string>();
 
         // check for quest item in player inventory
@@ -74,7 +75,7 @@ public class DialogueManager : MonoBehaviour
         //}
 
         Greeting();
-        //CheckQuestProgress();
+        CheckQuestProgress();
 
         if (dialoguePartner.NpcWithMenu == true)
         {
@@ -119,17 +120,22 @@ public class DialogueManager : MonoBehaviour
                 {
                     if (playerQuest.questProgress >= playerQuest.formerQuestProgress)
                     {
-                        if (playerQuest.questProgress == playerQuest.maxProgress)
+                        if (playerQuest.questProgress == playerQuest.maxProgress) // quest completed
                         {
                             int index = npcQuest.reactionToProgress.Length;
                             sentences.Enqueue(npcQuest.reactionToProgress[index]);
                             NextText();
 
-                            Inventory.instance.AddItem(playerQuest.reward); // get reward
+                            dialoguePartner.ChangedQuestStatus(playerQuest, "completed");
 
-                            message[0] = dialoguePartner.npcName + " gave you " +
-                                dialoguePartner.activeDialoguePart.playerResponse[index].getItem.itemName + "!";
-                            SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+                            if (playerQuest.reward != null)
+                            {
+                                Inventory.instance.AddItem(playerQuest.reward); // get reward
+
+                                message[0] = dialoguePartner.npcName + " gave you " +
+                                    dialoguePartner.activeDialoguePart.playerResponse[index].getItem.itemName + "!";
+                                SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+                            }
                         }
                         else
                         {
@@ -151,10 +157,13 @@ public class DialogueManager : MonoBehaviour
         dialogueWindow.SetActive(true);
     }
 
-    private void Update() //UI (de)activation
+    private void Update()
     {
-        if (Input.GetKey(KeyCode.Space)) NextText();
+        if (Input.GetKeyDown(KeyCode.Space)) NextText();
+    }
 
+    private void UpdateUI() //UI (de)activation
+    {
         if (state == DialogueState.PLAYERTURN)
             ContinueButton.interactable = false;
         else
@@ -184,6 +193,8 @@ public class DialogueManager : MonoBehaviour
     void SystemMessage(string[] message, Item item = default)
     {
         state = DialogueState.SYSTEMMESSAGE;
+        UpdateUI();
+
         foreach (string text in message)
         {
             sentences.Enqueue(text);
@@ -192,7 +203,7 @@ public class DialogueManager : MonoBehaviour
         
         //show animation of Sprite moving to screen center?
         itemImage.sprite = item.icon;
-        if (item != default) itemImage.enabled = true; // test
+        if (item != default) itemImage.enabled = true;
     }
 
     void Greeting() //npc greeting
@@ -217,6 +228,8 @@ public class DialogueManager : MonoBehaviour
     void NpcTalking(int index = default)
     {
         state = DialogueState.NPCTALKING;
+        UpdateUI();
+
         messageBeforeNpc = false;
         if (dialoguePartner.NpcWithMenu == true)
         {
@@ -257,6 +270,7 @@ public class DialogueManager : MonoBehaviour
     void PlayerTurn()
     {
         state = DialogueState.PLAYERTURN;
+        UpdateUI();
 
         if (dialoguePartner.NpcWithMenu == true) // menu
         {
@@ -332,6 +346,7 @@ public class DialogueManager : MonoBehaviour
                 if (dialoguePartner.noDialogueLeft != true) // = Dialogue continues
                 {
                     state = DialogueState.NPCTALKING;
+                    UpdateUI();
 
                     dialoguePartner.LoadNextDialoguePart(chosenIndex);
                     if (dialoguePartner.activeDialoguePart == null) ConversationEnd();
@@ -378,9 +393,7 @@ public class DialogueManager : MonoBehaviour
             message[0] = "You gave " + dialoguePartner.npcName + " " +
                 dialoguePartner.activeDialoguePart.playerResponse[index].giveItem.itemName + ".";
             SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].giveItem);
-
-            // check if quest gets triggered?
-
+            // check if quest item?
             Inventory.instance.RemoveItem(dialoguePartner.activeDialoguePart.playerResponse[index].giveItem);
 
             messageBeforeNpc = true;
@@ -402,11 +415,12 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("Quest ended");
 
             dialoguePartner.ChangedQuestStatus(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest, "completed");
-            // get reward
+            Inventory.instance.AddItem(dialoguePartner.activeDialoguePart.playerResponse[index].changedQuest.reward);
+
             // Npc Dialogue
             messageBeforeNpc = false;
         }
-        if (dialoguePartner.activeDialoguePart.playerResponse[index].questProgress != 0) // progress within the dialogue
+        if (dialoguePartner.activeDialoguePart.playerResponse[index].questProgress != 0) // quest progress within the dialogue
         {
             foreach(Quest quest in dialoguePartner.thisNpcDialogue.quest)
             {
@@ -458,6 +472,8 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePartner.SaveNewInfo();
         state = DialogueState.ENDDIALOGUE;
+        UpdateUI();
+
         npcNameText.text = "";
         dialogueText.text = "";
         

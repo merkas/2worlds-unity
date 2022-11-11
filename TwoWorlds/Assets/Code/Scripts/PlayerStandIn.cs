@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStandIn : MonoBehaviour
+public class PlayerStandIn : MonoBehaviour // delete script, if not needed anymore
 {
     public int corruptionStat;
     public DialogueManager dialogueManager;
-    //GameObject[] Items(string name, bool questItem);
+    
     bool canStartConversation = false;
     GameObject npc;
+
     public List<Quest> activeQuests;
     // List with completed and List with failed quests
 
@@ -61,10 +62,8 @@ public class PlayerStandIn : MonoBehaviour
     {
         if (other.tag == "DialogueNpc") canStartConversation = false;
 
-        if (other.tag == "PickUp")
-        {
-            canTakeItem = false;
-        }
+        if (other.tag == "PickUp") canTakeItem = false;
+
     }
 
     void Pickup()

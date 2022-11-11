@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f4c2ddd6c712f4797efff7f2c7683d, type: 3}
   m_Name: MenuOption1
   m_EditorClassIdentifier: 
-  playerQuestion: "Oha, you\xB4re old!"
+  playerQuestion: "Wow, you\xB4re old!"
   npcAnswer: Tch.
   oneTime: 0
   endConversation: 0
-  usedQuestion: 0
