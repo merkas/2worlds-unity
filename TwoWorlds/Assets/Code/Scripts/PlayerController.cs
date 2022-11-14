@@ -61,15 +61,16 @@ public class PlayerController : MonoBehaviour
             npc = other.gameObject;
             interactText.text = "Start Conversation with E";
             canStartConversation = true;
-            //show animated sign, that you can interact
+            InteractBox.SetActive(true);
         }
         if (other.tag == "PickUp")
         {
             interactText.text = "Pick up object with E";
             otherObject = other.gameObject;
             canTakeItem = true;
+            InteractBox.SetActive(true);
         }
-        InteractBox.SetActive(true);
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)
