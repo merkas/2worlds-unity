@@ -32,9 +32,9 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private void Update() //FixedUpdate
+    private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.deltaTime);//Time.FixedDeltaTime
+        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
 
         if (canStartConversation == true && Input.GetKey(KeyCode.E))
         {

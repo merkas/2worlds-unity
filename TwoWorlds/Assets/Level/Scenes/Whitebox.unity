@@ -1873,6 +1873,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  corruptionStat: 0
+  dialogueManager: {fileID: 0}
+  activeQuests: []
 --- !u!114 &1678136133
 MonoBehaviour:
   m_ObjectHideFlags: 0
