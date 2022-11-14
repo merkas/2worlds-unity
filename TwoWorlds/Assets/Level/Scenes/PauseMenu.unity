@@ -209,7 +209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1169124317}
         m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: ContinueGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -687,7 +687,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83e71afd7c0e7648a39023001914930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SampleScene: 
+  activeScene: Whitebox
+  GameSettingsMenu: PauseMenu
 --- !u!4 &1169124318
 Transform:
   m_ObjectHideFlags: 0

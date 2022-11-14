@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
-    public string SampleScene;
+    public string activeScene;
     public string GameSettingsMenu;
 
     // Start is called before the first frame update
@@ -31,16 +31,19 @@ public class SceneManagerScript : MonoBehaviour
     public void EscPress()
     {
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == SampleScene)
+        if (scene.name == activeScene)
         {
             SceneManager.LoadScene("PauseMenu");
         }
     }
-
+    public void ContinueGame()
+    {
+        SceneManager.LoadScene(activeScene);
+    }
     
     public void StartGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Whitebox");
     }       
     public void OpenSettings()
     {
