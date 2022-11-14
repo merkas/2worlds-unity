@@ -8,6 +8,14 @@ public class TestControllerInteract : MonoBehaviour
     public bool isOpen;
     public bool isDoorOpen;
 
+    Collider2D m_Collider;
+
+    private void Start()
+    {
+        m_Collider = GetComponent<Collider2D>();
+    }
+
+
     public void OpenDoors(GameObject obj)
     {
         if (!isDoorOpen)
@@ -20,6 +28,8 @@ public class TestControllerInteract : MonoBehaviour
                     isDoorOpen = true;
                     manager.UseKey();
                     Debug.Log("Door opened");
+                    m_Collider.enabled = !m_Collider.enabled;
+
                 }
             }
         }
