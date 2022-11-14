@@ -13,11 +13,10 @@ public class Interactable : MonoBehaviour
 
     public GameObject NotificationPrefab;
 
-
     // Start is called before the first frame update
     void Start()
     {
-            NotificationPrefab.SetActive(false);
+            NotificationPrefab.SetActive(false);      
     }
 
     // Update is called once per frame
@@ -35,7 +34,7 @@ public class Interactable : MonoBehaviour
     //Is interactable when inside the trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             isInRange = true;
             Debug.Log("Player in Range");
@@ -52,5 +51,26 @@ public class Interactable : MonoBehaviour
             NotificationPrefab.SetActive(false);
         }
     }
+
+
+    public void Interacted()
+    {
+            GetComponent<Collider2D>().enabled = false;
+    }
+
+
+    //public void ChestOpened(GameObject obj)
+    //{
+         
+    //        TestControllerInteract manager = obj.GetComponent<TestControllerInteract>();
+    //    if (manager)
+    //    {
+
+    //        if (manager.isOpen == true)
+    //        {
+    //            NotificationPrefab.SetActive(false);
+    //        }
+    //    }
+    //}
 
 }

@@ -10,6 +10,8 @@ public class TestControllerInteract : MonoBehaviour
 
     Collider2D m_Collider;
 
+
+
     private void Start()
     {
         m_Collider = GetComponent<Collider2D>();
@@ -42,10 +44,10 @@ public class TestControllerInteract : MonoBehaviour
         {
             isOpen = true;
             Debug.Log("Chest is open");
-
-
         }
     }
+
+
 
     public void destroyObstacle()
     {
