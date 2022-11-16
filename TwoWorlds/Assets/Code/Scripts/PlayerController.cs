@@ -17,10 +17,12 @@ public class PlayerController : MonoBehaviour
     public DialogueManager dialogueManager;
 
     bool canStartConversation = false;
+    bool optionalDialogue;
     GameObject npc;
 
     public List<Quest> activeQuests;
     // List with completed and List with failed quests
+    List<Companion> companions;
 
     bool canTakeItem;
     GameObject otherObject;
@@ -32,8 +34,12 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         corruptionStat = 0; // load old stat, when necessary, instead
-        interactText = InteractBox.GetComponentInChildren<Text>();
-        InteractBox.SetActive(false);
+        if (InteractBox != null)
+        {
+            interactText = InteractBox.GetComponentInChildren<Text>();
+            InteractBox.SetActive(false);
+        }
+        
     }
 
 
@@ -50,6 +56,12 @@ public class PlayerController : MonoBehaviour
         }
         if (canTakeItem == true && Input.GetKey(KeyCode.E))
             Pickup();
+
+        if (optionalDialogue == true && Input.GetKey(KeyCode.E))
+        {
+            otherObject.GetComponent<NpcChatter>().ChooseComment();
+            optionalDialogue = false;
+        }
     }
 
 
@@ -63,23 +75,34 @@ public class PlayerController : MonoBehaviour
             canStartConversation = true;
             InteractBox.SetActive(true);
         }
-        if (other.tag == "PickUp")
+        else if (other.tag == "PickUp")
         {
             interactText.text = "Pick up object with E";
             otherObject = other.gameObject;
             canTakeItem = true;
             InteractBox.SetActive(true);
         }
+        else if (other.tag == "Chatter")
+        {
+            optionalDialogue = true;
+            otherObject = other.gameObject;
+            // show notif
+        }
         
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        InteractBox.SetActive(false);
+        //InteractBox.SetActive(false);
         if (other.tag == "DialogueNpc") canStartConversation = false;
 
-        if (other.tag == "PickUp") canTakeItem = false;
+        else if (other.tag == "PickUp") canTakeItem = false;
 
+        else if (other.tag == "Chatter") 
+        {
+            //optionalDialogue = false;
+            otherObject.GetComponent<NpcChatter>().HideComment();
+        }
     }
 
     void OnMove(InputValue value)
