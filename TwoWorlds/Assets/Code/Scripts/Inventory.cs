@@ -5,15 +5,18 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
+    public List<TemporaryCard> cards = new List<TemporaryCard>();
+    public List<TemporaryCard> deckCards = new List<TemporaryCard>();
 
     List<int> itemAmount = new List<int>();
     List<int> numberOfItems = new List<int>();
     //int[] numberOfItems;
-    int allItems;
-    int itemNumber;
+    //int allItems;
+    //int itemNumber;
     bool addedToStack;
 
     public int space = 10;
+    public int cardSpace = 20;
 
     #region Singleton
     public static Inventory instance;
@@ -38,11 +41,10 @@ public class Inventory : MonoBehaviour
         addedToStack = false;
         
         int itemNumber = 0;
-        foreach (Item obj in items)
+        foreach (Item obj in items) // check if same stackable item is already in inventory
         {
             if (item == obj && item.isStackable == true)
             {
-                Debug.Log("Have: " + item.stack + ", new: " + obj.stack);
                 numberOfItems[itemNumber] += obj.stack;
                 addedToStack = true;
                 break;
@@ -66,6 +68,27 @@ public class Inventory : MonoBehaviour
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
         return true;
+    }
+
+    public bool AddCard(TemporaryCard card)
+    {
+        if (cards.Count >= cardSpace)
+        {
+            Debug.Log("Not enough room");
+            return false;
+        }
+        cards.Add(card);
+
+        // event
+
+        return true;
+    }
+
+    public void RemoveCard(TemporaryCard card)
+    {
+        cards.Remove(card);
+
+        // event
     }
 
     public void RemoveItem(Item item)

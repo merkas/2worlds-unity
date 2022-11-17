@@ -11,4 +11,5 @@ public class Item : ScriptableObject
     public bool isStackable;
 
     public int stack;
+    public string info;
 }

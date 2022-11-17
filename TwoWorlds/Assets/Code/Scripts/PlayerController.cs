@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         corruptionStat = 0; // load old stat, when necessary, instead
-        interactText = InteractBox.GetComponentInChildren<Text>();
-        InteractBox.SetActive(false);
+        //interactText = InteractBox.GetComponentInChildren<Text>();
+        //InteractBox.SetActive(false);
     }
 
 
@@ -59,23 +59,23 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "DialogueNpc")
         {
             npc = other.gameObject;
-            interactText.text = "Start Conversation with E";
+            //interactText.text = "Start Conversation with E";
             canStartConversation = true;
-            InteractBox.SetActive(true);
+            //InteractBox.SetActive(true);
         }
         if (other.tag == "PickUp")
         {
-            interactText.text = "Pick up object with E";
+            //interactText.text = "Pick up object with E";
             otherObject = other.gameObject;
             canTakeItem = true;
-            InteractBox.SetActive(true);
+            //InteractBox.SetActive(true);
         }
         
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        InteractBox.SetActive(false);
+        //InteractBox.SetActive(false);
         if (other.tag == "DialogueNpc") canStartConversation = false;
 
         if (other.tag == "PickUp") canTakeItem = false;

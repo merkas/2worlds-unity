@@ -10,7 +10,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public Image icon;
     public Text stackNumber;
     Item item;
-    
+
+    public Text infoText; // Prefab
+    public Text info;
+
     int numberOfItems;
 
     public void OnPointerClick(PointerEventData pointerEventData) // player clicks on inventory slot
@@ -40,12 +43,22 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-
+        if (item != null)
+        {
+            info = Instantiate(infoText, this.gameObject.transform);
+            info.transform.position += new Vector3(0, 50, 0);
+            info.text = item.info;
+            info.enabled = true;
+        }
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-
+        if (item != null)
+        {
+            info.enabled = false;
+            Destroy(info);
+        }
     }
 
     public void AddItem(Item newItem)

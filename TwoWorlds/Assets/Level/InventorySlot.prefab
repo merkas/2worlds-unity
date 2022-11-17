@@ -173,6 +173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 4971036613861546879}
   stackNumber: {fileID: 784404881284301405}
+  infoText: {fileID: 50168756743257303, guid: 3bfbb6b3ca167b8478ca637843ae9e02, type: 3}
+  info: {fileID: 0}
 --- !u!1 &4971036613861546873
 GameObject:
   m_ObjectHideFlags: 0

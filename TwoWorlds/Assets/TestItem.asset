@@ -18,3 +18,4 @@ MonoBehaviour:
   isQuestItem: 0
   isStackable: 1
   stack: 2
+  info: Test
