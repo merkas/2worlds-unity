@@ -5,14 +5,13 @@ using TMPro;
 
 public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
 {
-    public List<string> comments;
-    string previousComment;
-    int chosenComment;
     int chosenConversation;
+    int chosenComment;
 
     public List<Conversation> conversations;
     bool conversationUsed = false;
     Conversation previousConversation;
+    public bool conversationEnd;
 
     public Transform bubbleSpawn;
     public GameObject speechBubble; //Prefab
@@ -37,23 +36,31 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
 
     public void ChooseComment()
     {
-        if (conversations.Count < 1 || conversationUsed == true)
-        {
-            int max = comments.Count - 1;
-            chosenComment = Random.Range(0, max);
-
-            if (comments[chosenComment] != previousComment)
-                ShowComment();
-            //else ChooseComment(); // geht das? oder stattdessen while-loop?
-        }
-        else // npc conversation
-        {
+        //if (conversations.Count < 1 /*|| conversationUsed == true*/)
+        //{
+        //    int max = comments.Count - 1;
+        //    chosenComment = Random.Range(0, max);
+        //    commentOn = true;
+        //    if (comments[chosenComment] != previousComment)
+        //        ShowComment();
+        //    //else ChooseComment(); // geht das? oder stattdessen while-loop?
+        //}
+        //else // npc conversation
+        //{
+            //conversationOn = true;
             int max = conversations.Count - 1;
-            chosenConversation = Random.Range(0, max);
-            // check if already used chosenConversation
-            if (conversationUsed == false) StartCoroutine(ShowNpcConversation());
-        }
         
+
+            chosenConversation = Random.Range(0, max);
+        // check if already used chosenConversation
+        /*if (conversationUsed == false)*/
+        if (previousConversation != conversations[chosenConversation])
+            StartCoroutine(ShowNpcConversation());
+        else ChooseComment();
+
+        conversationEnd = false;
+        //}
+
     }
 
     void ShowComment()
@@ -62,18 +69,16 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
         else bubble = Instantiate(speechBubble, canvas2.transform.position, Quaternion.identity);
         bubble.transform.localScale += new Vector3(canvas.transform.localScale.x * 0.8f, canvas.transform.localScale.y * 0.8f, 0);
 
-        
-
         if (bubbleTurn == false)
         {
-            if (conversations.Count < 1) chatterText.text = comments[chosenComment];
-            else chatterText.text = conversations[chosenConversation].conversation[chosenComment];
+            //if (conversations.Count < 1) chatterText.text = comments[chosenComment];
+            /*else*/ chatterText.text = conversations[chosenConversation].conversation[chosenComment];
             chatterText.enabled = true;
         } 
         else 
         {
-            if (conversations.Count < 1) chatterText2.text = comments[chosenComment];
-            else chatterText2.text = conversations[chosenConversation].conversation[chosenComment];
+            //if (conversations.Count < 1) chatterText2.text = comments[chosenComment];
+            /*else*/ chatterText2.text = conversations[chosenConversation].conversation[chosenComment];
             chatterText2.enabled = true;
         }
         speechBubble.SetActive(true);
@@ -81,7 +86,11 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
 
     public void HideComment()
     {
-        previousComment = comments[chosenComment];
+        //if (commentOn == true)
+        //{
+        //    previousComment = comments[chosenComment];
+        //    commentOn = false;
+        //}
         Destroy(bubble);
         chatterText.text = "";
         chatterText2.text = "";
@@ -103,6 +112,8 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
             if (bubbleTurn == false) bubbleTurn = true;
             else bubbleTurn = false;
         }
-        conversations[chosenConversation] = previousConversation;
+        previousConversation = conversations[chosenConversation];
+        conversationEnd = true;
+        //conversationOn = false;
     }
 }

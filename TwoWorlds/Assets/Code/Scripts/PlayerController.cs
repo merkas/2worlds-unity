@@ -59,9 +59,14 @@ public class PlayerController : MonoBehaviour
 
         if (optionalDialogue == true && Input.GetKey(KeyCode.E))
         {
-            otherObject.GetComponent<NpcChatter>().ChooseComment();
+            if (otherObject.GetComponent<NpcChatter>() != null)
+                otherObject.GetComponent<NpcChatter>().ChooseComment();
+            if (otherObject.GetComponent<NpcComment>() != null)
+                otherObject.GetComponent<NpcComment>().ChooseComment();
+
             optionalDialogue = false;
         }
+
     }
 
 
@@ -101,7 +106,11 @@ public class PlayerController : MonoBehaviour
         else if (other.tag == "Chatter") 
         {
             //optionalDialogue = false;
-            otherObject.GetComponent<NpcChatter>().HideComment();
+            if (otherObject.GetComponent<NpcChatter>() != null)
+                otherObject.GetComponent<NpcChatter>().HideComment();
+            if (otherObject.GetComponent<NpcComment>() != null)
+                otherObject.GetComponent<NpcComment>().HideComment();
+
         }
     }
 
