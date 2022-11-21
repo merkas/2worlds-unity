@@ -25,7 +25,12 @@ public class BattleSystem : MonoBehaviour
     Unit playerUnit;
     Unit enemyUnit;
 
+
     public Text dialogueText;
+    public Button AttackButton;
+    public Button HealButton;
+    public Button SkipButton;
+    //Später vllt als Panel für die Karten und dass dann disablen
 
     public BattleHud playerHud;
     public BattleHud enemyHud;
@@ -33,6 +38,7 @@ public class BattleSystem : MonoBehaviour
     void Start()
     {
         state = BattleState.START;
+
         StartCoroutine(SetupBattle());
     }
 
@@ -52,22 +58,34 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         state = BattleState.PLAYERTURN;
+        PlayerTurn();
     }
 
     void PlayerTurn()
     {
         dialogueText.text = "Choose an action: ";
+        EnableButton();
     }
 
     IEnumerator PlayerAttack()
     {
-        bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
-        enemyHud.SetHP(enemyUnit.currentHP);
-        dialogueText.text = "The attack is successful!";
 
+        playerUnit.DrainAP(5);
+        playerHud.SetAP(playerUnit.CurrentAP);
+
+        bool isDead = enemyUnit.TakeDamage(10);
+
+        //bool isDead = enemyUnit.TakeDamage(10 + playerUnit.damage); playerUnit = Companion ATK (set dmg) + Card Dmg = Dmg
+        //or
+        //bool isDead = enemyUnit.TakeDamage(playerUnit.damage); Dmg number from the Inspector
+
+        enemyHud.SetHP(enemyUnit.currentHP);
+        dialogueText.text = "Attack 1: ...";
+
+        
         yield return new WaitForSeconds(2f);
 
-        if (isDead == true)
+        if (isDead)
         {
             state = BattleState.WON;
             EndBattle();
@@ -76,14 +94,46 @@ public class BattleSystem : MonoBehaviour
         {
             state = BattleState.ENEMYTURN;
             StartCoroutine(EnemyTurn());
+
+        }
+
+    }
+
+    IEnumerator PlayerAttack2()
+    {
+        //On AttackButton2 ?
+        playerUnit.DrainAP(8);
+        playerHud.SetAP(playerUnit.CurrentAP);
+
+        bool isDead = enemyUnit.TakeDamage(20);
+        enemyHud.SetHP(enemyUnit.currentHP);
+        dialogueText.text = "Attack 2: ...";
+
+
+        yield return new WaitForSeconds(2f);
+
+        if (isDead)
+        {
+            state = BattleState.WON;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+
         }
 
     }
 
     IEnumerator PlayerHeal()
     {
-        playerUnit.Heal(5);
 
+        playerUnit.DrainAP(10);
+        playerHud.SetAP(playerUnit.CurrentAP);
+
+
+        playerUnit.Heal(5);
         playerHud.SetHP(playerUnit.currentHP);
         dialogueText.text = "You feel renewed strength";
 
@@ -93,26 +143,106 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(EnemyTurn());
     }
 
+    IEnumerator SkipMove()
+    {
+
+        playerUnit.GetAP(5);
+        playerHud.SetAP(playerUnit.CurrentAP);
+
+        dialogueText.text = "You skip a move and regain some AP";
+        yield return new WaitForSeconds(2f);
+
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(EnemyTurn());
+    }
+
     IEnumerator EnemyTurn()
     {
         dialogueText.text = enemyUnit.unitName + " attacks!";
-        yield return new WaitForSeconds(1f);
-
-        bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
-        playerHud.SetHP(playerUnit.currentHP);
 
         yield return new WaitForSeconds(1f);
 
-        if (isDead == true)
-        {
-            state = BattleState.LOST;
-            EndBattle();
+
+        //Randomized Enemy Attack, 1 of 3
+        int randomNumber;
+        randomNumber = Random.Range(0, 3);
+
+        //dialogueText.text = "Number: " + randomNumber;
+
+        if (randomNumber == 0)
+            {
+                bool isDead = playerUnit.TakeDamage(5);
+                playerHud.SetHP(playerUnit.currentHP);
+                yield return new WaitForSeconds(1f);
+
+                if (isDead)
+                {
+                    state = BattleState.LOST;
+                    EndBattle();
+                }
+                else
+                {
+                    state = BattleState.PLAYERTURN;
+                    PlayerTurn();
+                }
         }
-        else
+
+        if(randomNumber == 1)
         {
-            state = BattleState.PLAYERTURN;
-            PlayerTurn();
+            bool isDead = playerUnit.TakeDamage(10);
+            playerHud.SetHP(playerUnit.currentHP);
+            yield return new WaitForSeconds(1f);
+
+            if (isDead)
+            {
+                state = BattleState.LOST;
+                EndBattle();
+            }
+            else
+            {
+                state = BattleState.PLAYERTURN;
+                PlayerTurn();
+            }
         }
+
+        if (randomNumber == 2)
+        {
+            bool isDead = playerUnit.TakeDamage(15);
+            playerHud.SetHP(playerUnit.currentHP);
+            yield return new WaitForSeconds(1f);
+
+            if (isDead)
+            {
+                state = BattleState.LOST;
+                EndBattle();
+            }
+            else
+            {
+                state = BattleState.PLAYERTURN;
+                PlayerTurn();
+            }
+        }
+
+
+        //Randomize();
+
+
+        //bool isDead = playerUnit.TakeDamage(10);
+        //bool isDead = playerUnit.TakeDamage(enemyUnit.damage); dmg numbers from Inspector
+        //playerHud.SetHP(playerUnit.currentHP);
+
+        //yield return new WaitForSeconds(1f);
+
+        //if (isDead)
+        //{
+        //    state = BattleState.LOST;
+        //    EndBattle();
+        //}
+        //else
+        //{
+        //    state = BattleState.PLAYERTURN;
+        //    PlayerTurn();
+        //}
     }
 
     void EndBattle()
@@ -134,6 +264,8 @@ public class BattleSystem : MonoBehaviour
             return;
 
         StartCoroutine(PlayerAttack());
+
+        DisableButtonOnClick();
     }
 
     public void OnHealButton()
@@ -142,5 +274,32 @@ public class BattleSystem : MonoBehaviour
             return;
 
         StartCoroutine(PlayerHeal());
+
+        DisableButtonOnClick();
+    }
+
+    public void OnSkipMoveButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        StartCoroutine(SkipMove());
+
+        DisableButtonOnClick();
+    }
+ 
+    public void DisableButtonOnClick()
+    { 
+        AttackButton.interactable = false;
+        HealButton.interactable = false;
+        SkipButton.interactable = false;
+
+    }
+
+    public void EnableButton()
+    {
+        AttackButton.interactable = true;
+        HealButton.interactable = true;
+        SkipButton.interactable = true;
     }
 }

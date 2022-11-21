@@ -11,10 +11,14 @@ public class Unit : MonoBehaviour // enemy/player object
 
     public int maxHP;
     public int currentHP;
+    public int maxAP;
+    public int CurrentAP;
 
     public bool TakeDamage(int dmg)
     {
         currentHP -= dmg;
+
+        Debug.Log("Schaden" + dmg);
 
         if (currentHP <= 0)
             return true;
@@ -27,6 +31,21 @@ public class Unit : MonoBehaviour // enemy/player object
         currentHP += amount;
         if (currentHP > maxHP)
             currentHP = maxHP;
+    }
+
+
+    public void DrainAP(int amount)
+    {
+        Debug.Log("Amount" + amount);
+        CurrentAP -= amount;
+    }
+
+    public void GetAP(int amount)
+    {
+        CurrentAP += amount;
+
+        if (CurrentAP > maxAP)
+            CurrentAP = maxAP;
     }
 }
 
