@@ -14,15 +14,37 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     public Text infoText; // Prefab
     public Text info;
 
+    bool cardActive;
+
+    InventoryUI inventoryUI;
+
+    void Start()
+    {
+        inventoryUI = gameObject.transform.GetComponentInParent<InventoryUI>();
+    }
+
     public void OnPointerClick(PointerEventData pointerEventData) // player clicks on inventory slot
     {
-        if (card != null) // slot is filled
+        
+        if (card != null)
         {
-            // get card to mouse
+            //if (pointerEventData.clickTime <= 1)
+            //inventoryUI.ShowActiveCard(card, gameObject, true);
+            /*else */
+            inventoryUI.ShowActiveCard(card, gameObject);
 
-            //ClearSlot();
+            cardActive = true;
         }
     }
+
+    public bool CardActive(bool active)
+    {
+        cardActive = active;
+        return cardActive;
+    }
+
+
+
     public void OnPointerMove(PointerEventData pointerEventData)
     {
 
@@ -34,7 +56,7 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         {
             info = Instantiate(infoText, this.gameObject.transform);
             info.transform.position += new Vector3(0, 50, 0);
-            info.text = card.info;
+            info.text = card.cardName;
             info.enabled = true;
         }
     }
@@ -43,8 +65,6 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     {
         if (card != null)
         {
-
-            info.enabled = false;
             Destroy(info);
         }
     }
@@ -61,5 +81,6 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         card = null;
         icon.sprite = null;
         icon.enabled = false;
+        CardActive(false);
     }
 }

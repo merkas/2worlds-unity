@@ -99,7 +99,10 @@ public class PlayerController : MonoBehaviour
 
     void Pickup()
     {
-        bool pickedUp = Inventory.instance.AddItem(otherObject.GetComponent<ItemPickup>().item);
+        bool pickedUp;
+        if (otherObject.GetComponent<ItemPickup>().item != null)
+            pickedUp = Inventory.instance.AddItem(otherObject.GetComponent<ItemPickup>().item);
+        else pickedUp = Inventory.instance.AddCard(otherObject.GetComponent<ItemPickup>().card);
 
         if (pickedUp)
             Destroy(otherObject);

@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour
 
     public int space = 10;
     public int cardSpace = 20;
+    public int deckSpace = 15;
 
     #region Singleton
     public static Inventory instance;
@@ -72,22 +73,75 @@ public class Inventory : MonoBehaviour
 
     public bool AddCard(TemporaryCard card)
     {
-        if (cards.Count >= cardSpace)
+        if (cards.Count < deckSpace) // check if deck is full, if not add card
+        {
+            deckCards.Add(card);
+
+            if (onItemChangedCallback != null)
+                onItemChangedCallback.Invoke();
+
+            return true;
+        }
+        if (cards.Count >= cardSpace) // check if card inventory is full, if true can't pick up
         {
             Debug.Log("Not enough room");
             return false;
         }
-        cards.Add(card);
+        cards.Add(card); // if nothing of above add card in card inventory
 
         // event
-
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
         return true;
+    }
+
+    public void MoveCardToDeck(TemporaryCard card, bool doubleClick, TemporaryCard deckCard = null)
+    {
+        if (deckCards.Count < deckSpace && doubleClick == false)
+        {
+            cards.Remove(card);
+            deckCards.Add(card);
+        }
+        else if (deckCards.Count == deckSpace && doubleClick == true && deckCard != null) 
+            // deck full, exchange cards with a double click on both
+        {
+            cards.Remove(card);
+            deckCards.Remove(deckCard);
+
+            cards.Add(deckCard);
+            deckCards.Add(card);
+        }
+        
+        //if (onItemChangedCallback != null)
+        //    onItemChangedCallback.Invoke();
+    }
+
+    public void MoveCardToInventory(TemporaryCard deckCard, bool doubleClick, TemporaryCard card = null)
+    {
+        if (cards.Count < space && doubleClick == false)
+        {
+            deckCards.Remove(deckCard);
+            cards.Add(deckCard);
+        }
+        else if (cards.Count == space && doubleClick == true && card != null)
+        // deck full, exchange cards with a double click on both
+        {
+            deckCards.Remove(deckCard);
+            cards.Remove(card);
+
+            deckCards.Add(card);
+            cards.Add(deckCard);
+        }
+        
+        //if (onItemChangedCallback != null)
+        //    onItemChangedCallback.Invoke();
     }
 
     public void RemoveCard(TemporaryCard card)
     {
         cards.Remove(card);
-
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
         // event
     }
 

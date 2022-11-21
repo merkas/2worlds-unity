@@ -14,17 +14,73 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public Text infoText; // Prefab
     public Text info;
 
+    bool cardOnMove;
+    bool cardActive;
+    bool doubleClickedCard;
+
+    InventoryUI inventoryUI;
+
+    void Start()
+    {
+        inventoryUI = gameObject.transform.GetComponentInParent<InventoryUI>();
+        InventoryUI.movedObject += ResendActiveCardData;
+    }
+
+    public bool CardActive(bool active)
+    {
+        cardActive = active;
+        return cardActive;
+    }
+
+    void ResendActiveCardData()
+    {
+        //if (cardActive == true) inventoryUI.ShowActiveCard(card, gameObject);
+    }
+
     public void OnPointerClick(PointerEventData pointerEventData) // player clicks on slot
     {
-        if (card != null) // slot filled
+        //Debug.Log(pointerEventData.clickTime + ", " + Time.time);
+        
+        if (card != null)
         {
-            // move card to mouse
+            //if (pointerEventData.clickTime <= 1)
+                //inventoryUI.ShowActiveCard(card, gameObject, true);
+            /*else */
+            inventoryUI.ShowActiveCard(card, gameObject);
+
+            cardActive = true;
         }
+
+
+
+
+
+        //if (card != null) // slot filled
+        //{
+        //    // move card to mouse
+        //    cardOnMove = true;
+        //    cardActive = true;
+        //}
+        //if (cardOnMove == true) // slot empty and card at mouse
+        //{
+        //    Debug.Log("Card on mouse, clicked on other object");
+        //    if (pointerEventData.selectedObject.GetComponent<CardSlot>() != null)
+        //    {
+        //        pointerEventData.selectedObject.GetComponent<CardSlot>().AddCard(card);
+
+        //    }
+        //    else if (pointerEventData.selectedObject.GetComponent<CardDeckSlot>() != null)
+        //    {
+        //        pointerEventData.selectedObject.GetComponent<CardDeckSlot>().AddCard(card);
+
+        //    }
+        //    cardOnMove = false;
+        //    ClearSlot();
+        //}
     }
     public void OnPointerMove(PointerEventData pointerEventData)
     {
-        Vector3 mousePos = Input.mousePosition;
-        info.transform.position = mousePos; // test out
+        
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
@@ -33,7 +89,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         {
             info = Instantiate(infoText, this.gameObject.transform);
             info.transform.position += new Vector3(0, 50, 0);
-            info.text = card.info;
+            info.text = card.cardName;
             info.enabled = true;
         }
     }
@@ -42,8 +98,6 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         if (card != null)
         {
-
-            info.enabled = false;
             Destroy(info);
         }
     }
@@ -60,6 +114,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         card = null;
         icon.sprite = null;
         icon.enabled = false;
+        CardActive(false);
     }
     
 }

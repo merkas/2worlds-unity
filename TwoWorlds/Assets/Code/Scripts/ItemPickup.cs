@@ -3,7 +3,7 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
     public Item item;
-
+    public TemporaryCard card;
     public Quest quest;
     public int questProgress;
 
