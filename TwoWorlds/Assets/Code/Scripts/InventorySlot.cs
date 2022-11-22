@@ -19,6 +19,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     bool selectedSlot;
     GameObject otherSlot;
+    bool itemActive;
 
     int newItemNumber;
     Item newItem;
@@ -98,6 +99,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 }
                 ClearSlot();
             }
+
+
+                inventoryUI.ShowActiveItem(item, gameObject);
+
+                itemActive = true;
         }
         //else inventoryUI.EmptySlot(gameObject);
     }
@@ -139,6 +145,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         icon.sprite = null;
         icon.enabled = false;
         stackNumber.enabled = false;
+        itemActive = false;
     }
 
     public void AddToStack(int added)

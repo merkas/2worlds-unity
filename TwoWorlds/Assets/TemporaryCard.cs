@@ -6,8 +6,9 @@ public enum CardType
 {
     DEFENSE,
     ATTACK,
-    BUFF,
-    SPECIAL
+    SONDER,
+    SPECIAL,
+    SUPPORT
 }
 
 [CreateAssetMenu(fileName = "New Card", menuName = "Inventory/Card")]
@@ -19,6 +20,7 @@ public class TemporaryCard: ScriptableObject
     public CardType cardType;
 
     public int ActionPointsNeeded;
+    public bool isStackable;
 
     public string info;
 }

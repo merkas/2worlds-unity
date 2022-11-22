@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler,
-     IPointerMoveHandler
+     IPointerMoveHandler, IPointerDownHandler
 {
     public Image icon;
     TemporaryCard card;
@@ -14,9 +14,16 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public Text infoText; // Prefab
     public Text info;
 
-    bool cardOnMove;
+    public GameObject miniMenu; // Prefab
+    GameObject existingMiniMenu;
+
+    int clicked = 0;
+
+    //bool cardOnMove;
     bool cardActive;
     bool doubleClickedCard;
+
+    int numberOfCards;
 
     InventoryUI inventoryUI;
 
@@ -24,6 +31,7 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         inventoryUI = gameObject.transform.GetComponentInParent<InventoryUI>();
         InventoryUI.movedObject += ResendActiveCardData;
+        InventoryUI.inventoryClosed += DeactivateCard;
     }
 
     public bool CardActive(bool active)
@@ -32,24 +40,55 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         return cardActive;
     }
 
+    void DeactivateCard()
+    {
+        cardActive = false;
+    }
+
     void ResendActiveCardData()
     {
         //if (cardActive == true) inventoryUI.ShowActiveCard(card, gameObject);
     }
 
+    public void OnPointerDown(PointerEventData pointerEventData)
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (card != null)
+            {
+                Debug.Log("Pointer Down");
+                existingMiniMenu = Instantiate(miniMenu, this.gameObject.transform);
+                existingMiniMenu.transform.position += new Vector3(0, 50, 0);
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (card != null)
+            {
+                Debug.Log("Pointer Click");
+                
+                inventoryUI.ShowActiveCard(card, gameObject);
+
+                cardActive = true;
+            }
+        }
+    }
+
     public void OnPointerClick(PointerEventData pointerEventData) // player clicks on slot
     {
         //Debug.Log(pointerEventData.clickTime + ", " + Time.time);
-        
-        if (card != null)
-        {
-            //if (pointerEventData.clickTime <= 1)
-                //inventoryUI.ShowActiveCard(card, gameObject, true);
-            /*else */
-            inventoryUI.ShowActiveCard(card, gameObject);
+        //if (existingMiniMenu != null) Destroy(existingMiniMenu);
 
-            cardActive = true;
-        }
+        //if (card != null)
+        //{
+        //    Debug.Log("Pointer Click");
+        //    //if (pointerEventData.clickTime <= 1)
+        //        //inventoryUI.ShowActiveCard(card, gameObject, true);
+        //    /*else */
+        //    inventoryUI.ShowActiveCard(card, gameObject);
+
+        //    cardActive = true;
+        //}
 
 
 
@@ -114,7 +153,18 @@ public class CardSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         card = null;
         icon.sprite = null;
         icon.enabled = false;
+        stackNumber.enabled = false;
+        //if (existingMiniMenu != null) Destroy(existingMiniMenu);
         CardActive(false);
     }
-    
+
+    public void AddToStack(int added)
+    {
+        numberOfCards += added;
+        if (numberOfCards > 1)
+        {
+            stackNumber.text = numberOfCards.ToString();
+            stackNumber.enabled = true;
+        }
+    }
 }

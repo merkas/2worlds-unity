@@ -15,7 +15,14 @@ public class InventoryUI : MonoBehaviour
     public Button AddToDeckButton;
 
     Inventory inventory;
+
+    Item activeItem;
     TemporaryCard activeCard;
+
+    public GameObject itemWindow;
+    public Text itemTitleText;
+    public Text itemInfoText;
+
     public GameObject cardWindow;
     public Text cardTitleText;
     public Text cardInfoText;
@@ -44,19 +51,34 @@ public class InventoryUI : MonoBehaviour
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
         cardSlots = cardParent.GetComponentsInChildren<CardSlot>(); // also normal card slots
         cardDeckSlots = cardParent.GetComponentsInChildren<CardDeckSlot>();
+
         inventoryWindow.SetActive(false);
         cardInventoryWindow.SetActive(false);
         cardWindow.SetActive(false);
+        itemWindow.SetActive(false);
 
         //movedInventoryObject += ChangeSlots;
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            inventoryWindow.SetActive(true);
-            cardInventoryWindow.SetActive(true);
+            if (inventoryWindow.activeSelf == false)
+            {
+                inventoryWindow.SetActive(true);
+                cardInventoryWindow.SetActive(false);
+            }
+            else inventoryWindow.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (cardInventoryWindow.activeSelf == false)
+            {
+                inventoryWindow.SetActive(false);
+                cardInventoryWindow.SetActive(true);
+            }
+            else cardInventoryWindow.SetActive(false);
         }
     }
 
@@ -69,7 +91,7 @@ public class InventoryUI : MonoBehaviour
                 slots[i].AddItem(inventory.items[i]);
                 if (inventory.items[i].isStackable)
                 {
-                    slots[i].AddToStack(inventory.items[i].stack);
+                    //slots[i].AddToStack(inventory.items[i].stack);
                 }
             }
             else
@@ -107,6 +129,11 @@ public class InventoryUI : MonoBehaviour
     {
         inventoryWindow.SetActive(false);
         cardInventoryWindow.SetActive(false);
+        cardWindow.SetActive(false);
+        itemWindow.SetActive(false);
+
+        if (inventoryClosed != null)
+            inventoryClosed.Invoke();
     }
 
     public void ClickedInInventory(GameObject obj) // = clicked on slot
@@ -124,6 +151,30 @@ public class InventoryUI : MonoBehaviour
             }
         }
         
+    }
+
+    public void ShowActiveItem(Item item, GameObject slot)
+    {
+        if (selectedObject != null) // object activated before
+        {
+            if (selectedObject.GetComponent<CardSlot>() != null)
+            {
+                selectedObject.GetComponent<CardSlot>().CardActive(false);
+            }
+            else selectedObject.GetComponent<CardDeckSlot>().CardActive(false);
+        }
+
+        selectedObject = slot;
+        activeItem = item;
+
+        itemWindow.GetComponentInChildren<Image>().sprite = item.icon;
+        itemTitleText.GetComponent<Text>().text = item.itemName;
+        itemInfoText.GetComponent<Text>().text = item.info;
+
+        if (item.isQuestItem == true) itemWindow.GetComponentInChildren<Button>().enabled = false; // = can't discard quest items
+        else itemWindow.GetComponentInChildren<Button>().enabled = true;
+
+        itemWindow.SetActive(true);
     }
 
     public void ShowActiveCard(TemporaryCard card, GameObject slot, bool doubleClick = false)
@@ -156,6 +207,22 @@ public class InventoryUI : MonoBehaviour
         cardWindow.SetActive(true);
     }
 
+    public void DiscardCard()
+    {
+        if (selectedObject.GetComponent<CardSlot>() != null)
+            selectedObject.GetComponent<CardSlot>().ClearSlot();
+        else selectedObject.GetComponent<CardDeckSlot>().ClearSlot();
+
+        cardWindow.SetActive(false);
+    }
+
+    public void DiscardItem()
+    {
+        selectedObject.GetComponent<InventorySlot>().ClearSlot();
+
+        itemWindow.SetActive(false);
+    }
+
     public void MoveCardToDeck() // move card to deck, needed in UI because of click and button methods
     {
         //bool doubleClick; statt true
@@ -168,9 +235,10 @@ public class InventoryUI : MonoBehaviour
         AddToDeckButton.gameObject.SetActive(false);
         AddToInventoryButton.gameObject.SetActive(true);
 
+        selectedObject.GetComponent<CardSlot>().CardActive(false);
         selectedObject = cardDeckSlots[inventory.deckCards.Count].gameObject;
         selectedObject.GetComponent<CardDeckSlot>().CardActive(true);
-        //UpdateUI();
+        UpdateUI();
     }
 
     public void MoveCardToInventory() //remove card from deck
@@ -184,9 +252,10 @@ public class InventoryUI : MonoBehaviour
         AddToDeckButton.gameObject.SetActive(true);
         AddToInventoryButton.gameObject.SetActive(false);
 
+        selectedObject.GetComponent<CardDeckSlot>().CardActive(false);
         selectedObject = cardSlots[inventory.cards.Count].gameObject;
         selectedObject.GetComponent<CardSlot>().CardActive(true);
-        //UpdateUI();
+        UpdateUI();
     }
 
     //public void EmptySlot(GameObject obj)

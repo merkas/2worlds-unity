@@ -8,8 +8,9 @@ public class Inventory : MonoBehaviour
     public List<TemporaryCard> cards = new List<TemporaryCard>();
     public List<TemporaryCard> deckCards = new List<TemporaryCard>();
 
-    List<int> itemAmount = new List<int>();
+    //List<int> itemAmount = new List<int>();
     List<int> numberOfItems = new List<int>();
+    List<int> numberOfCards = new List<int>();
     //int[] numberOfItems;
     //int allItems;
     //int itemNumber;
@@ -17,7 +18,7 @@ public class Inventory : MonoBehaviour
 
     public int space = 10;
     public int cardSpace = 20;
-    public int deckSpace = 15;
+    public int deckSpace = 20;
 
     #region Singleton
     public static Inventory instance;
@@ -46,7 +47,7 @@ public class Inventory : MonoBehaviour
         {
             if (item == obj && item.isStackable == true)
             {
-                numberOfItems[itemNumber] += obj.stack;
+                //numberOfItems[itemNumber] += obj.stack;
                 addedToStack = true;
                 break;
             }
@@ -61,7 +62,7 @@ public class Inventory : MonoBehaviour
                 return false;
             }
 
-            numberOfItems.Add(item.stack);
+            //numberOfItems.Add(item.stack);
             items.Add(item);
         }
         
@@ -73,21 +74,40 @@ public class Inventory : MonoBehaviour
 
     public bool AddCard(TemporaryCard card)
     {
-        if (cards.Count < deckSpace) // check if deck is full, if not add card
-        {
-            deckCards.Add(card);
+        addedToStack = false;
 
-            if (onItemChangedCallback != null)
-                onItemChangedCallback.Invoke();
-
-            return true;
-        }
-        if (cards.Count >= cardSpace) // check if card inventory is full, if true can't pick up
+        int cardNumber = 0;
+        foreach (TemporaryCard obj in cards) // check if same stackable card is already in card inventory
         {
-            Debug.Log("Not enough room");
-            return false;
+            if (card == obj && card.isStackable == true)
+            {
+                numberOfCards[cardNumber] ++; // nur einzelne Karten zu finden, nicht in stacks
+                addedToStack = true;
+                break;
+            }
+            cardNumber += 1;
         }
-        cards.Add(card); // if nothing of above add card in card inventory
+
+        if (addedToStack != true)
+        {
+            if (cards.Count < deckSpace) // check if deck is full, if not add card
+            {
+                deckCards.Add(card);
+
+                if (onItemChangedCallback != null)
+                    onItemChangedCallback.Invoke();
+
+                return true;
+            }
+            if (cards.Count >= cardSpace) // check if card inventory is full, if true can't pick up
+            {
+                Debug.Log("Not enough room");
+                return false;
+            }
+            cards.Add(card); // if nothing of above add card in card inventory
+            //numberOfCards.Add()
+        }
+        
 
         // event
         if (onItemChangedCallback != null)
@@ -130,7 +150,7 @@ public class Inventory : MonoBehaviour
             cards.Remove(card);
 
             deckCards.Add(card);
-            cards.Add(deckCard);
+            cards.Add(deckCard); // check for stack is in method
         }
         
         //if (onItemChangedCallback != null)

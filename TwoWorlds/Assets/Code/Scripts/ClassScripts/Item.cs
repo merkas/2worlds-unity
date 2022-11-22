@@ -10,6 +10,6 @@ public class Item : ScriptableObject
     public bool isQuestItem;
     public bool isStackable;
 
-    public int stack;
+    //public int stack;
     public string info;
 }

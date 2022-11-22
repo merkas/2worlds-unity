@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler,
-     IPointerMoveHandler
+     IPointerMoveHandler, IPointerDownHandler
 {
     public Image icon;
 
@@ -14,6 +14,9 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     public Text infoText; // Prefab
     public Text info;
 
+    public GameObject miniMenu; // Prefab
+    GameObject existingMiniMenu;
+
     bool cardActive;
 
     InventoryUI inventoryUI;
@@ -21,6 +24,29 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     void Start()
     {
         inventoryUI = gameObject.transform.GetComponentInParent<InventoryUI>();
+        InventoryUI.inventoryClosed += DeactivateCard;
+    }
+
+    public void OnPointerDown(PointerEventData pointerEventData)
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (card != null)
+            {
+                existingMiniMenu = Instantiate(miniMenu, this.gameObject.transform);
+                existingMiniMenu.transform.position += new Vector3(0, 50, 0);
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (card != null)
+            {
+
+                inventoryUI.ShowActiveCard(card, gameObject);
+
+                cardActive = true;
+            }
+        }
     }
 
     public void OnPointerClick(PointerEventData pointerEventData) // player clicks on inventory slot
@@ -43,7 +69,10 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         return cardActive;
     }
 
-
+    void DeactivateCard()
+    {
+        cardActive = false;
+    }
 
     public void OnPointerMove(PointerEventData pointerEventData)
     {
