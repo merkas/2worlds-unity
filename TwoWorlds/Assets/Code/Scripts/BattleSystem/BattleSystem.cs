@@ -28,6 +28,8 @@ public class BattleSystem : MonoBehaviour
 
     public Text dialogueText;
     public Button AttackButton;
+    public Button AttackButton2;
+    public Button AttackButton3;
     public Button HealButton;
     public Button SkipButton;
     //Später vllt als Panel für die Karten und dass dann disablen
@@ -101,13 +103,40 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerAttack2()
     {
-        //On AttackButton2 ?
-        playerUnit.DrainAP(8);
+
+        playerUnit.DrainAP(10);
         playerHud.SetAP(playerUnit.CurrentAP);
 
         bool isDead = enemyUnit.TakeDamage(20);
         enemyHud.SetHP(enemyUnit.currentHP);
         dialogueText.text = "Attack 2: ...";
+
+
+        yield return new WaitForSeconds(2f);
+
+        if (isDead)
+        {
+            state = BattleState.WON;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+
+        }
+
+    }
+
+    IEnumerator PlayerAttack3()
+    {
+
+        playerUnit.DrainAP(8);
+        playerHud.SetAP(playerUnit.CurrentAP);
+
+        bool isDead = enemyUnit.TakeDamage(12);
+        enemyHud.SetHP(enemyUnit.currentHP);
+        dialogueText.text = "Attack 3: ...";
 
 
         yield return new WaitForSeconds(2f);
@@ -268,6 +297,26 @@ public class BattleSystem : MonoBehaviour
         DisableButtonOnClick();
     }
 
+    public void OnAttackButton2()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        StartCoroutine(PlayerAttack2());
+
+        DisableButtonOnClick();
+    }
+
+    public void OnAttackButton3()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        StartCoroutine(PlayerAttack3());
+
+        DisableButtonOnClick();
+    }
+
     public void OnHealButton()
     {
         if (state != BattleState.PLAYERTURN)
@@ -291,6 +340,8 @@ public class BattleSystem : MonoBehaviour
     public void DisableButtonOnClick()
     { 
         AttackButton.interactable = false;
+        AttackButton2.interactable = false;
+        AttackButton3.interactable = false;
         HealButton.interactable = false;
         SkipButton.interactable = false;
 
@@ -299,6 +350,8 @@ public class BattleSystem : MonoBehaviour
     public void EnableButton()
     {
         AttackButton.interactable = true;
+        AttackButton2.interactable = true;
+        AttackButton3.interactable = true;
         HealButton.interactable = true;
         SkipButton.interactable = true;
     }
