@@ -251,3 +251,4 @@ MonoBehaviour:
   stackNumber: {fileID: 2449274076226144156}
   infoText: {fileID: 50168756743257303, guid: 3bfbb6b3ca167b8478ca637843ae9e02, type: 3}
   info: {fileID: 0}
+  miniMenu: {fileID: 7590949579886816487, guid: 76d9f4b39ee4002469c409075946bbec, type: 3}

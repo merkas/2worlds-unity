@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Item> items = new List<Item>();
-    public List<TemporaryCard> cards = new List<TemporaryCard>();
-    public List<TemporaryCard> deckCards = new List<TemporaryCard>();
+    public List<CompleteItem> items = new List<CompleteItem>();
+    public List<CompleteCard> cards = new List<CompleteCard>();
+    public List<CompleteCard> deckCards = new List<CompleteCard>();
 
-    //List<int> itemAmount = new List<int>();
-    List<int> numberOfItems = new List<int>();
-    List<int> numberOfCards = new List<int>();
-    //int[] numberOfItems;
-    //int allItems;
-    //int itemNumber;
     bool addedToStack;
 
     public int space = 10;
@@ -38,20 +32,23 @@ public class Inventory : MonoBehaviour
 
     public OnItemChanged onItemChangedCallback;
 
-    public bool AddItem(Item item)
+    public bool AddItem(CompleteItem item)
     {
         addedToStack = false;
-        
-        int itemNumber = 0;
-        foreach (Item obj in items) // check if same stackable item is already in inventory
+
+        if (item.item.isStackable == true)
         {
-            if (item == obj && item.isStackable == true)
+            int itemNumber = 0;
+            foreach (CompleteItem obj in items) // check if same stackable item is already in inventory
             {
-                //numberOfItems[itemNumber] += obj.stack;
-                addedToStack = true;
-                break;
+                if (item.item == obj.item)
+                {
+                    obj.amount += item.amount;
+                    addedToStack = true;
+                    break;
+                }
+                itemNumber += 1;
             }
-            itemNumber += 1;
         }
         
         if (addedToStack != true)
@@ -61,69 +58,71 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Not enough room");
                 return false;
             }
-
-            //numberOfItems.Add(item.stack);
             items.Add(item);
         }
         
-
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
         return true;
     }
 
-    public bool AddCard(TemporaryCard card)
+    public bool AddCard(CompleteCard card)
     {
+        if (cards.Count < deckSpace) // check if deck is full, if not add card
+        {
+            deckCards.Add(card);
+
+            if (onItemChangedCallback != null)
+                onItemChangedCallback.Invoke();
+
+            return true;
+        }
+
         addedToStack = false;
-
-        int cardNumber = 0;
-        foreach (TemporaryCard obj in cards) // check if same stackable card is already in card inventory
+        if (card.card.isStackable == true)
         {
-            if (card == obj && card.isStackable == true)
+            int cardNumber = 0;
+            foreach (CompleteCard obj in cards) // check if same stackable card is already in card inventory
             {
-                numberOfCards[cardNumber] ++; // nur einzelne Karten zu finden, nicht in stacks
-                addedToStack = true;
-                break;
+                if (card.card == obj.card)
+                {
+                    //obj.amount += card.amount;
+                    obj.amount += 1; // ändern zu oben, wenn Karten doppelt oder mehrfach auf einmal zu finden sind
+                    addedToStack = true;
+                    return true;
+                }
+                cardNumber += 1;
             }
-            cardNumber += 1;
         }
-
-        if (addedToStack != true)
+        else if (cards.Count >= cardSpace) // check if card inventory is full, if true can't pick up
         {
-            if (cards.Count < deckSpace) // check if deck is full, if not add card
-            {
-                deckCards.Add(card);
-
-                if (onItemChangedCallback != null)
-                    onItemChangedCallback.Invoke();
-
-                return true;
-            }
-            if (cards.Count >= cardSpace) // check if card inventory is full, if true can't pick up
-            {
-                Debug.Log("Not enough room");
-                return false;
-            }
-            cards.Add(card); // if nothing of above add card in card inventory
-            //numberOfCards.Add()
+            Debug.Log("Not enough room");
+            return false;
         }
-        
+        cards.Add(card); // if nothing of above add card in card inventory
 
-        // event
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
         return true;
     }
 
-    public void MoveCardToDeck(TemporaryCard card, bool doubleClick, TemporaryCard deckCard = null)
+    public void MoveCardToDeck(CompleteCard card, bool doubleClick, CompleteCard deckCard = null)
     {
         if (deckCards.Count < deckSpace && doubleClick == false)
         {
-            cards.Remove(card);
+            if (card.card.isStackable == true)
+            {
+                if (card.amount > 1)
+                {
+                    card.amount -= 1;
+                }
+                else cards.Remove(card);
+            }
+            else cards.Remove(card);
+
             deckCards.Add(card);
         }
-        else if (deckCards.Count == deckSpace && doubleClick == true && deckCard != null) 
-            // deck full, exchange cards with a double click on both
+        else if (doubleClick == true && deckCard != null) // exchange cards with a double click on both
         {
             cards.Remove(card);
             deckCards.Remove(deckCard);
@@ -131,20 +130,30 @@ public class Inventory : MonoBehaviour
             cards.Add(deckCard);
             deckCards.Add(card);
         }
-        
-        //if (onItemChangedCallback != null)
-        //    onItemChangedCallback.Invoke();
     }
 
-    public void MoveCardToInventory(TemporaryCard deckCard, bool doubleClick, TemporaryCard card = null)
+    public void MoveCardToInventory(CompleteCard deckCard, bool doubleClick, CompleteCard card = null)
     {
         if (cards.Count < space && doubleClick == false)
         {
             deckCards.Remove(deckCard);
-            cards.Add(deckCard);
+            if (deckCard.card.isStackable == true)
+            {
+                bool isInInventory = false;
+                foreach (CompleteCard c in cards)
+                {
+                    if (c.card == deckCard.card)
+                    {
+                        c.amount += 1;
+                        isInInventory = true;
+                        break;
+                    }
+                }
+                if (isInInventory == false) cards.Add(deckCard);
+            }
+            else cards.Add(deckCard);
         }
-        else if (cards.Count == space && doubleClick == true && card != null)
-        // deck full, exchange cards with a double click on both
+        else if (doubleClick == true && card != null) // exchange cards with a double click on both
         {
             deckCards.Remove(deckCard);
             cards.Remove(card);
@@ -152,20 +161,26 @@ public class Inventory : MonoBehaviour
             deckCards.Add(card);
             cards.Add(deckCard); // check for stack is in method
         }
-        
-        //if (onItemChangedCallback != null)
-        //    onItemChangedCallback.Invoke();
     }
 
-    public void RemoveCard(TemporaryCard card)
+    public void UseItem(CompleteItem item)
     {
-        cards.Remove(card);
+        item.amount -= 1;
+        if (item.amount == 0) RemoveItem(item);
+
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
-        // event
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveCard(CompleteCard card)
+    {
+        cards.Remove(card);
+
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
+    }
+
+    public void RemoveItem(CompleteItem item)
     {
         items.Remove(item);
 

@@ -31,8 +31,12 @@ MonoBehaviour:
     startAFight: 0
     getAnItem: 1
     giveAnItem: 0
-    getItem: {fileID: 11400000, guid: fc2284f1833f44149b7c69a7d6198ac2, type: 2}
-    giveItem: {fileID: 0}
+    getItem:
+      item: {fileID: 11400000, guid: 510c2803a1e03cc48ad069a2fc76217a, type: 2}
+      amount: 1
+    giveItem:
+      item: {fileID: 0}
+      amount: 0
     changeToMenuInNextConversation: 0
   - answer: It's so ugly.
     endConversation: 0
@@ -46,8 +50,12 @@ MonoBehaviour:
     startAFight: 0
     getAnItem: 0
     giveAnItem: 0
-    getItem: {fileID: 0}
-    giveItem: {fileID: 0}
+    getItem:
+      item: {fileID: 0}
+      amount: 0
+    giveItem:
+      item: {fileID: 0}
+      amount: 0
     changeToMenuInNextConversation: 0
   nextNpcText:
   - {fileID: 11400000, guid: 4a80ebeb33e6d9046b54c448283d0b84, type: 2}

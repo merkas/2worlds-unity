@@ -99,9 +99,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialoguePartner.CheckForItemConditions(player.corruptionStat) == true)
         {
-            Sprite sprite = dialoguePartner.item.icon;
+            Sprite sprite = dialoguePartner.item.item.icon;
             string[] message = dialoguePartner.itemText;
-            SystemMessage(dialoguePartner.itemText, dialoguePartner.item);
+            SystemMessage(dialoguePartner.itemText, dialoguePartner.item.item);
             
             Inventory.instance.AddItem(dialoguePartner.item);
         }
@@ -133,8 +133,8 @@ public class DialogueManager : MonoBehaviour
                                 Inventory.instance.AddItem(playerQuest.reward); // get reward
 
                                 message[0] = dialoguePartner.npcName + " gave you " +
-                                    dialoguePartner.activeDialoguePart.playerResponse[index].getItem.itemName + "!";
-                                SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+                                    dialoguePartner.activeDialoguePart.playerResponse[index].getItem.item.itemName + "!";
+                                SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem.item);
                             }
                         }
                         else
@@ -380,8 +380,8 @@ public class DialogueManager : MonoBehaviour
         if (dialoguePartner.activeDialoguePart.playerResponse[index].getAnItem == true) // get item
         {
             message[0] = dialoguePartner.npcName + " gave you " +
-                dialoguePartner.activeDialoguePart.playerResponse[index].getItem.itemName + "!";
-            SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
+                dialoguePartner.activeDialoguePart.playerResponse[index].getItem.item.itemName + "!";
+            SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem.item);
 
             Inventory.instance.AddItem(dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
 
@@ -391,8 +391,8 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("player gives an item");
             message[0] = "You gave " + dialoguePartner.npcName + " " +
-                dialoguePartner.activeDialoguePart.playerResponse[index].giveItem.itemName + ".";
-            SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].giveItem);
+                dialoguePartner.activeDialoguePart.playerResponse[index].giveItem.item.itemName + ".";
+            SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].giveItem.item);
             // check if quest item?
             Inventory.instance.RemoveItem(dialoguePartner.activeDialoguePart.playerResponse[index].giveItem);
 
@@ -492,10 +492,10 @@ public class DialogueManager : MonoBehaviour
         // select npc reaction
     }
 
-    void GiveItem(Item item)
+    void GiveItem(CompleteItem item)
     {
         Inventory.instance.RemoveItem(item);
-        itemImage.sprite = item.icon;
+        itemImage.sprite = item.item.icon;
         //show item Sprite
     }
 

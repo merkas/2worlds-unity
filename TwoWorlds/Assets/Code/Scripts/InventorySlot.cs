@@ -4,25 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler,
-     IPointerMoveHandler
+public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Image icon;
     public Text stackNumber;
+    CompleteItem comItem;
     Item item;
     InventoryUI inventoryUI;
     public Text infoText; // Prefab
     public Text info;
 
-    bool itemOnMove;
+    public GameObject miniMenu; // Prefab
+    GameObject mMenu;
+    Button[] mMenuButtons;
+
     int numberOfItems;
 
     bool selectedSlot;
     GameObject otherSlot;
     bool itemActive;
 
-    int newItemNumber;
-    Item newItem;
+    //int newItemNumber;
+    //Item newItem;
 
     void Start()
     {
@@ -31,7 +34,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         // add method to unsubscribe?
         inventoryUI = gameObject.transform.GetComponentInParent<InventoryUI>();
     }
-    
+
+    public bool ItemActive(bool active)
+    {
+        itemActive = active;
+        return itemActive;
+    }
 
     public void GetSecondObj(GameObject otherObj)
     {
@@ -70,47 +78,66 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         }
     }
 
-    public void ExchangeItem(Item newItem, int number)
-    {
-        //ClearSlot();
-        //AddItem(newItem);
-        //if (item.isStackable == true)
-        //    AddToStack(number);
-    }
+    //public void ExchangeItem(Item newItem, int number)
+    //{
+    //    //ClearSlot();
+    //    //AddItem(newItem);
+    //    //if (item.isStackable == true)
+    //    //    AddToStack(number);
+    //}
 
-    public void OnPointerClick(PointerEventData pointerEventData) // player clicks on inventory slot
+    public void OnPointerDown(PointerEventData pointerEventData) // player clicks on inventory slot
     {
 
         //inventoryUI.ClickedInInventory(gameObject);
         if (item != null) // slot is filled
         {
-            selectedSlot = true;
-            if (item.isConsumable)
+            if (Input.GetMouseButtonDown(0)) // Linksklick
             {
-                if (item.isStackable)
-                {
-                    if (numberOfItems > 1)
-                    {
-                        numberOfItems -= 1;
-                        if (numberOfItems < 2) stackNumber.enabled = false;
+                if (mMenu != null) Destroy(mMenu); // auch wenn wo anders auf der UI geklickt wird einfügen!
 
-                        return;
-                    }
-                }
-                ClearSlot();
-            }
-
-
+                selectedSlot = true;
                 inventoryUI.ShowActiveItem(item, gameObject);
-
                 itemActive = true;
+            }
+            else if(Input.GetMouseButtonDown(1)) // Rechtsklick
+            {
+                // open menu
+                mMenu = Instantiate(miniMenu, inventoryUI.transform); // not hidden behind other slots with this
+                mMenu.transform.position = gameObject.transform.position; // position to slot position
+                mMenu.transform.position += new Vector3(50, 50, 0); // offset
+
+                // Instantiate Button
+                mMenuButtons = mMenu.GetComponentsInChildren<Button>();
+                mMenuButtons[0].onClick.AddListener(UseItem);
+                mMenuButtons[1].onClick.AddListener(BackButton);
+
+                if (item.isConsumable)
+                {
+                    // enable UseButton
+                    mMenuButtons[0].enabled = true;
+                }
+                else mMenuButtons[0].enabled = false;
+            }
+                
         }
-        //else inventoryUI.EmptySlot(gameObject);
+        else
+        {
+            Destroy(mMenu); // Destroy miniMenu, when clicked on empty slot, remove if overall check is implemented
+        }
     }
 
-    public void OnPointerMove(PointerEventData pointerEventData)
+    public void UseItem() // setzt voraus, dass Item consumable ist, auf miniMenu Button
     {
-        
+        if (item.isStackable)
+        {
+            Inventory.instance.UseItem(comItem);
+        }
+    }
+
+    public void BackButton()
+    {
+        Destroy(mMenu);
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
@@ -132,20 +159,38 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         }
     }
 
-    public void AddItem(Item newItem)
+    public void AddItem(CompleteItem newItem)
     {
-        item = newItem;
-        icon.sprite = newItem.icon;
+        comItem = newItem;
+        item = newItem.item;
+        numberOfItems = newItem.amount;
+        icon.sprite = item.icon;
         icon.enabled = true;
     }
 
     public void ClearSlot()
     {
+        if (itemActive == true) inventoryUI.HideInfoWindow();
+        if (mMenu != null) Destroy(mMenu);
+
+        comItem = null;
         item = null;
         icon.sprite = null;
         icon.enabled = false;
+        numberOfItems = 0;
         stackNumber.enabled = false;
         itemActive = false;
+    }
+
+    public void UpdateStack(int newAmount)
+    {
+        numberOfItems = newAmount;
+        if (numberOfItems > 1)
+        {
+            stackNumber.text = numberOfItems.ToString();
+            stackNumber.enabled = true;
+        }
+        else stackNumber.enabled = false;
     }
 
     public void AddToStack(int added)

@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Shampoo
   icon: {fileID: 7482667652216324306, guid: 7c2d6af1d7274c941b749e3c45569c5c, type: 3}
-  isConsumable: 0
+  isConsumable: 1
   isQuestItem: 0
   isStackable: 1
-  stack: 2
   info: Test

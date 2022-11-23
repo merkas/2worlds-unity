@@ -8,7 +8,8 @@ public class Quest: ScriptableObject
 {
     public string title;
     public string description;
-    public Item reward;
+    public CompleteItem reward;
+    public CompleteCard cardReward;
 
     public string questNpcName;
 

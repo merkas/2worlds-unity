@@ -41,7 +41,9 @@ MonoBehaviour:
     maxTalks: 0
     maxCor: 0
     triggerItem: {fileID: 0}
-  item: {fileID: 11400000, guid: fc2284f1833f44149b7c69a7d6198ac2, type: 2}
+  item:
+    item: {fileID: 11400000, guid: fc2284f1833f44149b7c69a7d6198ac2, type: 2}
+    amount: 1
   itemText:
   - This is for you. A little something.
   - You got normal shampoo!

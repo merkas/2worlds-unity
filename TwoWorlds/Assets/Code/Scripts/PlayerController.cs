@@ -25,15 +25,10 @@ public class PlayerController : MonoBehaviour
     bool canTakeItem;
     GameObject otherObject;
 
-    public GameObject InteractBox;
-    Text interactText;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         corruptionStat = 0; // load old stat, when necessary, instead
-        //interactText = InteractBox.GetComponentInChildren<Text>();
-        //InteractBox.SetActive(false);
     }
 
 
@@ -59,23 +54,18 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "DialogueNpc")
         {
             npc = other.gameObject;
-            //interactText.text = "Start Conversation with E";
             canStartConversation = true;
-            //InteractBox.SetActive(true);
         }
         if (other.tag == "PickUp")
         {
-            //interactText.text = "Pick up object with E";
             otherObject = other.gameObject;
             canTakeItem = true;
-            //InteractBox.SetActive(true);
         }
         
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        //InteractBox.SetActive(false);
         if (other.tag == "DialogueNpc") canStartConversation = false;
 
         if (other.tag == "PickUp") canTakeItem = false;
@@ -100,7 +90,7 @@ public class PlayerController : MonoBehaviour
     void Pickup()
     {
         bool pickedUp;
-        if (otherObject.GetComponent<ItemPickup>().item != null)
+        if (otherObject.GetComponent<ItemPickup>().item.item != null)
             pickedUp = Inventory.instance.AddItem(otherObject.GetComponent<ItemPickup>().item);
         else pickedUp = Inventory.instance.AddCard(otherObject.GetComponent<ItemPickup>().card);
 

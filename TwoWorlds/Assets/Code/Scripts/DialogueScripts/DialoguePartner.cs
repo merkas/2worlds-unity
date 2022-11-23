@@ -5,11 +5,11 @@ using UnityEngine;
 public class DialoguePartner : MonoBehaviour
 {
     public string npcName;
-    public GameObject nameShield;
+    //public GameObject nameShield;
     DialogueNpc thisNPC = new DialogueNpc(); //vorerst, wenn fertig, dann bestimmte NPCs aufgerufen
-    public bool getItem;
     public CompleteDialogue thisNpcDialogue;
     SingleDialogue activeDialogue;
+    public bool getItem;
 
     int activeIndex = 0;
 
@@ -32,7 +32,7 @@ public class DialoguePartner : MonoBehaviour
     public string additionalGreeting;
 
     [System.NonSerialized]
-    public Item item;
+    public CompleteItem item;
     [System.NonSerialized]
     public string[] itemText;
 
@@ -60,9 +60,9 @@ public class DialoguePartner : MonoBehaviour
                 {
                     if (greeting.triggerItem != null)
                     {
-                        foreach (Item playerItem in Inventory.instance.items)
+                        foreach (CompleteItem playerItem in Inventory.instance.items)
                         {
-                            if (playerItem == greeting.triggerItem)
+                            if (playerItem.item == greeting.triggerItem) // amount checken
                             {
                                 chosenGreeting = greeting.greetingText;
                                 break;

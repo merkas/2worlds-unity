@@ -4,20 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler,
-     IPointerMoveHandler, IPointerDownHandler
+public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Image icon;
 
+    CompleteCard comCard;
     TemporaryCard card;
 
     public Text infoText; // Prefab
     public Text info;
 
-    public GameObject miniMenu; // Prefab
-    GameObject existingMiniMenu;
-
     bool cardActive;
+
+    bool doubleClickedCard;
+    int clicked = 0;
+    float clickTime;
+    float clickDelay = 0.5f;
 
     InventoryUI inventoryUI;
 
@@ -27,40 +29,31 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         InventoryUI.inventoryClosed += DeactivateCard;
     }
 
-    public void OnPointerDown(PointerEventData pointerEventData)
+    public void OnPointerClick(PointerEventData pointerEventData)
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (card != null)
-            {
-                existingMiniMenu = Instantiate(miniMenu, this.gameObject.transform);
-                existingMiniMenu.transform.position += new Vector3(0, 50, 0);
-            }
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            if (card != null)
-            {
-
-                inventoryUI.ShowActiveCard(card, gameObject);
-
-                cardActive = true;
-            }
-        }
-    }
-
-    public void OnPointerClick(PointerEventData pointerEventData) // player clicks on inventory slot
-    {
-        
         if (card != null)
         {
-            //if (pointerEventData.clickTime <= 1)
-            //inventoryUI.ShowActiveCard(card, gameObject, true);
-            /*else */
-            inventoryUI.ShowActiveCard(card, gameObject);
+            if (Time.time - clickTime > clickDelay)
+            {
+                clicked = 0;
+                doubleClickedCard = false;
+            }
+            clicked++;
+            if (clicked == 1) clickTime = Time.time;
+            else if (clicked > 1 && Time.time - clickTime < clickDelay)
+            {
+                clicked = 0;
+                clickTime = 0;
+                doubleClickedCard = true;
+                // highlight slot somehow
+            }
 
+            if (doubleClickedCard != true) inventoryUI.ShowActiveCard(comCard, gameObject);
+            else inventoryUI.ShowActiveCard(comCard, gameObject, true);
+            //doubleClickedCard = false;
             cardActive = true;
         }
+        else inventoryUI.ResetDoubleClickedObjects();
     }
 
     public bool CardActive(bool active)
@@ -72,11 +65,6 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     void DeactivateCard()
     {
         cardActive = false;
-    }
-
-    public void OnPointerMove(PointerEventData pointerEventData)
-    {
-
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
@@ -98,18 +86,22 @@ public class CardDeckSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         }
     }
 
-    public void AddCard(TemporaryCard newCard)
+    public void AddCard(CompleteCard newCard)
     {
-        card = newCard;
-        icon.sprite = newCard.cardIcon;
+        comCard = newCard;
+        card = newCard.card;
+        icon.sprite = card.cardIcon;
         icon.enabled = true;
+        if (info != null) info.text = card.cardName;
     }
 
     public void ClearSlot()
     {
+        CardActive(false);
+
+        comCard = null;
         card = null;
         icon.sprite = null;
         icon.enabled = false;
-        CardActive(false);
     }
 }

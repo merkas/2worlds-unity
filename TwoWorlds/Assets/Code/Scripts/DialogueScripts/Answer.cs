@@ -22,8 +22,8 @@ public class Answer
     //public bool itemCondition;
     public bool getAnItem;
     public bool giveAnItem;
-    public Item getItem;
-    public Item giveItem;
+    public CompleteItem getItem;
+    public CompleteItem giveItem;
 
     public bool changeToMenuInNextConversation;
     

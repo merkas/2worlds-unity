@@ -16,4 +16,5 @@ MonoBehaviour:
   cardIcon: {fileID: 7482667652216324306, guid: 7c2d6af1d7274c941b749e3c45569c5c, type: 3}
   cardType: 1
   ActionPointsNeeded: 1
+  isStackable: 1
   info: Shower them in Mesons ire... Or underwear!
