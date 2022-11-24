@@ -72,4 +72,13 @@ public class SceneManagerScript : MonoBehaviour
         Application.Quit();
     }
 
+
+
+
+    //Whitebox
+
+    public void OpenCombat()
+    {
+        SceneManager.LoadScene("CombatTest");
+    }
 }
