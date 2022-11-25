@@ -27,6 +27,9 @@ public class InventoryUI : MonoBehaviour
     public Text cardTitleText;
     public Text cardInfoText;
 
+    public Button[] tabButtons;
+    public GameObject[] tabs;
+
     InventorySlot[] slots;
 
     CardSlot[] cardSlots;
@@ -34,8 +37,8 @@ public class InventoryUI : MonoBehaviour
 
     GameObject selectedObject;
 
-    public delegate void MovedObject();
-    public static event MovedObject movedObject;
+    //public delegate void MovedObject();
+    //public static event MovedObject movedObject;
 
     public delegate void ClosingInventory();
     public static event ClosingInventory inventoryClosed;
@@ -58,6 +61,15 @@ public class InventoryUI : MonoBehaviour
         cardInventoryWindow.SetActive(false);
         cardWindow.SetActive(false);
         itemWindow.SetActive(false);
+
+        foreach (GameObject tab in tabs)
+        {
+            tab.SetActive(false);
+        }
+        foreach (Button tabButton in tabButtons)
+        {
+            tabButton.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -66,19 +78,53 @@ public class InventoryUI : MonoBehaviour
         {
             if (inventoryWindow.activeSelf == false)
             {
+                HideTabs();
                 inventoryWindow.SetActive(true);
                 cardInventoryWindow.SetActive(false);
+                foreach (Button tabButton in tabButtons)
+                {
+                    tabButton.gameObject.SetActive(true);
+                }
+                ActivateNewTab(0);
             }
-            else inventoryWindow.SetActive(false);
+            else
+            {
+                //inventoryWindow.SetActive(false);
+                foreach (GameObject tab in tabs)
+                {
+                    tab.SetActive(false);
+                }
+                foreach (Button tabButton in tabButtons)
+                {
+                    tabButton.gameObject.SetActive(false);
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
             if (cardInventoryWindow.activeSelf == false)
             {
+                HideTabs();
                 inventoryWindow.SetActive(false);
                 cardInventoryWindow.SetActive(true);
+                foreach (Button tabButton in tabButtons)
+                {
+                    tabButton.gameObject.SetActive(true);
+                }
+                ActivateNewTab(1);
             }
-            else cardInventoryWindow.SetActive(false);
+            else 
+            {
+                //cardInventoryWindow.SetActive(false);
+                foreach (GameObject tab in tabs)
+                {
+                    tab.SetActive(false);
+                }
+                foreach (Button tabButton in tabButtons)
+                {
+                    tabButton.gameObject.SetActive(false);
+                }
+            }
         }
     }
 
@@ -135,28 +181,18 @@ public class InventoryUI : MonoBehaviour
         cardInventoryWindow.SetActive(false);
         cardWindow.SetActive(false);
         itemWindow.SetActive(false);
-
+        foreach (GameObject tab in tabs)
+        {
+            tab.SetActive(false);
+        }
+        foreach (Button tabButton in tabButtons)
+        {
+            tabButton.gameObject.SetActive(false);
+        }
         ResetDoubleClickedObjects();
 
         if (inventoryClosed != null)
             inventoryClosed.Invoke();
-    }
-
-    public void ClickedInInventory(GameObject obj) // = clicked on slot
-    {
-        if (obj1 == null)
-            obj1 = obj;
-        else if (obj1 != null && obj2 == null)
-        {
-            if (obj1 != obj)
-            {
-                obj2 = obj;
-
-                //if (moveInventoryObject != null)
-                //    moveInventoryObject.Invoke();
-            }
-        }
-        
     }
 
     public void ShowActiveItem(Item item, GameObject slot)
@@ -175,9 +211,6 @@ public class InventoryUI : MonoBehaviour
         itemWindow.GetComponentInChildren<Image>().sprite = item.icon;
         itemTitleText.GetComponent<Text>().text = item.itemName;
         itemInfoText.GetComponent<Text>().text = item.info;
-
-        if (item.isQuestItem == true) itemWindow.GetComponentInChildren<Button>().enabled = false; // = can't discard quest items
-        else itemWindow.GetComponentInChildren<Button>().enabled = true;
 
         itemWindow.SetActive(true);
     }
@@ -286,13 +319,6 @@ public class InventoryUI : MonoBehaviour
         cardWindow.SetActive(false);
     }
 
-    public void DiscardItem()
-    {
-        selectedObject.GetComponent<InventorySlot>().ClearSlot();
-
-        itemWindow.SetActive(false);
-    }
-
     public void MoveCardToDeck() // move card to deck with Button
     {
         selectedObject.GetComponent<CardSlot>().ClearSlot();
@@ -322,6 +348,36 @@ public class InventoryUI : MonoBehaviour
         selectedObject = cardSlots[inventory.cards.Count].gameObject;
         selectedObject.GetComponent<CardSlot>().CardActive(true);
         UpdateUI();
+    }
+
+    void HideTabs()
+    {
+        foreach(GameObject tab in tabs)
+        {
+            tab.SetActive(false);
+        }
+        foreach(Button button in tabButtons)
+        {
+            button.GetComponent<Image>().color = new Color32(0, 50, 80, 255); // dark blueish grey, change component if needed
+            button.enabled = true;
+        }
+    }
+
+    void ActivateNewTab(int index)
+    {
+        HideTabs();
+        tabs[index].SetActive(true);
+        tabButtons[index].GetComponent<Image>().color = new Color32(0, 75, 120, 255);
+        tabButtons[index].enabled = false;
+    }
+
+    public void ActivateTab1()
+    {
+        ActivateNewTab(0);
+    }
+    public void ActivateTab2()
+    {
+        ActivateNewTab(1);
     }
 
 }
