@@ -48,7 +48,7 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
         //else // npc conversation
         //{
             //conversationOn = true;
-            int max = conversations.Count - 1;
+            int max = conversations.Count;
         
 
             chosenConversation = Random.Range(0, max);

@@ -29,7 +29,7 @@ public class NpcComment : MonoBehaviour
 
     public void ChooseComment()
     {
-        int max = comments.Count - 1;
+        int max = comments.Count;
         chosenComment = Random.Range(0, max);
         commentOn = true;
         if (comments[chosenComment] != previousComment)
