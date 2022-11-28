@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     // List with completed and List with failed quests
 
     bool optionalDialogue;
-    bool automaticListening = false;
     bool canTakeItem;
     GameObject otherObject;
 
