@@ -10,7 +10,7 @@ public class Companion : ScriptableObject
 
     // fight stats and attack funtions
 
-    public List<SingleDialogue> possibleDialogues;
+    public List<SingleDialogue> possibleDialogues; // while being with player
 
     void CheckForDialogueActivation()
     {

@@ -7,9 +7,9 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
 {
     int chosenConversation;
     int chosenComment;
+    public bool automatic;
 
     public List<Conversation> conversations;
-    bool conversationUsed = false;
     Conversation previousConversation;
     public bool conversationEnd;
 
@@ -34,33 +34,24 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
         chatterText2.enabled = false;
     }
 
-    public void ChooseComment()
+    public void ChooseConversation()
     {
-        //if (conversations.Count < 1 /*|| conversationUsed == true*/)
-        //{
-        //    int max = comments.Count - 1;
-        //    chosenComment = Random.Range(0, max);
-        //    commentOn = true;
-        //    if (comments[chosenComment] != previousComment)
-        //        ShowComment();
-        //    //else ChooseComment(); // geht das? oder stattdessen while-loop?
-        //}
-        //else // npc conversation
-        //{
-            //conversationOn = true;
+        if (conversations != null) // check if conversations left
+        {
             int max = conversations.Count;
-        
+            Debug.Log(max);
+            if (max > 1) chosenConversation = Random.Range(0, max); // check if more than one conversation left
+            else chosenConversation = max - 1;
 
-            chosenConversation = Random.Range(0, max);
-        // check if already used chosenConversation
-        /*if (conversationUsed == false)*/
-        if (previousConversation != conversations[chosenConversation])
-            StartCoroutine(ShowNpcConversation());
-        else ChooseComment();
-
-        conversationEnd = false;
-        //}
-
+            if (previousConversation != conversations[chosenConversation])
+            {
+                StartCoroutine(ShowNpcConversation());
+            }
+            else
+            {
+                ChooseConversation();
+            }
+        }
     }
 
     void ShowComment()
@@ -86,11 +77,6 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
 
     public void HideComment()
     {
-        //if (commentOn == true)
-        //{
-        //    previousComment = comments[chosenComment];
-        //    commentOn = false;
-        //}
         Destroy(bubble);
         chatterText.text = "";
         chatterText2.text = "";
@@ -100,7 +86,6 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
 
     IEnumerator ShowNpcConversation()
     {
-        //conversationUsed = true;
         int selection = 0;
         foreach(string text in conversations[chosenConversation].conversation)
         {
@@ -113,7 +98,8 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
             else bubbleTurn = false;
         }
         previousConversation = conversations[chosenConversation];
+        conversations.Remove(previousConversation); // save previousConversation on scene leave
+        if (conversations.Count == 0) conversations = null;
         conversationEnd = true;
-        //conversationOn = false;
     }
 }

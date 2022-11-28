@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     bool canStartConversation = false;
     bool optionalDialogue;
+    bool automaticListening = false;
     GameObject npc;
 
     public List<Quest> activeQuests;
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
         if (optionalDialogue == true && Input.GetKey(KeyCode.E))
         {
             if (otherObject.GetComponent<NpcChatter>() != null)
-                otherObject.GetComponent<NpcChatter>().ChooseComment();
+                otherObject.GetComponent<NpcChatter>().ChooseConversation();
             if (otherObject.GetComponent<NpcComment>() != null)
                 otherObject.GetComponent<NpcComment>().ChooseComment();
 
@@ -76,22 +77,34 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "DialogueNpc")
         {
             npc = other.gameObject;
-            interactText.text = "Start Conversation with E";
+            //interactText.text = "Start Conversation with E";
             canStartConversation = true;
-            InteractBox.SetActive(true);
+            //InteractBox.SetActive(true);
         }
         else if (other.tag == "PickUp")
         {
-            interactText.text = "Pick up object with E";
+            //interactText.text = "Pick up object with E";
             otherObject = other.gameObject;
             canTakeItem = true;
-            InteractBox.SetActive(true);
+            //InteractBox.SetActive(true);
         }
         else if (other.tag == "Chatter")
         {
-            optionalDialogue = true;
+            //optionalDialogue = true;
             otherObject = other.gameObject;
-            // show notif
+
+            if (otherObject.GetComponent<NpcChatter>() != null && otherObject.GetComponent<NpcChatter>().automatic == true)
+            {
+                otherObject.GetComponent<NpcChatter>().ChooseConversation();
+                automaticListening = true;
+            }
+            else if (otherObject.GetComponent<NpcComment>() != null && otherObject.GetComponent<NpcComment>().automatic == true)  
+            {
+                otherObject.GetComponent<NpcComment>().ChooseComment();
+                automaticListening = true;
+            }
+            else optionalDialogue = true;
+            // show notif, if not automatic and conversation not empty
         }
         
     }
@@ -110,7 +123,7 @@ public class PlayerController : MonoBehaviour
                 otherObject.GetComponent<NpcChatter>().HideComment();
             if (otherObject.GetComponent<NpcComment>() != null)
                 otherObject.GetComponent<NpcComment>().HideComment();
-
+            automaticListening = false;
         }
     }
 

@@ -9,6 +9,8 @@ public class NpcComment : MonoBehaviour
     string previousComment;
     int chosenComment;
 
+    public bool automatic;
+
     public Transform bubbleSpawn;
     public GameObject speechBubble; //Prefab
     float timer;
@@ -16,8 +18,6 @@ public class NpcComment : MonoBehaviour
     public GameObject canvas;
 
     GameObject bubble;
-
-    bool commentOn;
 
     TextMeshProUGUI chatterText;
 
@@ -31,10 +31,10 @@ public class NpcComment : MonoBehaviour
     {
         int max = comments.Count;
         chosenComment = Random.Range(0, max);
-        commentOn = true;
+        
         if (comments[chosenComment] != previousComment)
             ShowComment();
-        //else ChooseComment(); // geht das? oder stattdessen while-loop?
+        else ChooseComment(); // is working
     }
 
     void ShowComment()
@@ -58,18 +58,14 @@ public class NpcComment : MonoBehaviour
             if (timer >= 2)
             {
                 HideComment();
-                //commentOnShow = false;
             }
         }
     }
 
     public void HideComment()
     {
-        if (commentOn == true)
-        {
-            previousComment = comments[chosenComment];
-            commentOn = false;
-        }
+        previousComment = comments[chosenComment];
+
         Destroy(bubble);
         chatterText.text = "";
         chatterText.enabled = false;
