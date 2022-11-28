@@ -26,5 +26,6 @@ public class Answer
     public CompleteItem giveItem;
 
     public bool changeToMenuInNextConversation;
-    
+
+    public bool becomesCompanion;
 }
