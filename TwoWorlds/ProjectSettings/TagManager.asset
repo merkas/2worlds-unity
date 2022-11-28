@@ -8,7 +8,6 @@ TagManager:
   - PickUp
   - pospoint
   - DialogueNpc
-  - Chatter
   layers:
   - Default
   - TransparentFX

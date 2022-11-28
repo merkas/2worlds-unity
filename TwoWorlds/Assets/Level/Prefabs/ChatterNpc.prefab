@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4412691972346702187}
   m_Layer: 0
   m_Name: ChatterNpc
-  m_TagString: Chatter
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,6 +161,7 @@ MonoBehaviour:
   - Seven wonders are still too little.
   - Hidi saw a cute blobby down siren hill.
   - That guy comes here surprisingly often...
+  automatic: 0
   bubbleSpawn: {fileID: 4412691971778137544}
   speechBubble: {fileID: 1108107219666750413, guid: f7561ae5c6cb0324aad90c9043fa54e0, type: 3}
   canvas: {fileID: 4412691972516566689}
