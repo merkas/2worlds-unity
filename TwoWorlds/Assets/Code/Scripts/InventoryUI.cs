@@ -6,9 +6,10 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
-    public Transform itemsParent;
     public GameObject inventoryWindow;
     public GameObject cardInventoryWindow;
+
+    public Transform itemsParent;
     public Transform cardParent;
 
     public Button AddToInventoryButton;
@@ -22,10 +23,14 @@ public class InventoryUI : MonoBehaviour
     public GameObject itemWindow;
     public Text itemTitleText;
     public Text itemInfoText;
+    public Text questItemText;
 
     public GameObject cardWindow;
     public Text cardTitleText;
     public Text cardInfoText;
+
+    public Button[] tabButtons;
+    public GameObject[] tabs;
 
     InventorySlot[] slots;
 
@@ -33,9 +38,6 @@ public class InventoryUI : MonoBehaviour
     CardDeckSlot[] cardDeckSlots;
 
     GameObject selectedObject;
-
-    public delegate void MovedObject();
-    public static event MovedObject movedObject;
 
     public delegate void ClosingInventory();
     public static event ClosingInventory inventoryClosed;
@@ -54,35 +56,16 @@ public class InventoryUI : MonoBehaviour
         cardSlots = cardParent.GetComponentsInChildren<CardSlot>(); // also normal card slots
         cardDeckSlots = cardParent.GetComponentsInChildren<CardDeckSlot>();
 
-        inventoryWindow.SetActive(false);
-        cardInventoryWindow.SetActive(false);
         cardWindow.SetActive(false);
         itemWindow.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (inventoryWindow.activeSelf == false)
-            {
-                inventoryWindow.SetActive(true);
-                cardInventoryWindow.SetActive(false);
-            }
-            else inventoryWindow.SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (cardInventoryWindow.activeSelf == false)
-            {
-                inventoryWindow.SetActive(false);
-                cardInventoryWindow.SetActive(true);
-            }
-            else cardInventoryWindow.SetActive(false);
-        }
-    }
+    //private void Update()
+    //{
 
-    void UpdateUI()
+    //}
+
+    void UpdateUI() // Inventory slots only
     {
         for (int i = 0; i < slots.Length; i++) // item inventory
         {
@@ -129,10 +112,8 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void CloseInventory()
+    public void CloseInventory() // called by UI Navigation Script
     {
-        inventoryWindow.SetActive(false);
-        cardInventoryWindow.SetActive(false);
         cardWindow.SetActive(false);
         itemWindow.SetActive(false);
 
@@ -140,23 +121,6 @@ public class InventoryUI : MonoBehaviour
 
         if (inventoryClosed != null)
             inventoryClosed.Invoke();
-    }
-
-    public void ClickedInInventory(GameObject obj) // = clicked on slot
-    {
-        if (obj1 == null)
-            obj1 = obj;
-        else if (obj1 != null && obj2 == null)
-        {
-            if (obj1 != obj)
-            {
-                obj2 = obj;
-
-                //if (moveInventoryObject != null)
-                //    moveInventoryObject.Invoke();
-            }
-        }
-        
     }
 
     public void ShowActiveItem(Item item, GameObject slot)
@@ -175,10 +139,8 @@ public class InventoryUI : MonoBehaviour
         itemWindow.GetComponentInChildren<Image>().sprite = item.icon;
         itemTitleText.GetComponent<Text>().text = item.itemName;
         itemInfoText.GetComponent<Text>().text = item.info;
-
-        if (item.isQuestItem == true) itemWindow.GetComponentInChildren<Button>().enabled = false; // = can't discard quest items
-        else itemWindow.GetComponentInChildren<Button>().enabled = true;
-
+        if (item.isQuestItem) questItemText.enabled = true;
+        else questItemText.enabled = false;
         itemWindow.SetActive(true);
     }
 
@@ -284,13 +246,6 @@ public class InventoryUI : MonoBehaviour
     {
         itemWindow.SetActive(false);
         cardWindow.SetActive(false);
-    }
-
-    public void DiscardItem()
-    {
-        selectedObject.GetComponent<InventorySlot>().ClearSlot();
-
-        itemWindow.SetActive(false);
     }
 
     public void MoveCardToDeck() // move card to deck with Button

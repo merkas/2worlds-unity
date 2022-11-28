@@ -87,6 +87,13 @@ public class PlayerController : MonoBehaviour
         canStartConversation = true;
     }
 
+    void AddTemporaryCompanion()
+    {
+        // get temporary cards
+        // add temporary cards to inventory
+        // add to companion tab
+    }
+
     void Pickup()
     {
         bool pickedUp;

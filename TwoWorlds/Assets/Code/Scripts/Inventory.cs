@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     public List<CompleteItem> items = new List<CompleteItem>();
     public List<CompleteCard> cards = new List<CompleteCard>();
     public List<CompleteCard> deckCards = new List<CompleteCard>();
+    public List<CompleteCard> temporaryDeckCards = new List<CompleteCard>();
 
     bool addedToStack;
 
