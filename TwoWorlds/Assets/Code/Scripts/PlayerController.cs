@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public List<Quest> activeQuests;
     // List with completed and List with failed quests
 
+    bool optionalDialogue;
+    bool automaticListening = false;
     bool canTakeItem;
     GameObject otherObject;
 
@@ -45,6 +47,15 @@ public class PlayerController : MonoBehaviour
         }
         if (canTakeItem == true && Input.GetKey(KeyCode.E))
             Pickup();
+        if (optionalDialogue == true && Input.GetKey(KeyCode.E))
+        {
+            if (otherObject.GetComponent<NpcChatter>() != null)
+                otherObject.GetComponent<NpcChatter>().ChooseConversation();
+            if (otherObject.GetComponent<NpcComment>() != null)
+                otherObject.GetComponent<NpcComment>().ChooseComment();
+
+            optionalDialogue = false;
+        }
     }
 
 
@@ -61,15 +72,23 @@ public class PlayerController : MonoBehaviour
             otherObject = other.gameObject;
             canTakeItem = true;
         }
-        
+        if (other.tag == "Chatter")
+        {
+            otherObject = other.gameObject;
+            
+            if (otherObject.GetComponent<NpcChatter>() != null && otherObject.GetComponent<NpcChatter>().automatic == true)
+                otherObject.GetComponent<NpcChatter>().ChooseConversation();
+            else if (otherObject.GetComponent<NpcComment>() != null && otherObject.GetComponent<NpcComment>().automatic == true)
+                otherObject.GetComponent<NpcComment>().ChooseComment();
+            else optionalDialogue = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "DialogueNpc") canStartConversation = false;
-
         if (other.tag == "PickUp") canTakeItem = false;
-
+        if (other.tag == "Chatter") optionalDialogue = false;
     }
 
     void OnMove(InputValue value)

@@ -39,7 +39,7 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
         if (conversations != null) // check if conversations left
         {
             int max = conversations.Count;
-            Debug.Log(max);
+            
             if (max > 1) chosenConversation = Random.Range(0, max); // check if more than one conversation left
             else chosenConversation = max - 1;
 
@@ -62,14 +62,12 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
 
         if (bubbleTurn == false)
         {
-            //if (conversations.Count < 1) chatterText.text = comments[chosenComment];
-            /*else*/ chatterText.text = conversations[chosenConversation].conversation[chosenComment];
+            chatterText.text = conversations[chosenConversation].conversation[chosenComment];
             chatterText.enabled = true;
         } 
         else 
         {
-            //if (conversations.Count < 1) chatterText2.text = comments[chosenComment];
-            /*else*/ chatterText2.text = conversations[chosenConversation].conversation[chosenComment];
+            chatterText2.text = conversations[chosenConversation].conversation[chosenComment];
             chatterText2.enabled = true;
         }
         speechBubble.SetActive(true);
@@ -97,9 +95,10 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
             if (bubbleTurn == false) bubbleTurn = true;
             else bubbleTurn = false;
         }
-        previousConversation = conversations[chosenConversation];
-        conversations.Remove(previousConversation); // save previousConversation on scene leave
+        //previousConversation = conversations[chosenConversation];
+        //conversations.Remove(previousConversation); // save previousConversation on scene leave
+        conversations.Remove(conversations[chosenConversation]);
         if (conversations.Count == 0) conversations = null;
-        conversationEnd = true;
+        //conversationEnd = true;
     }
 }

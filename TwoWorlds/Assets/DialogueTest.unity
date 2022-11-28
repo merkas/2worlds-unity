@@ -269,7 +269,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &439861422
 GameObject:
@@ -301,7 +301,7 @@ Transform:
   m_Children:
   - {fileID: 1815861838}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &492452353
 GameObject:
@@ -413,7 +413,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &492452357
 MonoBehaviour:
@@ -428,9 +428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcName: Laila
-  nameShield: {fileID: 0}
-  getItem: 0
   thisNpcDialogue: {fileID: 11400000, guid: 1f59cf499f331d74398ee948959ab5ac, type: 2}
+  getItem: 0
   changeToMenuNpc: 0
   NpcWithMenu: 0
   noDialogueLeft: 0
@@ -533,7 +532,7 @@ RectTransform:
   m_Children:
   - {fileID: 1994260862}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -747,7 +746,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1081168128
 GameObject:
@@ -870,7 +869,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1153377223
 Rigidbody2D:
@@ -935,7 +934,6 @@ MonoBehaviour:
   corruptionStat: 0
   dialogueManager: {fileID: 1022212088}
   activeQuests: []
-  InteractBox: {fileID: 0}
 --- !u!1001 &1159771471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -945,7 +943,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5908401141620865993, guid: 0a3ec0012dd6dbe439dbe9124b64dafc, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5908401141620865993, guid: 0a3ec0012dd6dbe439dbe9124b64dafc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -992,6 +990,10 @@ PrefabInstance:
       value: NpcConversation
       objectReference: {fileID: 0}
     - target: {fileID: 5908401141620866039, guid: 0a3ec0012dd6dbe439dbe9124b64dafc, type: 3}
+      propertyPath: automatic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5908401141620866039, guid: 0a3ec0012dd6dbe439dbe9124b64dafc, type: 3}
       propertyPath: conversations.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 974f9fefde7bc4347808779d9d6b9414, type: 2}
@@ -1029,9 +1031,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcName: Eric
-  nameShield: {fileID: 0}
-  getItem: 1
   thisNpcDialogue: {fileID: 11400000, guid: 6d85ff56bce46a84ca5069f0ba5728ee, type: 2}
+  getItem: 1
   changeToMenuNpc: 0
   NpcWithMenu: 1
   noDialogueLeft: 0
@@ -1131,7 +1132,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1316097203
 GameObject:
@@ -1280,7 +1281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412691972346702186, guid: f1edfa513021d6641931aebd225e5bbf, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4412691972346702186, guid: f1edfa513021d6641931aebd225e5bbf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1405,9 +1406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcName: Geric
-  nameShield: {fileID: 0}
-  getItem: 0
   thisNpcDialogue: {fileID: 11400000, guid: e4f0478ed18bd4247a9cbf0c7e1a610c, type: 2}
+  getItem: 0
   changeToMenuNpc: 0
   NpcWithMenu: 0
   noDialogueLeft: 0
@@ -1507,7 +1507,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907205745
 GameObject:
