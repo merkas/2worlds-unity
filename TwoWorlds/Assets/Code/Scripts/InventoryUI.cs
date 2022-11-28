@@ -6,9 +6,10 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
-    public Transform itemsParent;
     public GameObject inventoryWindow;
     public GameObject cardInventoryWindow;
+
+    public Transform itemsParent;
     public Transform cardParent;
 
     public Button AddToInventoryButton;
@@ -22,6 +23,7 @@ public class InventoryUI : MonoBehaviour
     public GameObject itemWindow;
     public Text itemTitleText;
     public Text itemInfoText;
+    public Text questItemText;
 
     public GameObject cardWindow;
     public Text cardTitleText;
@@ -36,9 +38,6 @@ public class InventoryUI : MonoBehaviour
     CardDeckSlot[] cardDeckSlots;
 
     GameObject selectedObject;
-
-    //public delegate void MovedObject();
-    //public static event MovedObject movedObject;
 
     public delegate void ClosingInventory();
     public static event ClosingInventory inventoryClosed;
@@ -57,78 +56,16 @@ public class InventoryUI : MonoBehaviour
         cardSlots = cardParent.GetComponentsInChildren<CardSlot>(); // also normal card slots
         cardDeckSlots = cardParent.GetComponentsInChildren<CardDeckSlot>();
 
-        inventoryWindow.SetActive(false);
-        cardInventoryWindow.SetActive(false);
         cardWindow.SetActive(false);
         itemWindow.SetActive(false);
-
-        foreach (GameObject tab in tabs)
-        {
-            tab.SetActive(false);
-        }
-        foreach (Button tabButton in tabButtons)
-        {
-            tabButton.gameObject.SetActive(false);
-        }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (inventoryWindow.activeSelf == false)
-            {
-                HideTabs();
-                inventoryWindow.SetActive(true);
-                cardInventoryWindow.SetActive(false);
-                foreach (Button tabButton in tabButtons)
-                {
-                    tabButton.gameObject.SetActive(true);
-                }
-                ActivateNewTab(0);
-            }
-            else
-            {
-                //inventoryWindow.SetActive(false);
-                foreach (GameObject tab in tabs)
-                {
-                    tab.SetActive(false);
-                }
-                foreach (Button tabButton in tabButtons)
-                {
-                    tabButton.gameObject.SetActive(false);
-                }
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (cardInventoryWindow.activeSelf == false)
-            {
-                HideTabs();
-                inventoryWindow.SetActive(false);
-                cardInventoryWindow.SetActive(true);
-                foreach (Button tabButton in tabButtons)
-                {
-                    tabButton.gameObject.SetActive(true);
-                }
-                ActivateNewTab(1);
-            }
-            else 
-            {
-                //cardInventoryWindow.SetActive(false);
-                foreach (GameObject tab in tabs)
-                {
-                    tab.SetActive(false);
-                }
-                foreach (Button tabButton in tabButtons)
-                {
-                    tabButton.gameObject.SetActive(false);
-                }
-            }
-        }
-    }
+    //private void Update()
+    //{
 
-    void UpdateUI()
+    //}
+
+    void UpdateUI() // Inventory slots only
     {
         for (int i = 0; i < slots.Length; i++) // item inventory
         {
@@ -175,20 +112,11 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void CloseInventory()
+    public void CloseInventory() // called by UI Navigation Script
     {
-        inventoryWindow.SetActive(false);
-        cardInventoryWindow.SetActive(false);
         cardWindow.SetActive(false);
         itemWindow.SetActive(false);
-        foreach (GameObject tab in tabs)
-        {
-            tab.SetActive(false);
-        }
-        foreach (Button tabButton in tabButtons)
-        {
-            tabButton.gameObject.SetActive(false);
-        }
+
         ResetDoubleClickedObjects();
 
         if (inventoryClosed != null)
@@ -211,7 +139,8 @@ public class InventoryUI : MonoBehaviour
         itemWindow.GetComponentInChildren<Image>().sprite = item.icon;
         itemTitleText.GetComponent<Text>().text = item.itemName;
         itemInfoText.GetComponent<Text>().text = item.info;
-
+        if (item.isQuestItem) questItemText.enabled = true;
+        else questItemText.enabled = false;
         itemWindow.SetActive(true);
     }
 
@@ -348,36 +277,6 @@ public class InventoryUI : MonoBehaviour
         selectedObject = cardSlots[inventory.cards.Count].gameObject;
         selectedObject.GetComponent<CardSlot>().CardActive(true);
         UpdateUI();
-    }
-
-    void HideTabs()
-    {
-        foreach(GameObject tab in tabs)
-        {
-            tab.SetActive(false);
-        }
-        foreach(Button button in tabButtons)
-        {
-            button.GetComponent<Image>().color = new Color32(0, 50, 80, 255); // dark blueish grey, change component if needed
-            button.enabled = true;
-        }
-    }
-
-    void ActivateNewTab(int index)
-    {
-        HideTabs();
-        tabs[index].SetActive(true);
-        tabButtons[index].GetComponent<Image>().color = new Color32(0, 75, 120, 255);
-        tabButtons[index].enabled = false;
-    }
-
-    public void ActivateTab1()
-    {
-        ActivateNewTab(0);
-    }
-    public void ActivateTab2()
-    {
-        ActivateNewTab(1);
     }
 
 }
