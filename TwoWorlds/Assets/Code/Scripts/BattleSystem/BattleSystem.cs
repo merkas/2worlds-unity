@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public enum BattleState 
 { 
     START, 
+
     PLAYERTURN, 
     ENEMYTURN, 
     WON, 
@@ -37,12 +38,19 @@ public class BattleSystem : MonoBehaviour
     public BattleHud playerHud;
     public BattleHud enemyHud;
 
+
+    //int index = Card.IndexOf(Inventory);
+
     void Start()
     {
         state = BattleState.START;
 
+
         StartCoroutine(SetupBattle());
 
+        //Inventory.instance.deckCards
+        //liste = inventory
+        //for each
     }
 
     IEnumerator SetupBattle()
@@ -107,6 +115,7 @@ public class BattleSystem : MonoBehaviour
 
         playerUnit.DrainAP(10);
         playerHud.SetAP(playerUnit.CurrentAP);
+
 
         bool isDead = enemyUnit.TakeDamage(20);
         enemyHud.SetHP(enemyUnit.currentHP);

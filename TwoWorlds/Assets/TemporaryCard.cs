@@ -22,5 +22,8 @@ public class TemporaryCard: ScriptableObject
     public int ActionPointsNeeded;
     public bool isStackable;
 
+
+    public int Cardamage;
+
     public string info;
 }
