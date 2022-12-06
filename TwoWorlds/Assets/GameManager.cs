@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public enum GameMode
 {
     Gameplay, // player can move around
+    FightMode,
     Cutscene // player can't move around, space to continue
 }
 

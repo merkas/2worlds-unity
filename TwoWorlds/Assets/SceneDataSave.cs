@@ -19,40 +19,177 @@ public class SceneDataSave : MonoBehaviour
     }
     #endregion
 
-    public List<Scene> ingameScenes;
-
     public List<SingleSceneData> sceneData;
 
-    //int sceneEnters;
-    //int sceneProgress;
-
-    static int storyProgress;
+    public int storyProgress = 0;
 
     public Scene activeScene;
+    public SingleSceneData activeSceneData;
+    public List<ObjectChange> objectsToCheck;
+
+    public List<NpcData> currentNpcs;
+    public List<NpcData> allNpcs; // just for check public
+
+    bool newSceneAdded = false;
+
+    private void Start()
+    {
+        // load default values / save file   
+    }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneLoaded;
     }
 
-    void SceneLoaded(Scene scene, LoadSceneMode mode)
+    void SceneLoaded(Scene scene, LoadSceneMode mode) // called after Awake of DataContainer
     {
+        newSceneAdded = false;
         activeScene = SceneManager.GetActiveScene();
+        bool foundSceneInList = false;
+
+        foreach (SingleSceneData data in sceneData)
+        {
+            if (data.sceneName == activeSceneData.sceneOfThisData.name)
+            {
+                foundSceneInList = true;
+                activeSceneData = data;
+                break;
+            }
+        }
+        
+        if (foundSceneInList == true)
+        {
+            activeSceneData.sceneEnters++;
+        }
+        else
+        {
+            AddSceneDataToList(activeSceneData); 
+        }
+
+        LoadCurrentScene();
     }
 
-    public void Debugger(string message)
+    public void LoadNpcData(NpcData data, GameObject npc)
     {
-        Debug.Log(message);
+        currentNpcs.Add(data);
+        if (newSceneAdded == true)
+        {
+            allNpcs.Add(data);
+        }
+        else
+        {
+            foreach(NpcData npcData in allNpcs)
+            {
+                if (npcData.npcName == data.npcName) // since name stays always the same
+                {
+                    npc.GetComponent<DialoguePartner>().UpdateData(npcData);
+                }
+            }
+        }
     }
 
-    static void GetStoryProgress()
+    public void SaveNewNpcData(NpcData data)
+    {
+        int index = 0;
+        foreach(NpcData npcData in allNpcs)
+        {
+            if (npcData.npcName == data.npcName)
+            {
+                allNpcs[index].numberOfTalks += data.numberOfTalks;
+
+                allNpcs[index].npcWithMenu = data.npcWithMenu;
+                allNpcs[index].getItem = data.getItem;
+                break;
+            }
+            index++;
+        }
+    }
+
+    public void OnSceneExit() // called by dataContainer
+    {
+        newSceneAdded = false;
+    }
+
+    public void AddSceneDataToList(SingleSceneData activeSceneData)
+    {
+        // check for unwanted scenes like main menu, credits and fight scene
+        newSceneAdded = true;
+        sceneData.Add(activeSceneData);
+    }
+
+    void CheckForSceneProgress(int storyProgress)
+    {
+        int index = 0;
+        foreach(int checkpoint in activeSceneData.progressPoint)
+        {
+            if (storyProgress == checkpoint)
+            {
+                //int progress = 1;
+                // scene Progress depending on last checkpoint activated
+
+                //activeSceneData.sceneProgress += progress;
+                activeSceneData.sceneProgress = index; // check if working
+            }
+            index++;
+        }
+    }
+
+    void SceneData(int corruption, int numberOfEnters, int sceneProgress) // give data to scene
     {
 
     }
 
-    void SaveData()
+    void LoadCurrentScene() // has to be checked
     {
+        foreach (ObjectChange obj in objectsToCheck)
+        {
+            if (obj.objectToChange == null) // check for empty refrence
+            {
+                Debug.Log("Found ListObject without GameObject");
+                objectsToCheck.Remove(obj);
+                return;
+            }
+            // checkFor corruption is missing
+            if (obj.sceneProgressMin >= activeSceneData.sceneProgress && obj.NumberOfEntersMin >= activeSceneData.sceneEnters) // check min conditions
+            {
+                if (obj.sceneProgressMax <= activeSceneData.sceneProgress && obj.NumberOfEntersMax <= activeSceneData.sceneEnters) // check max conditions
+                {
+                    ChangeObjectWhenConditionsMet(obj);
+                }
+            }
+        }
+    }
 
+    void ChangeObjectWhenConditionsMet(ObjectChange obj) // change object depending on its bools
+    {
+        if (obj.doThis == DoThis.TRIGGER)
+        {
+            if (obj.activateTrigger == true) obj.objectToChange.GetComponent<Collider2D>().isTrigger = true;
+            else obj.objectToChange.GetComponent<Collider2D>().isTrigger = false;
+        }
+
+        else if (obj.doThis == DoThis.SETACTIVE)
+        {
+            if (obj.setActive == true) obj.objectToChange.SetActive(true);
+            else obj.objectToChange.SetActive(false);
+        }
+
+        else if (obj.doThis == DoThis.OTHER)
+        {
+            if (obj.changeSprite == true) // only one-time use for now
+            {
+                obj.objectToChange.GetComponent<SpriteRenderer>().sprite = obj.changeToThisSprite;
+            }
+            else if (obj.instantiate == true)
+            {
+                Instantiate(obj.objectToChange, obj.spawnPoint.position, Quaternion.identity);
+            }
+            else if (obj.destroy == true)
+            {
+                Destroy(obj.objectToChange);
+            }
+        }
     }
 
     private void OnDisable()

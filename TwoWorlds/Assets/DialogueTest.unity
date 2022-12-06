@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 492452357}
   m_Layer: 0
   m_Name: ChoiceNpc
-  m_TagString: Untagged
+  m_TagString: DialogueNpc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -487,6 +487,11 @@ MonoBehaviour:
   allQuests: []
   chosenGreeting: 
   additionalGreeting: 
+  thisNpcData:
+    npcName: 
+    numberOfTalks: 0
+    npcWithMenu: 0
+    getItem: 0
 --- !u!1 &588055923
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,7 +848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694192140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 995.4196, y: 480.47614, z: 0.44163167}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -862,10 +867,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c930b7a946c7b9f47a178a85e0f465c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingameScenes: []
   sceneData: []
+  storyProgress: 0
   activeScene:
     m_Handle: 0
+  activeSceneData:
+    sceneEnters: 0
+    sceneProgress: 0
+    sceneOfThisData:
+      m_Handle: 0
+    sceneName: 
+    progressPoint: 
+  objectsToCheck: []
+  currentNpcs: []
+  allNpcs: []
 --- !u!1 &720920708
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   corruptionStat: 0
-  dialogueManager: {fileID: 0}
+  dialogueManager: {fileID: 1022212088}
   activeQuests: []
 --- !u!114 &720920712
 MonoBehaviour:
@@ -1422,7 +1437,7 @@ GameObject:
   - component: {fileID: 1161624942}
   m_Layer: 0
   m_Name: MenuNpc
-  m_TagString: Untagged
+  m_TagString: DialogueNpc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1450,6 +1465,11 @@ MonoBehaviour:
   allQuests: []
   chosenGreeting: 
   additionalGreeting: 
+  thisNpcData:
+    npcName: 
+    numberOfTalks: 0
+    npcWithMenu: 0
+    getItem: 0
 --- !u!61 &1161624943
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2257,7 +2277,7 @@ GameObject:
   - component: {fileID: 1893187582}
   m_Layer: 0
   m_Name: ChoiceNpc2
-  m_TagString: Untagged
+  m_TagString: DialogueNpc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2285,6 +2305,11 @@ MonoBehaviour:
   allQuests: []
   chosenGreeting: 
   additionalGreeting: 
+  thisNpcData:
+    npcName: 
+    numberOfTalks: 0
+    npcWithMenu: 0
+    getItem: 0
 --- !u!61 &1893187583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2467,7 +2492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1960524771}
-  - component: {fileID: 1960524770}
+  - component: {fileID: 1960524772}
   m_Layer: 0
   m_Name: SceneData
   m_TagString: Untagged
@@ -2475,22 +2500,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1960524770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960524769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 840fb91e01038a445aa72c8385783572, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneEnters: 0
-  thisScene:
-    m_Handle: 0
-  objectsToChange: []
 --- !u!4 &1960524771
 Transform:
   m_ObjectHideFlags: 0
@@ -2506,6 +2515,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1960524772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960524769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8b33a14f141be4dab429e4101c903f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisSceneData:
+    sceneEnters: 0
+    sceneProgress: 2
+    sceneOfThisData:
+      m_Handle: 0
+    sceneName: 
+    progressPoint: 
+  objectsToChange:
+  - objectToChange: {fileID: 492452353}
+    doThis: 1
+    instantiate: 0
+    setActive: 0
+    destroy: 0
+    changeSprite: 0
+    activateTrigger: 0
+    spawnPoint: {fileID: 0}
+    changeToThisSprite: {fileID: 0}
+    sceneProgressMin: 0
+    sceneProgressMax: 5
+    NumberOfEntersMin: 1
+    NumberOfEntersMax: 1
+  - objectToChange: {fileID: 1161624941}
+    doThis: 0
+    instantiate: 0
+    setActive: 0
+    destroy: 0
+    changeSprite: 0
+    activateTrigger: 0
+    spawnPoint: {fileID: 0}
+    changeToThisSprite: {fileID: 0}
+    sceneProgressMin: 0
+    sceneProgressMax: 0
+    NumberOfEntersMin: 0
+    NumberOfEntersMax: 0
 --- !u!1 &1977413172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2642,7 +2697,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1994260862
 RectTransform:
   m_ObjectHideFlags: 0
