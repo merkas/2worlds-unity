@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
-    public GameObject dialogueBox;
+    public GameObject textBoxWindow;
     public string timelineDialogue;
     public Image charSprite;
     public TextMeshProUGUI characterName;
@@ -35,7 +35,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        OpenTimelineDialogueBox(false);
+        OpenTextBox(false);
+        textBoxWindow.SetActive(false);
         //DontDestroyOnLoad(this);
     }
 
@@ -55,7 +56,7 @@ public class UIManager : MonoBehaviour
         if (dialogueText != null ) dialogueText.text = dialogue;
 
         characterName.text = charName;
-        OpenTimelineDialogueBox(true);
+        OpenTextBox(true);
     }
 
     public void GetBinding(TextMeshProUGUI text) // dialogue tracks
@@ -63,14 +64,21 @@ public class UIManager : MonoBehaviour
         dialogueText = text;
     }
 
-    public void OpenTimelineDialogueBox(bool active)
+    public void OpenTextBox(bool active)
     {
-        dialogueBox.SetActive(active);
+        if (textBoxWindow != null) textBoxWindow.SetActive(active);
+    }
+
+    public void UseGeneralTextbox(string textToDisplay, string charName = null)
+    {
+        dialogueText.text = textToDisplay;
+        if (charName == null) characterName.text = "Faye"; // default
+        else characterName.text = charName;
+        OpenTextBox(true);
     }
 
     IEnumerator TypeSentence(string sentence, TextMeshProUGUI dialogueText) // not working
     {
-        Debug.Log("Type Sentence started");
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {

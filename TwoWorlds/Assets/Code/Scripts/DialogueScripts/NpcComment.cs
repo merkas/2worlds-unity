@@ -30,11 +30,20 @@ public class NpcComment : MonoBehaviour
     public void ChooseComment()
     {
         int max = comments.Count;
-        chosenComment = Random.Range(0, max);
-        
-        if (comments[chosenComment] != previousComment)
+        if (max > 1)
+        {
+            chosenComment = Random.Range(0, max);
+            if (comments[chosenComment] != previousComment)
+                ShowComment();
+            else ChooseComment(); // is working
+        }
+        else
+        {
+            chosenComment = 0;
             ShowComment();
-        else ChooseComment(); // is working
+            GetComponent<BoxCollider2D>().enabled = false; // actual collider as child object since it's not always needed?
+        }
+        
     }
 
     void ShowComment()

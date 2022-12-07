@@ -66,7 +66,7 @@ public class DialogueClipBehaviour : PlayableBehaviour
         }
         else
         {
-            UIManager.instance.OpenTimelineDialogueBox(false);
+            UIManager.instance.OpenTextBox(false);
         }
         clipPlayed = false;
     }

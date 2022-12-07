@@ -11,19 +11,15 @@ public class DataContainer : MonoBehaviour
 
     private void Awake()
     {
-        //SceneManager.sceneLoaded += SceneLoaded;
-
         thisSceneData.sceneOfThisData = SceneManager.GetActiveScene();
-        thisSceneData.sceneName = SceneManager.GetActiveScene().name;
+        thisSceneData.sceneName = SceneManager.GetActiveScene().name; 
+    }
 
+    private void Start()
+    {
         SceneDataSave.instance.activeSceneData = thisSceneData;
         SceneDataSave.instance.objectsToCheck = objectsToChange;
     }
-
-    //void SceneLoaded(Scene scene, LoadSceneMode mode)
-    //{
-        
-    //}
 
     private void OnDestroy()
     {

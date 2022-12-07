@@ -16,7 +16,7 @@ public class Interactable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-            NotificationPrefab.SetActive(false);      
+            if (NotificationPrefab != null) NotificationPrefab.SetActive(false);      
     }
 
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class Interactable : MonoBehaviour
         {
             isInRange = true;
             Debug.Log("Player in Range");
-            NotificationPrefab.SetActive(true);
+            if (NotificationPrefab != null) NotificationPrefab.SetActive(true);
         }
     }
     //Is not interactable when exiting the trigger
@@ -48,7 +48,8 @@ public class Interactable : MonoBehaviour
         {
             isInRange = false;
             Debug.Log("Player not in Range");
-            NotificationPrefab.SetActive(false);
+            if (NotificationPrefab != null) NotificationPrefab.SetActive(false);
+            UIManager.instance.OpenTextBox(false);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TestControllerInteract : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class TestControllerInteract : MonoBehaviour
 
     Collider2D m_Collider;
 
-
+    public string description;
 
     private void Start()
     {
@@ -47,7 +48,10 @@ public class TestControllerInteract : MonoBehaviour
         }
     }
 
-
+    public void GiveDescription()
+    {
+        UIManager.instance.UseGeneralTextbox(description);
+    }
 
     public void destroyObstacle()
     {

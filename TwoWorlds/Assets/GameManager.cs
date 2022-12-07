@@ -61,8 +61,13 @@ public class GameManager : MonoBehaviour
     public void PauseTimeline(PlayableDirector activeOne)
     {
         activeDirector = activeOne;
-        activeDirector.playableGraph.GetRootPlayable(0).SetSpeed(0d);
-        dialogueMoment = true;
+        
+        if (activeDirector != null)
+        {
+            activeDirector.playableGraph.GetRootPlayable(0).SetSpeed(0d);
+            dialogueMoment = true;
+        }
+        else UIManager.instance.OpenTextBox(false);
     }
 
     public void ResumeTimeline()
