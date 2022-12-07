@@ -26,9 +26,15 @@ public class ObjectChange
     public Transform spawnPoint;
     public Sprite changeToThisSprite;
 
+    // bool?
     public int sceneProgressMin;
     public int sceneProgressMax;
 
-    public int NumberOfEntersMin;
-    public int NumberOfEntersMax;
+    // bool?
+    public int sceneEntersMin;
+    public int sceneEntersMax;
+
+    // bool?
+    public int corruptionMin;
+    public int corruptionMax;
 }

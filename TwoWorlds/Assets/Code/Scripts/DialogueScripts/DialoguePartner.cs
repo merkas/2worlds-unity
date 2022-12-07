@@ -51,10 +51,7 @@ public class DialoguePartner : MonoBehaviour
 
     public void UpdateData(NpcData data)
     {
-        Debug.Log("Data updated");
         thisNpcData = data;
-        
-        //check if right number of talks
     }
 
     void LoadNpcData()
@@ -68,9 +65,12 @@ public class DialoguePartner : MonoBehaviour
 
 
     private void OnDestroy()
-    {
-        //LoadNpcData();
-        SceneDataSave.instance.SaveNewNpcData(thisNpcData); // save new data
+    { 
+        if (thisNPC.numberOfTalks >= 1) // check if player talked to npc in current sceneEnter
+        {
+            LoadNpcData(); // load new data in npcData
+            SceneDataSave.instance.SaveNewNpcData(thisNpcData); // save new data
+        }
     }
 
     public void ChooseGreeting(int corruptionStat)
@@ -227,8 +227,8 @@ public class DialoguePartner : MonoBehaviour
         {
             NpcWithMenu = true;
         }
-        Debug.Log(thisNPC.numberOfTalks);
-        //LoadNpcData();
+        
+        //LoadNpcData(); // only add if info needed before scene leave
         //SceneDataSave.instance.SaveNewNpcData(thisNpcData);
     }
 }

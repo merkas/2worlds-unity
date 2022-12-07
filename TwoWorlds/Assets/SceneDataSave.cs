@@ -67,14 +67,15 @@ public class SceneDataSave : MonoBehaviour
             AddSceneDataToList(activeSceneData); 
         }
 
+        //CheckForSceneProgress(GameManager.instance.storyProgress);
         LoadCurrentScene();
     }
 
     public void LoadNpcData(NpcData data, GameObject npc)
     {
-        currentNpcs.Add(data);
         if (newSceneAdded == true)
         {
+            currentNpcs.Add(data);
             allNpcs.Add(data);
         }
         else
@@ -84,19 +85,21 @@ public class SceneDataSave : MonoBehaviour
                 if (npcData.npcName == data.npcName) // since name stays always the same
                 {
                     npc.GetComponent<DialoguePartner>().UpdateData(npcData);
+                    currentNpcs.Add(npcData); // current npcData takes saved data as well
                 }
             }
         }
     }
 
-    public void SaveNewNpcData(NpcData data)
+    public void SaveNewNpcData(NpcData data) // called on scene leave
     {
         int index = 0;
         foreach(NpcData npcData in allNpcs)
         {
             if (npcData.npcName == data.npcName)
             {
-                allNpcs[index].numberOfTalks += data.numberOfTalks;
+                Debug.Log("Found matching data, updating data");
+                allNpcs[index].numberOfTalks = data.numberOfTalks; // check if strange numbers appear in inspector
 
                 allNpcs[index].npcWithMenu = data.npcWithMenu;
                 allNpcs[index].getItem = data.getItem;
@@ -142,6 +145,7 @@ public class SceneDataSave : MonoBehaviour
 
     void LoadCurrentScene() // has to be checked
     {
+        //int corruption = GameManager.instance.corruption;
         foreach (ObjectChange obj in objectsToCheck)
         {
             if (obj.objectToChange == null) // check for empty refrence
@@ -150,10 +154,11 @@ public class SceneDataSave : MonoBehaviour
                 objectsToCheck.Remove(obj);
                 return;
             }
-            // checkFor corruption is missing
-            if (obj.sceneProgressMin >= activeSceneData.sceneProgress && obj.NumberOfEntersMin >= activeSceneData.sceneEnters) // check min conditions
+            
+            if (obj.sceneProgressMin <= activeSceneData.sceneProgress && obj.sceneEntersMin <= activeSceneData.sceneEnters) // check min conditions
             {
-                if (obj.sceneProgressMax <= activeSceneData.sceneProgress && obj.NumberOfEntersMax <= activeSceneData.sceneEnters) // check max conditions
+                if (obj.sceneProgressMax >= activeSceneData.sceneProgress && obj.sceneEntersMax >= activeSceneData.sceneEnters
+                   /* && obj.corruptionMin <= corruption && obj.corruptionMax >= corruption*/) // check max conditions, implement, when corruption stat script stands
                 {
                     ChangeObjectWhenConditionsMet(obj);
                 }

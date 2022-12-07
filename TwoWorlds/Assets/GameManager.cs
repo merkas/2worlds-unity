@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public int storyProgress = 0;
+    //public int corruption;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneLoaded;

@@ -271,6 +271,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &415985490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415985491}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415985491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415985490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.7, y: 1.97, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &439861422
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,6 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd27e9dcb781a2e4cb6def8e9fd611ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  storyProgress: 0
 --- !u!4 &694192142
 Transform:
   m_ObjectHideFlags: 0
@@ -2542,12 +2574,12 @@ MonoBehaviour:
     destroy: 0
     changeSprite: 0
     activateTrigger: 0
-    spawnPoint: {fileID: 0}
+    spawnPoint: {fileID: 415985491}
     changeToThisSprite: {fileID: 0}
     sceneProgressMin: 0
     sceneProgressMax: 5
     NumberOfEntersMin: 1
-    NumberOfEntersMax: 1
+    NumberOfEntersMax: 5
   - objectToChange: {fileID: 1161624941}
     doThis: 0
     instantiate: 0
