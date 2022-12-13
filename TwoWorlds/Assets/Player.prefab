@@ -47,10 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Player
   unitLevel: 100
-  damage: 10
-  APCost: 0
-  maxHP: 50
-  currentHP: 50
+  _Damage: 5
+  maxHP: 200
+  currentHP: 200
   maxAP: 50
   CurrentAP: 50
 --- !u!1 &4407637376961712034

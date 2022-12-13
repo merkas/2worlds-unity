@@ -6,13 +6,18 @@ public class Unit : MonoBehaviour // enemy/player object
 {
     public string unitName;
     public int unitLevel;
-
-    public int damage;
+    [SerializeField] int _Damage;
 
     public int maxHP;
     public int currentHP;
     public int maxAP;
     public int CurrentAP;
+
+    public int Damage
+    {
+        get { return _Damage; }
+        set { _Damage = Damage; }
+    }
 
     public bool TakeDamage(int dmg)
     {
@@ -47,5 +52,7 @@ public class Unit : MonoBehaviour // enemy/player object
         if (CurrentAP > maxAP)
             CurrentAP = maxAP;
     }
+
+
 }
 

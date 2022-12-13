@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e21eacc9ae744459b7e913d94e44cb, type: 3}
   m_Name: TestCard
   m_EditorClassIdentifier: 
+  _ATKValue: 25
+  _APDrain: 10
+  _HealHP: 0
   cardName: Mesons Ire
   cardIcon: {fileID: 7482667652216324306, guid: 7c2d6af1d7274c941b749e3c45569c5c, type: 3}
   cardType: 1

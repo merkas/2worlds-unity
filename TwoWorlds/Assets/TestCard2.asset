@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e21eacc9ae744459b7e913d94e44cb, type: 3}
   m_Name: TestCard2
   m_EditorClassIdentifier: 
+  _ATKValue: 10
+  _APDrain: 5
+  _HealHP: 0
   cardName: Sevens Flowy Movement
   cardIcon: {fileID: 7482667652216324306, guid: 7c2d6af1d7274c941b749e3c45569c5c, type: 3}
   cardType: 2
   ActionPointsNeeded: 0
+  isStackable: 0
   info: Flowy Movements around your enemy! No damage

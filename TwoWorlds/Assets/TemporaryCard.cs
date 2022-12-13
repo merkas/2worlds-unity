@@ -14,6 +14,14 @@ public enum CardType
 [CreateAssetMenu(fileName = "New Card", menuName = "Inventory/Card")]
 public class TemporaryCard: ScriptableObject
 {
+
+    [SerializeField] int _ATKValue;
+    [SerializeField] int _APDrain;
+    [SerializeField] int _HealHP;
+   
+    
+    
+
     public string cardName;
     public Sprite cardIcon;
 
@@ -23,7 +31,25 @@ public class TemporaryCard: ScriptableObject
     public bool isStackable;
 
 
-    public int Cardamage;
-
     public string info;
+
+
+    public int ATKValue
+    {
+        get { return _ATKValue; }
+        set { _ATKValue = ATKValue;  }
+    }
+
+    public int APDrain
+    {
+        get { return _APDrain; }
+        set { _APDrain = APDrain; }
+    }
+
+    public int HealHP
+    {
+        get { return _HealHP; }
+        set { _HealHP = HealHP; }
+    }
+
 }

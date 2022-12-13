@@ -9,6 +9,7 @@ TagManager:
   - pospoint
   - DialogueNpc
   - Enemy
+  - Card
   layers:
   - Default
   - TransparentFX
