@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
     public int storyProgress = 0;
     //public int corruption;
 
+    public GameObject transitionScreen;
+    Animator transitionAnimator;
+    float transitionTime = 1f;
+
+    public GameObject player;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneLoaded;
@@ -43,6 +49,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this);
+        transitionAnimator = transitionScreen.GetComponent<Animator>();
     }
 
     public void SceneLoaded(Scene scene, LoadSceneMode mode)
@@ -79,5 +86,18 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= SceneLoaded;
+    }
+
+    public void LoadNewScene(int index)
+    {
+        StartCoroutine(LoadNewLevel(index));
+    }
+
+    IEnumerator LoadNewLevel(int index)
+    {
+        transitionAnimator.SetTrigger("StartSceneTransition");
+        yield return new WaitForSeconds(transitionTime);
+        // instead load into base scene and unload old scene
+        SceneManager.LoadScene(index);
     }
 }

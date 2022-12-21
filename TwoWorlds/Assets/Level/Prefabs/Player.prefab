@@ -131,6 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  corruptionStat: 0
+  dialogueManager: {fileID: 0}
+  activeQuests: []
 --- !u!50 &7184108362882095303
 Rigidbody2D:
   serializedVersion: 4
