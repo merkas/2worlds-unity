@@ -10,6 +10,9 @@ public class NpcComment : MonoBehaviour
     int chosenComment;
 
     public bool automatic;
+    public bool playerReaction;
+    public string characterDialogue;
+    public string characterName;
 
     public Transform bubbleSpawn;
     public GameObject speechBubble; //Prefab
@@ -49,8 +52,7 @@ public class NpcComment : MonoBehaviour
     void ShowComment()
     {
         bubble = Instantiate(speechBubble, canvas.transform.position, Quaternion.identity);
-        bubble.transform.localScale += new Vector3(canvas.transform.localScale.x * 0.8f, canvas.transform.localScale.y * 0.8f, 0);
-
+        //bubble.transform.localScale += new Vector3(canvas.transform.localScale.x * 0.8f, canvas.transform.localScale.y * 0.8f, 0);
 
         chatterText.text = comments[chosenComment];
         chatterText.enabled = true;
@@ -80,5 +82,10 @@ public class NpcComment : MonoBehaviour
         chatterText.enabled = false;
         commentOnShow = false;
         timer = 0;
+
+        if (playerReaction == true && characterDialogue != null)
+        {
+            UIManager.instance.UseGeneralTextbox(characterDialogue, characterName);
+        }
     }
 }
