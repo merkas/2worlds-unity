@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &54307
 Grid:
   m_ObjectHideFlags: 0
@@ -1647,7 +1647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &306623009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4971,7 +4971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1047764258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5760,7 +5760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1274090434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5918,7 +5918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1297514330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6007,6 +6007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyProgress: 0
   transitionScreen: {fileID: 1959965810}
+  player: {fileID: 0}
 --- !u!1001 &1308022970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8007,7 +8008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1693012367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8667,7 +8668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1813298055
 MonoBehaviour:
   m_ObjectHideFlags: 0

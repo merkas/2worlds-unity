@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     public string timelineDialogue;
     public Image charSprite;
     public TextMeshProUGUI characterName;
+    public TextMeshProUGUI dialogueTextInBox;
     TextMeshProUGUI dialogueText;
 
     PlayableDirector activeDirector;
@@ -59,7 +60,7 @@ public class UIManager : MonoBehaviour
         OpenTextBox(true);
     }
 
-    public void GetBinding(TextMeshProUGUI text) // dialogue tracks
+    public void GetBinding(TextMeshProUGUI text) // dialogue tracks, has to be reset after use
     {
         dialogueText = text;
     }
@@ -67,9 +68,14 @@ public class UIManager : MonoBehaviour
     public void OpenTextBox(bool active)
     {
         if (textBoxWindow != null) textBoxWindow.SetActive(active);
+
+        if (active == false) // reset to default text object
+        {
+            dialogueText = dialogueTextInBox;
+        }
     }
 
-    public void UseGeneralTextbox(string textToDisplay, string charName = null)
+    public void UseGeneralTextbox(string textToDisplay, string charName = null) // implement check, if not interactable, to hide it again
     {
         dialogueText.text = textToDisplay;
         if (charName == null) characterName.text = "Faye"; // default

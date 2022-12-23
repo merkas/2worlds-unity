@@ -13,7 +13,7 @@ public class DialogueClipBehaviour : PlayableBehaviour
     public string characterName;
     PlayableDirector director;
 
-    public bool pauseThis = true; // change later
+    public bool pauseThis = true;
     bool pauseScheduled;
     bool clipPlayed;
 
@@ -22,7 +22,7 @@ public class DialogueClipBehaviour : PlayableBehaviour
 
     public override void OnPlayableCreate(Playable playable)
     {
-        director = (playable.GetGraph().GetResolver() as PlayableDirector); // Klammern nötig?
+        director = (playable.GetGraph().GetResolver() as PlayableDirector);
     }
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
