@@ -8,10 +8,25 @@ public class SceneManagerScript : MonoBehaviour
     public string activeScene;
     public string GameSettingsMenu;
 
-    // Start is called before the first frame update
-    void Start()
+    List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
+    private void OnEnable()
     {
+        SceneManager.sceneLoaded += SceneLoaded;
+        Debug.Log("SceneManager subscribed event");
+    }
 
+    void SceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (mode == LoadSceneMode.Additive)
+        {
+            activeScene = SceneManager.GetActiveScene().name;
+            Debug.Log(activeScene);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= SceneLoaded;
     }
 
     void Awake()
@@ -28,6 +43,12 @@ public class SceneManagerScript : MonoBehaviour
             }
     }
 
+    public void StartGame() 
+    {
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("BaseScene"));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Level1A", LoadSceneMode.Additive));
+    }
+
     public void EscPress()
     {
         Scene scene = SceneManager.GetActiveScene();
@@ -36,15 +57,12 @@ public class SceneManagerScript : MonoBehaviour
             SceneManager.LoadScene("PauseMenu");
         }
     }
+
     public void ContinueGame()
     {
         SceneManager.LoadScene(activeScene);
     }
-    
-    public void StartGame()
-    {
-        SceneManager.LoadScene("Whitebox");
-    }       
+     
     public void OpenSettings()
     {
         SceneManager.LoadScene("SettingsMenu");

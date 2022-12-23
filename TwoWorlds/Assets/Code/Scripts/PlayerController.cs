@@ -26,13 +26,47 @@ public class PlayerController : MonoBehaviour
     bool canTakeItem;
     GameObject otherObject;
 
+    Animator animator;
+    Vector2 lookDirection = new Vector2(0, -1);
+
+    #region Singleton
+    public static PlayerController instance;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject); // with "this", only the component gets destroyed
+            //return;
+        }
+        else instance = this;
+    }
+    #endregion
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         corruptionStat = 0; // load old stat, when necessary, instead
+
+        //DontDestroyOnLoad(this);
     }
 
+    private void Update()
+    {
+        if (GetComponent<Animator>() != null)
+        {
+            animator.SetFloat("Move X", lookDirection.x);
+            animator.SetFloat("Move Y", lookDirection.y);
+            animator.SetFloat("Speed", moveInput.magnitude);
+        }
 
+        if (!Mathf.Approximately(moveInput.x, 0.0f) || !Mathf.Approximately(moveInput.y, 0.0f))
+        {
+            lookDirection.Set(moveInput.x, moveInput.y);
+            lookDirection.Normalize();
+        }
+    }
 
     private void FixedUpdate()
     {

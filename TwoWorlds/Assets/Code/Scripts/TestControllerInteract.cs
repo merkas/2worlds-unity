@@ -13,6 +13,8 @@ public class TestControllerInteract : MonoBehaviour
 
     public string description;
 
+    public int sceneIndexToLoad;
+
     private void Start()
     {
         m_Collider = GetComponent<Collider2D>();
@@ -59,5 +61,10 @@ public class TestControllerInteract : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void ChangeScene()
+    {
+        GameManager.instance.LoadNewScene(sceneIndexToLoad);
     }
 }

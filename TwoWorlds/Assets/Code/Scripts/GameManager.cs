@@ -14,9 +14,11 @@ public enum GameMode
 public class GameManager : MonoBehaviour
 {
     GameMode gameMode;
-
+    string activeScene;
     PlayableDirector activeDirector;
     bool dialogueMoment;
+
+    public List<GameObject> timelineReferences;
 
     #region Singleton
     public static GameManager instance;
@@ -39,8 +41,6 @@ public class GameManager : MonoBehaviour
     Animator transitionAnimator;
     float transitionTime = 1f;
 
-    public GameObject player;
-
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneLoaded;
@@ -48,13 +48,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
         transitionAnimator = transitionScreen.GetComponent<Animator>();
     }
 
     public void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        
+        if (mode == LoadSceneMode.Additive)
+        {
+            activeScene = scene.name;
+            Debug.Log("Active scene: " + activeScene);
+        }
+        //if (scene.name != "BaseScene" && mode != LoadSceneMode.Additive) // not working
+        //{
+        //    SceneManager.LoadSceneAsync("BaseScene");
+        //    Debug.Log("Base Scene had to be loaded in");
+        //}
     }
 
     private void Update() // only for checking
@@ -97,7 +106,16 @@ public class GameManager : MonoBehaviour
     {
         transitionAnimator.SetTrigger("StartSceneTransition");
         yield return new WaitForSeconds(transitionTime);
-        // instead load into base scene and unload old scene
-        SceneManager.LoadScene(index);
+        
+        //SceneManager.LoadScene(index);
+        SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(activeScene);
+
+        transitionAnimator.SetTrigger("SceneEnter");
+    }
+
+    public void SendDataToDirector(PlayableDirector director)
+    {
+        director.GetComponent<GetTimelineDefaultBinding>().externReferences = timelineReferences;
     }
 }

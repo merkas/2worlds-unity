@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Level/Scenes/Whitebox.unity
     guid: 336b60294ab6400449d31c996abaa9b6
   - enabled: 1
-    path: Assets/Level/Scenes/SampleScene.unity
+    path: Assets/TestingMaterial/SaveSystemTest.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/CombatTest.unity
@@ -35,4 +35,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TestingMaterial/TestSceneX.unity
     guid: 225b7f0016b11184a9dcf278bde15306
+  - enabled: 1
+    path: Assets/Level/Scenes/LevelTemplate.unity
+    guid: 94211db2c3de2db42acb5c81d52712a1
+  - enabled: 1
+    path: Assets/Level/Scenes/Level1A.unity
+    guid: fa74c233f502ca741b684842a06dd0b5
+  - enabled: 1
+    path: Assets/Level/Scenes/Level1B.unity
+    guid: 0ec13257af62cf543929f265cd270e6c
+  - enabled: 1
+    path: Assets/Level/Scenes/Level1C.unity
+    guid: cc65d588f32a2744eb60a1dd3082bb79
+  - enabled: 1
+    path: Assets/Level/Scenes/BaseScene.unity
+    guid: 1b6d131b621ca154986100ea1b198819
   m_configObjects: {}
