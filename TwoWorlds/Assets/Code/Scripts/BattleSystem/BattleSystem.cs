@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public enum BattleState 
 { 
     START, 
+    CHARSELECT,
+    CARDSELECT,
     PLAYERTURN, 
     ENEMYTURN, 
     WON, 
@@ -17,19 +19,30 @@ public class BattleSystem : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
+    public GameObject CharaSelectPanel;
+
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
     public BattleState state;
 
     Unit playerUnit;
+    Unit Companion1;
     Unit enemyUnit;
 
+    private Card Cd;
+    private ButtonSwitch BSw;
 
+    private int DmgDealt;
+    private int APCost;
+    private int Heals;
+
+    public bool Cardsplayable;
+
+    public Text discardText;
+    public Text deckText;
     public Text dialogueText;
     public Button AttackButton;
-    public Button AttackButton2;
-    public Button AttackButton3;
     public Button HealButton;
     public Button SkipButton;
     //Später vllt als Panel für die Karten und dass dann disablen
@@ -37,13 +50,35 @@ public class BattleSystem : MonoBehaviour
     public BattleHud playerHud;
     public BattleHud enemyHud;
 
+    public List<Card> deck = new List<Card>();
+    public List<Card> discarded = new List<Card>();
+    //public List<TemporaryCard> deck = new List<TemporaryCard>(); ?
+
+    public Transform[] cardSlots;
+    public bool[] availableCardSlots;
+
+    //int index = Card.IndexOf(Inventory);
+
     void Start()
     {
+        Cd = FindObjectOfType<Card>();
+        BSw = FindObjectOfType<ButtonSwitch>();
+        CharaSelectPanel.gameObject.SetActive(false);
+        Cardsplayable = false;
+
         state = BattleState.START;
+
 
         StartCoroutine(SetupBattle());
 
     }
+
+    private void Update()
+    {
+        deckText.text = deck.Count.ToString();
+        discardText.text = discarded.Count.ToString();
+    }
+
 
     IEnumerator SetupBattle()
     {
@@ -55,63 +90,96 @@ public class BattleSystem : MonoBehaviour
 
         dialogueText.text = "A smelly " + enemyUnit.unitName + " approaches . . .";
 
+        //dialogueText.text = Karte.ATKValue + ""; ATK Value anzeigen lassen
+
         playerHud.SetHub(playerUnit);
         enemyHud.SetHub(enemyUnit);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
+
+        dialogueText.text = "Here are your Cards";
+        //Cardpull();
+        InvokeRepeating(nameof(Cardpull), 0.3f, 0.3f);
+
+
+        yield return new WaitForSeconds(4f);
+        state = BattleState.CHARSELECT;
+        CharaSelect();
+
+        //state = BattleState.PLAYERTURN;
+        //PlayerTurn();
+    }
+
+    void CharaSelect()
+    {
+        CharaSelectPanel.gameObject.SetActive(true);
+        //Auf Charawahl warten per Button
+    }
+
+    public void CardSelect()
+    {
+        CharaSelectPanel.gameObject.SetActive(false);
 
         state = BattleState.PLAYERTURN;
         PlayerTurn();
     }
 
+    void Cardpull()
+    {
+        if(deck.Count >= 1)
+        {
+            Card randomCard = deck[Random.Range(0, deck.Count)];
+
+            for (int i = 0; i < availableCardSlots.Length; i++)
+            {
+                if(availableCardSlots[i] == true)
+                {
+                    randomCard.gameObject.SetActive(true);
+                    randomCard.handindex = i;
+                    randomCard.transform.position = cardSlots[i].position;
+                    randomCard.hasBeenPlayed = false;
+
+                    availableCardSlots[i] = false;
+                    deck.Remove(randomCard);
+                    Debug.Log("Card" + i);
+                    return;
+                }       
+            }
+        }
+
+    }
+
+    void Shuffle()
+    {
+        if(discarded.Count >= 5)
+        {
+            foreach (Card card in discarded)
+            {
+                deck.Add(card);
+            }
+            discarded.Clear();
+        }
+    }
+
     void PlayerTurn()
     {
-        dialogueText.text = "Choose an action: ";
+        dialogueText.text = "Pick a Card!";
         EnableButton();
     }
 
     IEnumerator PlayerAttack()
     {
+        playerUnit.DrainAP(APCost);
 
-        playerUnit.DrainAP(5);
-        playerHud.SetAP(playerUnit.CurrentAP);
+        DmgDealt += BSw.CharDmg;
 
-        bool isDead = enemyUnit.TakeDamage(10);
+        bool isDead = enemyUnit.TakeDamage(DmgDealt);
 
-        //bool isDead = enemyUnit.TakeDamage(10 + playerUnit.damage); playerUnit = Companion ATK (set dmg) + Card Dmg = Dmg
-        //or
-        //bool isDead = enemyUnit.TakeDamage(playerUnit.damage); Dmg number from the Inspector
+        Debug.Log("Dmg zsm: " + DmgDealt);
 
         enemyHud.SetHP(enemyUnit.currentHP);
         dialogueText.text = "Attack 1: ...";
 
-        
-        yield return new WaitForSeconds(2f);
-
-        if (isDead)
-        {
-            state = BattleState.WON;
-            EndBattle();
-        }
-        else
-        {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
-
-        }
-
-    }
-
-    IEnumerator PlayerAttack2()
-    {
-
-        playerUnit.DrainAP(10);
-        playerHud.SetAP(playerUnit.CurrentAP);
-
-        bool isDead = enemyUnit.TakeDamage(20);
-        enemyHud.SetHP(enemyUnit.currentHP);
-        dialogueText.text = "Attack 2: ...";
-
 
         yield return new WaitForSeconds(2f);
 
@@ -129,41 +197,15 @@ public class BattleSystem : MonoBehaviour
 
     }
 
-    IEnumerator PlayerAttack3()
-    {
-
-        playerUnit.DrainAP(8);
-        playerHud.SetAP(playerUnit.CurrentAP);
-
-        bool isDead = enemyUnit.TakeDamage(12);
-        enemyHud.SetHP(enemyUnit.currentHP);
-        dialogueText.text = "Attack 3: ...";
-
-
-        yield return new WaitForSeconds(2f);
-
-        if (isDead)
-        {
-            state = BattleState.WON;
-            EndBattle();
-        }
-        else
-        {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
-
-        }
-
-    }
 
     IEnumerator PlayerHeal()
     {
-
-        playerUnit.DrainAP(10);
+        Debug.Log("HealingRec:" + Heals);
+        playerUnit.DrainAP(APCost);
         playerHud.SetAP(playerUnit.CurrentAP);
 
 
-        playerUnit.Heal(5);
+        playerUnit.Heal(Heals);
         playerHud.SetHP(playerUnit.currentHP);
         dialogueText.text = "You feel renewed strength";
 
@@ -201,9 +243,10 @@ public class BattleSystem : MonoBehaviour
 
         if (randomNumber == 0)
             {
-                bool isDead = playerUnit.TakeDamage(5);
+            bool isDead = Companion1.TakeDamage(5);
+       
                 playerHud.SetHP(playerUnit.currentHP);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(2f);
 
                 if (isDead)
                 {
@@ -212,8 +255,10 @@ public class BattleSystem : MonoBehaviour
                 }
                 else
                 {
-                    state = BattleState.PLAYERTURN;
-                    PlayerTurn();
+                Shuffle();
+                yield return new WaitForSeconds(4f); //Time before Character selection starts
+                state = BattleState.CHARSELECT;
+                    CharaSelect();
                 }
         }
 
@@ -221,7 +266,7 @@ public class BattleSystem : MonoBehaviour
         {
             bool isDead = playerUnit.TakeDamage(10);
             playerHud.SetHP(playerUnit.currentHP);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(4f);
 
             if (isDead)
             {
@@ -230,8 +275,10 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
+                Shuffle();
+                yield return new WaitForSeconds(4f); //Time before Character selection starts
                 state = BattleState.PLAYERTURN;
-                PlayerTurn();
+                CharaSelect();
             }
         }
 
@@ -239,7 +286,7 @@ public class BattleSystem : MonoBehaviour
         {
             bool isDead = playerUnit.TakeDamage(15);
             playerHud.SetHP(playerUnit.currentHP);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
 
             if (isDead)
             {
@@ -248,31 +295,13 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
+                Shuffle();
+                yield return new WaitForSeconds(2f); //Time before Character selection starts
                 state = BattleState.PLAYERTURN;
-                PlayerTurn();
+                CharaSelect();
             }
         }
 
-
-        //Randomize();
-
-
-        //bool isDead = playerUnit.TakeDamage(10);
-        //bool isDead = playerUnit.TakeDamage(enemyUnit.damage); dmg numbers from Inspector
-        //playerHud.SetHP(playerUnit.currentHP);
-
-        //yield return new WaitForSeconds(1f);
-
-        //if (isDead)
-        //{
-        //    state = BattleState.LOST;
-        //    EndBattle();
-        //}
-        //else
-        //{
-        //    state = BattleState.PLAYERTURN;
-        //    PlayerTurn();
-        //}
     }
 
     void EndBattle()
@@ -288,41 +317,35 @@ public class BattleSystem : MonoBehaviour
     }
 
 
-    public void OnAttackButton()
+    public void OnCharaSelect()
+    {
+        CharaSelectPanel.gameObject.SetActive(false);
+        //Atk Button enable oder SetActive
+        //Karten als Sprite an Position und Panel mit jeweiligen Button wird aktiviert
+        Cardsplayable = true;
+        state = BattleState.PLAYERTURN;
+        PlayerTurn();
+    }
+
+    public void OnAttackButton(int CaaardDmg, int APStat)
     {
         if (state != BattleState.PLAYERTURN)
             return;
-
+        DmgDealt = CaaardDmg;
+        APCost = APStat;
+        Debug.Log("AP" + APCost);
         StartCoroutine(PlayerAttack());
 
         DisableButtonOnClick();
     }
 
-    public void OnAttackButton2()
+
+    public void OnHealButton(int Healing, int APStat)
     {
         if (state != BattleState.PLAYERTURN)
             return;
-
-        StartCoroutine(PlayerAttack2());
-
-        DisableButtonOnClick();
-    }
-
-    public void OnAttackButton3()
-    {
-        if (state != BattleState.PLAYERTURN)
-            return;
-
-        StartCoroutine(PlayerAttack3());
-
-        DisableButtonOnClick();
-    }
-
-    public void OnHealButton()
-    {
-        if (state != BattleState.PLAYERTURN)
-            return;
-
+        Heals = Healing;
+        APCost = APStat;
         StartCoroutine(PlayerHeal());
 
         DisableButtonOnClick();
@@ -337,12 +360,11 @@ public class BattleSystem : MonoBehaviour
 
         DisableButtonOnClick();
     }
- 
+
+
     public void DisableButtonOnClick()
     { 
         AttackButton.interactable = false;
-        AttackButton2.interactable = false;
-        AttackButton3.interactable = false;
         HealButton.interactable = false;
         SkipButton.interactable = false;
 
@@ -351,8 +373,6 @@ public class BattleSystem : MonoBehaviour
     public void EnableButton()
     {
         AttackButton.interactable = true;
-        AttackButton2.interactable = true;
-        AttackButton3.interactable = true;
         HealButton.interactable = true;
         SkipButton.interactable = true;
     }
