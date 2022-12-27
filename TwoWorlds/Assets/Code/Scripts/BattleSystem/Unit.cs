@@ -8,10 +8,19 @@ public class Unit : MonoBehaviour // enemy/player object
     public int unitLevel;
     [SerializeField] int _Damage;
 
+    //public static int MCDmg;
+    //public static int Companion1Dmg;
+
     public int maxHP;
     public int currentHP;
     public int maxAP;
     public int CurrentAP;
+
+    private ButtonSwitch BSw;
+    private void Start()
+    {
+        BSw = FindObjectOfType<ButtonSwitch>();
+    }
 
     public int Damage
     {
@@ -19,12 +28,12 @@ public class Unit : MonoBehaviour // enemy/player object
         set { _Damage = Damage; }
     }
 
+
     public bool TakeDamage(int dmg)
     {
         currentHP -= dmg;
-
         Debug.Log("Schaden" + dmg);
-
+        
         if (currentHP <= 0)
             return true;
         else

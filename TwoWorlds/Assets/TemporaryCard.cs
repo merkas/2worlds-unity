@@ -15,7 +15,7 @@ public enum CardType
 public class TemporaryCard: ScriptableObject
 {
 
-    [SerializeField] int _ATKValue;
+    public int _ATKValue;
     [SerializeField] int _APDrain;
     [SerializeField] int _HealHP;
    
