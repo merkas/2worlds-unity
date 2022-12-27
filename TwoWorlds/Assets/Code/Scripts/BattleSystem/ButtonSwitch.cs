@@ -8,6 +8,7 @@ public class ButtonSwitch : MonoBehaviour
     private BattleSystem Un;
     private CharaManager ChM;
     public ButtonNr CurrentButtonNr = ButtonNr.Empty;
+
     public int CharDmg;
 
     public bool buttonisClicked;
