@@ -14,7 +14,7 @@ public class NpcComment : MonoBehaviour
     public string characterDialogue;
     public string characterName;
 
-    public Transform bubbleSpawn;
+    //public Transform bubbleSpawn;
     public GameObject speechBubble; //Prefab
     float timer;
     bool commentOnShow;
@@ -51,9 +51,9 @@ public class NpcComment : MonoBehaviour
 
     void ShowComment()
     {
-        bubble = Instantiate(speechBubble, canvas.transform.position, Quaternion.identity);
-        //bubble.transform.localScale += new Vector3(canvas.transform.localScale.x * 0.8f, canvas.transform.localScale.y * 0.8f, 0);
-
+        bubble = Instantiate(speechBubble, canvas.transform/*.position, Quaternion.identity*/);
+        bubble.transform.localScale += new Vector3(chatterText.transform.localScale.x * 2f, chatterText.transform.localScale.y /** 1.2f*/, 0);
+        bubble.transform.position = canvas.transform.position;
         chatterText.text = comments[chosenComment];
         chatterText.enabled = true;
 

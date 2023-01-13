@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d0ec26bd4a52c27469ce36e0b317466a
+guid: 69c88e3ec20b8d541b5ef57196d1223c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,12 +42,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 2
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 164
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -115,7 +115,112 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: flowerfield 1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 16
+        width: 7
+        height: 9
+      alignment: 9
+      pivot: {x: 0.45742354, y: 1.5066935}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ff39a267dbdfe1468b9d2ee5ed48511
+      internalID: 641234838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flowerfield 1_1
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 17
+        width: 7
+        height: 10
+      alignment: 9
+      pivot: {x: 0.47785228, y: 1.3361108}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 738801c2c3446554bb7182f3bf645de5
+      internalID: 2069973643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flowerfield 1_2
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 16
+        width: 7
+        height: 9
+      alignment: 9
+      pivot: {x: 0.49943352, y: 1.4034013}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3efd9046a62ff948a06b27ca2a97786
+      internalID: 517176143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flowerfield 1_3
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 6
+        width: 7
+        height: 9
+      alignment: 9
+      pivot: {x: 0.46763802, y: 1.585352}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0790a8b1c2959547ae1ffd180d12b18
+      internalID: -1074180587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flowerfield 1_4
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 4
+        width: 7
+        height: 10
+      alignment: 9
+      pivot: {x: 0.47615322, y: 1.4069726}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 333fd8ba67ab28249be559917ce42db8
+      internalID: -1771881981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -126,7 +231,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      flowerfield 1_0: 641234838
+      flowerfield 1_4: -1771881981
+      flowerfield 1_3: -1074180587
+      flowerfield 1_2: 517176143
+      flowerfield 1_1: 2069973643
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
