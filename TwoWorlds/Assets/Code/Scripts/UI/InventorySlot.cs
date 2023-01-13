@@ -41,11 +41,11 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         return itemActive;
     }
 
-    public void GetSecondObj(GameObject otherObj)
-    {
-        otherSlot = otherObj;
-        MoveObjectInSlot();
-    }
+    //public void GetSecondObj(GameObject otherObj)
+    //{
+    //    otherSlot = otherObj;
+    //    MoveObjectInSlot();
+    //}
 
     void UiDeactivated()
     {
@@ -146,7 +146,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHa
         {
             info = Instantiate(infoText, this.gameObject.transform);
             info.transform.position += new Vector3(0, 50, 0);
-            info.text = item.info;
+            info.text = item.itemName;
             info.enabled = true;
         }
     }
