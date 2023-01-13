@@ -30,39 +30,37 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI dialogueTextInBox;
     TextMeshProUGUI dialogueText;
 
-    PlayableDirector activeDirector;
-    bool activeTimeline = false;
-    public GameObject timeline;
+    //PlayableDirector activeDirector;
+    //bool activeTimeline = false;
+
+    public Button continueButton; //continue in text display
+    public Button continueTimelineButton;
+    Queue<string> sentencesToDisplay;
 
     private void Start()
     {
         OpenTextBox(false);
         textBoxWindow.SetActive(false);
+        continueButton.gameObject.SetActive(false);
+        continueTimelineButton.gameObject.SetActive(false);
         //DontDestroyOnLoad(this);
-    }
-
-    public void TestTimeline()
-    {
-        timeline.GetComponent<PlayableDirector>().Play();
-    }
-
-    public void ChangeSceneButton()
-    {
-        SceneManager.LoadScene("TestSceneX");
     }
 
     public void SetDialogue(string dialogue, string charName, Sprite characterSprite = null)
     {
         if (characterSprite != null) charSprite.sprite = characterSprite;
-        if (dialogueText != null ) dialogueText.text = dialogue;
 
+        if (dialogueText == null) dialogueText = dialogueTextInBox;
+
+        dialogueText.text = dialogue;
+        
         characterName.text = charName;
-        OpenTextBox(true);
+        if (textBoxWindow.activeSelf == false) OpenTextBox(true);
     }
 
     public void GetBinding(TextMeshProUGUI text) // dialogue tracks, has to be reset after use
     {
-        dialogueText = text;
+        dialogueText = text; // deleted, when timeline pauses
     }
 
     public void OpenTextBox(bool active)
@@ -71,7 +69,11 @@ public class UIManager : MonoBehaviour
 
         if (active == false) // reset to default text object
         {
-            dialogueText = dialogueTextInBox;
+            dialogueText = dialogueTextInBox; 
+            continueButton.enabled = false;
+            continueTimelineButton.enabled = false;
+            continueButton.gameObject.SetActive(false);
+            continueTimelineButton.gameObject.SetActive(false);
         }
     }
 
@@ -83,13 +85,35 @@ public class UIManager : MonoBehaviour
         OpenTextBox(true);
     }
 
-    IEnumerator TypeSentence(string sentence, TextMeshProUGUI dialogueText) // not working
+    public void UseGeneralTextboxMultipleTimes(string[] textToDisplay, string charName = null)
     {
-        dialogueText.text = "";
-        foreach (char letter in sentence.ToCharArray())
+        sentencesToDisplay = new Queue<string>();
+        if (charName == null) characterName.text = "Faye"; // default
+        else characterName.text = charName;
+
+        foreach (string text in textToDisplay)
         {
-            dialogueText.text += letter;
-            yield return null; // = wait for next frame
+            sentencesToDisplay.Enqueue(text);
+        }
+        NextText();
+        OpenTextBox(true);
+        continueButton.gameObject.SetActive(true);
+        continueButton.enabled = true;
+    }
+
+    public void NextText() //ContinueButton
+    {
+        if (sentencesToDisplay != null)
+        {
+            if (sentencesToDisplay.Count == 0)
+            {
+                sentencesToDisplay.Clear();
+                OpenTextBox(false);
+                return;
+            }
+
+            string sentence = sentencesToDisplay.Dequeue();
+            dialogueText.text = sentence;
         }
     }
 }

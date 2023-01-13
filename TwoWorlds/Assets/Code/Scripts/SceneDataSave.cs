@@ -23,14 +23,18 @@ public class SceneDataSave : MonoBehaviour
 
     public int storyProgress = 0;
 
-    public Scene activeScene;
+    Scene activeScene;
+    
     public SingleSceneData activeSceneData;
     public List<ObjectChange> objectsToCheck;
 
     public List<NpcData> currentNpcs;
     public List<NpcData> allNpcs; // just for check public
 
+    public GameObject player;
+
     bool newSceneAdded = false;
+    //GameObject currentDataContainer;
 
     private void Start()
     {
@@ -39,36 +43,51 @@ public class SceneDataSave : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += SceneLoaded;
+        SceneManager.sceneUnloaded += SceneUnloaded;
     }
 
-    void SceneLoaded(Scene scene, LoadSceneMode mode) // called after Awake of DataContainer
+    public void GetCurrentDataContainer(GameObject container, Scene scene, LoadSceneMode mode) // called by data container
+    {
+        activeSceneData = container.GetComponent<DataContainer>().thisSceneData;
+        objectsToCheck = container.GetComponent<DataContainer>().objectsToChange;
+        //currentDataContainer = container;
+        SceneLoaded(scene, mode);
+        player.transform.position = container.GetComponent<DataContainer>().spawnPoint[0].transform.position;
+    }
+
+    void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
         newSceneAdded = false;
-        activeScene = SceneManager.GetActiveScene();
+        activeScene = scene;
+
         bool foundSceneInList = false;
 
         foreach (SingleSceneData data in sceneData)
         {
-            if (data.sceneName == activeSceneData.sceneOfThisData.name)
+            if (data.sceneName == activeScene.name)
             {
                 foundSceneInList = true;
+                
+                data.sceneEnters++;
                 activeSceneData = data;
+                
                 break;
             }
         }
-        
-        if (foundSceneInList == true)
+
+        if (foundSceneInList != true)
         {
-            activeSceneData.sceneEnters++;
-        }
-        else
-        {
-            AddSceneDataToList(activeSceneData); 
+            activeSceneData.sceneName = activeScene.name;
+            AddSceneDataToList(activeSceneData);
         }
 
         //CheckForSceneProgress(GameManager.instance.storyProgress);
-        LoadCurrentScene();
+        LoadCurrentScene();   
+    }
+
+    void SceneUnloaded(Scene currentScene)
+    {
+        activeSceneData = null;
     }
 
     public void LoadNpcData(NpcData data, GameObject npc)
@@ -91,14 +110,13 @@ public class SceneDataSave : MonoBehaviour
         }
     }
 
-    public void SaveNewNpcData(NpcData data) // called on scene leave
+    public void SaveNewNpcData(NpcData data) // called on scene leave, check if working
     {
         int index = 0;
         foreach(NpcData npcData in allNpcs)
         {
             if (npcData.npcName == data.npcName)
             {
-                Debug.Log("Found matching data, updating data");
                 allNpcs[index].numberOfTalks = data.numberOfTalks; // check if strange numbers appear in inspector
 
                 allNpcs[index].npcWithMenu = data.npcWithMenu;
@@ -116,7 +134,7 @@ public class SceneDataSave : MonoBehaviour
 
     public void AddSceneDataToList(SingleSceneData activeSceneData)
     {
-        // check for unwanted scenes like main menu, credits and fight scene
+        // implement check for unwanted scenes like main menu, credits and fight scene - unnecessary, since they won't have data containers?
         newSceneAdded = true;
         sceneData.Add(activeSceneData);
     }
@@ -161,6 +179,7 @@ public class SceneDataSave : MonoBehaviour
                    /* && obj.corruptionMin <= corruption && obj.corruptionMax >= corruption*/) // check max conditions, implement, when corruption stat script stands
                 {
                     ChangeObjectWhenConditionsMet(obj);
+
                 }
             }
         }
@@ -168,10 +187,11 @@ public class SceneDataSave : MonoBehaviour
 
     void ChangeObjectWhenConditionsMet(ObjectChange obj) // change object depending on its bools
     {
-        if (obj.doThis == DoThis.TRIGGER)
+
+        if (obj.doThis == DoThis.TRIGGER) // collider is enabled or disabled
         {
-            if (obj.activateTrigger == true) obj.objectToChange.GetComponent<Collider2D>().isTrigger = true;
-            else obj.objectToChange.GetComponent<Collider2D>().isTrigger = false;
+            if (obj.activateTrigger == true) obj.objectToChange.GetComponent<Collider2D>().enabled = true;
+            else obj.objectToChange.GetComponent<Collider2D>().enabled = false;
         }
 
         else if (obj.doThis == DoThis.SETACTIVE)
@@ -199,6 +219,6 @@ public class SceneDataSave : MonoBehaviour
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= SceneLoaded;
+        SceneManager.sceneUnloaded -= SceneUnloaded;
     }
 }

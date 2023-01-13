@@ -9,22 +9,22 @@ public class DataContainer : MonoBehaviour
 
     public List<ObjectChange> objectsToChange;
 
-    private void Awake()
+    public GameObject[] spawnPoint;
+
+    private void OnEnable()
     {
-        thisSceneData.sceneOfThisData = SceneManager.GetActiveScene();
-        thisSceneData.sceneName = SceneManager.GetActiveScene().name; 
+        SceneManager.sceneLoaded += SceneLoaded;
     }
 
-    private void Start()
+    void SceneLoaded(Scene scene, LoadSceneMode mode) // might not be called before SceneDataSave
     {
-        SceneDataSave.instance.activeSceneData = thisSceneData;
-        SceneDataSave.instance.objectsToCheck = objectsToChange;
+        if (mode == LoadSceneMode.Additive)
+            SceneDataSave.instance.GetCurrentDataContainer(this.gameObject, scene, mode);
     }
 
     private void OnDestroy()
     {
-        // before destroyed, save new data to scene data save?
-        //SceneManager.sceneLoaded -= SceneLoaded;
+        SceneManager.sceneLoaded -= SceneLoaded;
         SceneDataSave.instance.OnSceneExit();
         SceneDataSave.instance.currentNpcs.Clear(); // positioned here and not in npcPartner, so it gets called only once per scene
     }
