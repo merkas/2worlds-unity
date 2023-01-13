@@ -12,7 +12,7 @@ public class SceneManagerScript : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneLoaded;
-        Debug.Log("SceneManager subscribed event");
+        //Debug.Log("SceneManager subscribed event");
     }
 
     void SceneLoaded(Scene scene, LoadSceneMode mode)
@@ -20,7 +20,6 @@ public class SceneManagerScript : MonoBehaviour
         if (mode == LoadSceneMode.Additive)
         {
             activeScene = SceneManager.GetActiveScene().name;
-            Debug.Log(activeScene);
         }
     }
 
@@ -31,7 +30,7 @@ public class SceneManagerScript : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("Awake:" + SceneManager.GetActiveScene().name);
+        //Debug.Log("Awake:" + SceneManager.GetActiveScene().name);
     }
 
   
@@ -49,7 +48,7 @@ public class SceneManagerScript : MonoBehaviour
         scenesToLoad.Add(SceneManager.LoadSceneAsync("Level1A", LoadSceneMode.Additive));
     }
 
-    public void EscPress()
+    public void EscPress() // instead in gameManager to manage input in same script? and Pause Menu won't be an extra scene anymore
     {
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == activeScene)
@@ -58,7 +57,7 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    public void ContinueGame()
+    public void ContinueGame() //unnecessary
     {
         SceneManager.LoadScene(activeScene);
     }

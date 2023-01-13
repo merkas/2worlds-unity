@@ -8,7 +8,7 @@ public enum GameMode
 {
     Gameplay, // player can move around
     FightMode,
-    Cutscene // player can't move around, space to continue
+    Cutscene // player can't move around
 }
 
 public class GameManager : MonoBehaviour
@@ -57,20 +57,18 @@ public class GameManager : MonoBehaviour
         if (mode == LoadSceneMode.Additive)
         {
             activeScene = scene.name;
-            Debug.Log("Active scene: " + activeScene);
         }
-        //if (scene.name != "BaseScene" && mode != LoadSceneMode.Additive) // not working
-        //{
-        //    SceneManager.LoadSceneAsync("BaseScene");
-        //    Debug.Log("Base Scene had to be loaded in");
-        //}
     }
 
-    private void Update() // only for checking
+    private void Update() // implement in an input manager instead?
     {
-        if (dialogueMoment == true && Input.GetKey(KeyCode.Space))
+        if (dialogueMoment == true && Input.GetKeyDown(KeyCode.Space))
         {
             ResumeTimeline();
+        }
+        else if (dialogueMoment == false && Input.GetKeyDown(KeyCode.Space))
+        {
+            UIManager.instance.NextText();
         }
     }
 
@@ -82,6 +80,7 @@ public class GameManager : MonoBehaviour
         {
             activeDirector.playableGraph.GetRootPlayable(0).SetSpeed(0d);
             dialogueMoment = true;
+            UIManager.instance.continueTimelineButton.enabled = true;
         }
         else UIManager.instance.OpenTextBox(false);
     }
@@ -107,9 +106,8 @@ public class GameManager : MonoBehaviour
         transitionAnimator.SetTrigger("StartSceneTransition");
         yield return new WaitForSeconds(transitionTime);
         
-        //SceneManager.LoadScene(index);
-        SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync(activeScene);
+        SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
 
         transitionAnimator.SetTrigger("SceneEnter");
     }

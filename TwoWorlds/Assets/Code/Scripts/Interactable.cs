@@ -45,7 +45,7 @@ public class Interactable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isInRange = true;
-            Debug.Log("Player in Range");
+            //Debug.Log("Player in Range");
             if (NotificationPrefab != null) NotificationPrefab.SetActive(true);
         }
     }
@@ -55,7 +55,7 @@ public class Interactable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isInRange = false;
-            Debug.Log("Player not in Range");
+            //Debug.Log("Player not in Range");
             if (NotificationPrefab != null) NotificationPrefab.SetActive(false);
             UIManager.instance.OpenTextBox(false);
         }

@@ -44,6 +44,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3586038087
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: InWorld UI
+    uniqueID: 1043977879
+    locked: 0
+  - name: Top
+    uniqueID: 160550629
     locked: 0

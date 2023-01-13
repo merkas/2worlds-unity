@@ -11,7 +11,7 @@ public class TestControllerInteract : MonoBehaviour
 
     Collider2D m_Collider;
 
-    public string description;
+    public string[] description;
 
     public int sceneIndexToLoad;
 
@@ -32,7 +32,7 @@ public class TestControllerInteract : MonoBehaviour
                 {
                     isDoorOpen = true;
                     manager.UseKey();
-                    Debug.Log("Door opened");
+                    Debug.Log("Door opened"); // change sprite instead
                     m_Collider.enabled = !m_Collider.enabled;
 
                 }
@@ -46,13 +46,17 @@ public class TestControllerInteract : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            Debug.Log("Chest is open");
+            Debug.Log("Chest is open"); // change sprite instead
         }
     }
 
     public void GiveDescription()
     {
-        UIManager.instance.UseGeneralTextbox(description);
+        if (description.Length > 1)
+        {
+            UIManager.instance.UseGeneralTextboxMultipleTimes(description);
+        }
+        else UIManager.instance.UseGeneralTextbox(description[0]); // if only one sentence
     }
 
     public void destroyObstacle()
