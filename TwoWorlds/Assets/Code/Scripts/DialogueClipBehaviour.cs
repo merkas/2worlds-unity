@@ -32,8 +32,8 @@ public class DialogueClipBehaviour : PlayableBehaviour
         {
             if (characterSprite != null) UIManager.instance.SetDialogue(/*bindingText,*/ dialogueText, characterName, characterSprite);
             else UIManager.instance.SetDialogue(/*bindingText,*/ dialogueText, characterName);
-
-            if (Application.isPlaying) // what is meant with application?
+            
+            if (Application.isPlaying) // don't get what this condition does
             {
                 if (pauseThis)
                 {
@@ -42,14 +42,22 @@ public class DialogueClipBehaviour : PlayableBehaviour
             }
             clipPlayed = true;
         }
+
         textBinding = playerData as TextMeshProUGUI;
+
         if (sendBinding == true)
         {
-            UIManager.instance.GetBinding(textBinding);
+            UIManager.instance.GetBinding(textBinding); // get default binding for dialogue tracks
             sendBinding = false;
         }
         //text.text = dialogueText;
         //text.color = new Color(1, 1, 1, info.weight); // for fading in/out of text
+    }
+
+    public override void OnGraphStop(Playable playable) // works for now, if problems appear, check
+    {
+        base.OnGraphStop(playable);
+        if (pauseScheduled == false) UIManager.instance.OpenTextBox(false);
     }
 
     public override void OnBehaviourPlay(Playable playable, FrameData info)
