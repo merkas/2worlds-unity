@@ -15,5 +15,7 @@ public enum CardNr
     Card8,
     Card9,
     Card10,
+    Card11,
+    Card12,
     Empty
 }

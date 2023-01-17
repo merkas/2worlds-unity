@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: MC
-  unitLevel: 10
+  unitLevel: 2
   _Damage: 30
   maxHP: 10
   currentHP: 10

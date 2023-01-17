@@ -18,15 +18,6 @@ public class Card : MonoBehaviour
     public int AP;
 
 
-    //[SerializeField]
-    //public TemporaryCard Card1;
-    //[SerializeField]
-    //public TemporaryCard Card2;
-    //[SerializeField]
-    //public TemporaryCard Card3;
-
-
-
     private void Update()
     {
         if (bs.Cardsplayable == true)
@@ -91,13 +82,13 @@ public class Card : MonoBehaviour
     void OnMouseEnter()
     {
         transform.position += Vector3.up * 0.2f;
-        transform.position += Vector3.right * 0.1f;
+        //transform.position += Vector3.right * 0.1f;
     }
 
     void OnMouseExit()
     {
         transform.position += Vector3.up * -0.2f;
-        transform.position += Vector3.right * -0.1f;
+        //transform.position += Vector3.right * -0.1f;
     }
 
 
@@ -178,6 +169,21 @@ public class Card : MonoBehaviour
                 CardDmg = CM.Card10.ATKValue;
 
                 AP = CM.Card10.APDrain;
+                break;
+
+
+                case CardNr.Card11:
+                CurrentCardNr = CardNr.Card11;
+                CardDmg = CM.Card11.ATKValue;
+
+                AP = CM.Card11.APDrain;
+                break;
+
+                case CardNr.Card12:
+                CurrentCardNr = CardNr.Card12;
+                CardDmg = CM.Card12.ATKValue;
+
+                AP = CM.Card12.APDrain;
                 break;
         }
 
