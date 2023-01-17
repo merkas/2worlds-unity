@@ -14,6 +14,7 @@ public class TestControllerInteract : MonoBehaviour
     public string[] description;
 
     public int sceneIndexToLoad;
+    public int spawnPointIndex;
 
     private void Start()
     {
@@ -69,6 +70,6 @@ public class TestControllerInteract : MonoBehaviour
 
     public void ChangeScene()
     {
-        GameManager.instance.LoadNewScene(sceneIndexToLoad);
+        GameManager.instance.LoadNewScene(sceneIndexToLoad, spawnPointIndex);
     }
 }

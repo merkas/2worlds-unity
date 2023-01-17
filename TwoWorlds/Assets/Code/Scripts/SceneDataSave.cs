@@ -52,7 +52,11 @@ public class SceneDataSave : MonoBehaviour
         objectsToCheck = container.GetComponent<DataContainer>().objectsToChange;
         //currentDataContainer = container;
         SceneLoaded(scene, mode);
-        player.transform.position = container.GetComponent<DataContainer>().spawnPoint[0].transform.position;
+        if (container.GetComponent<DataContainer>().spawnPoint.Length > 1)
+        {
+            player.transform.position = container.GetComponent<DataContainer>().spawnPoint[GameManager.instance.spawnPointIndex].transform.position;
+        }
+        else player.transform.position = container.GetComponent<DataContainer>().spawnPoint[0].transform.position;
     }
 
     void SceneLoaded(Scene scene, LoadSceneMode mode)
@@ -134,7 +138,7 @@ public class SceneDataSave : MonoBehaviour
 
     public void AddSceneDataToList(SingleSceneData activeSceneData)
     {
-        // implement check for unwanted scenes like main menu, credits and fight scene - unnecessary, since they won't have data containers?
+        // implement check for unwanted scenes like main menu, credits and fight scene - unnecessary, since they won't have data containers? check
         newSceneAdded = true;
         sceneData.Add(activeSceneData);
     }
@@ -154,11 +158,6 @@ public class SceneDataSave : MonoBehaviour
             }
             index++;
         }
-    }
-
-    void SceneData(int corruption, int numberOfEnters, int sceneProgress) // give data to scene
-    {
-
     }
 
     void LoadCurrentScene() // has to be checked

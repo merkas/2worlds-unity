@@ -69,11 +69,17 @@ public class UIManager : MonoBehaviour
 
         if (active == false) // reset to default text object
         {
-            dialogueText = dialogueTextInBox; 
-            continueButton.enabled = false;
-            continueTimelineButton.enabled = false;
-            continueButton.gameObject.SetActive(false);
-            continueTimelineButton.gameObject.SetActive(false);
+            dialogueText = dialogueTextInBox;
+            if (continueButton != null)
+            {
+                continueButton.enabled = false;
+                continueButton.gameObject.SetActive(false);
+            }
+            if (continueTimelineButton != null)
+            {
+                continueTimelineButton.enabled = false;
+                continueTimelineButton.gameObject.SetActive(false);
+            }
         }
     }
 

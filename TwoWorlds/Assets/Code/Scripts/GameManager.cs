@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public GameObject transitionScreen;
     Animator transitionAnimator;
     float transitionTime = 1f;
+    public int spawnPointIndex;
 
     private void OnEnable()
     {
@@ -96,12 +97,12 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= SceneLoaded;
     }
 
-    public void LoadNewScene(int index)
+    public void LoadNewScene(int index, int spawnPointIndex)
     {
-        StartCoroutine(LoadNewLevel(index));
+        StartCoroutine(LoadNewLevel(index, spawnPointIndex));
     }
 
-    IEnumerator LoadNewLevel(int index)
+    IEnumerator LoadNewLevel(int index, int spawnPointIndex)
     {
         transitionAnimator.SetTrigger("StartSceneTransition");
         yield return new WaitForSeconds(transitionTime);
