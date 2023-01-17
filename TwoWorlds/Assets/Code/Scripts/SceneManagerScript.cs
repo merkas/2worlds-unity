@@ -15,9 +15,20 @@ public class SceneManagerScript : MonoBehaviour
     public Button MainMenu;
     public Slider SoundSlider;
     public Text Sound;
-    // Start is called before the first frame update
-    void Start()
+    List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
+    private void OnEnable()
     {
+        SceneManager.sceneLoaded += SceneLoaded;
+        //Debug.Log("SceneManager subscribed event");
+    }
+
+    void SceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (mode == LoadSceneMode.Additive)
+        {
+            activeScene = SceneManager.GetActiveScene().name;
+        }
+    }
         pauseMenu.SetActive(false);
         pauseGameMenu = false;
         Back.gameObject.SetActive(false);
@@ -26,11 +37,14 @@ public class SceneManagerScript : MonoBehaviour
         MainMenu.gameObject.SetActive(false);
         Sound.gameObject.SetActive(false);
         SoundSlider.gameObject.SetActive(false);
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= SceneLoaded;
     }
 
     void Awake()
     {
-        Debug.Log("Awake:" + SceneManager.GetActiveScene().name);
+        //Debug.Log("Awake:" + SceneManager.GetActiveScene().name);
     }
 
   
@@ -42,7 +56,13 @@ public class SceneManagerScript : MonoBehaviour
             }
     }
 
-    public void EscPress()
+    public void StartGame() 
+    {
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("BaseScene"));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync("Level1A", LoadSceneMode.Additive));
+    }
+
+    public void EscPress() // instead in gameManager to manage input in same script? and Pause Menu won't be an extra scene anymore
     {
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == activeScene)
@@ -85,11 +105,7 @@ public class SceneManagerScript : MonoBehaviour
         pauseGameMenu = false;
         Time.timeScale = 1;
     }
-    
-    public void StartGame()
-    {
-        SceneManager.LoadScene("Whitebox");
-    }       
+     
     public void OpenSettings()
     {
         SceneManager.LoadScene("SettingsMenu");

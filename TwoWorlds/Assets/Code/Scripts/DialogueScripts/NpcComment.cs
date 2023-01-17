@@ -10,8 +10,11 @@ public class NpcComment : MonoBehaviour
     int chosenComment;
 
     public bool automatic;
+    public bool playerReaction;
+    public string characterDialogue;
+    public string characterName;
 
-    public Transform bubbleSpawn;
+    //public Transform bubbleSpawn;
     public GameObject speechBubble; //Prefab
     float timer;
     bool commentOnShow;
@@ -30,19 +33,27 @@ public class NpcComment : MonoBehaviour
     public void ChooseComment()
     {
         int max = comments.Count;
-        chosenComment = Random.Range(0, max);
-        
-        if (comments[chosenComment] != previousComment)
+        if (max > 1)
+        {
+            chosenComment = Random.Range(0, max);
+            if (comments[chosenComment] != previousComment)
+                ShowComment();
+            else ChooseComment(); // is working
+        }
+        else
+        {
+            chosenComment = 0;
             ShowComment();
-        else ChooseComment(); // is working
+            GetComponent<BoxCollider2D>().enabled = false; // actual collider as child object since it's not always needed?
+        }
+        
     }
 
     void ShowComment()
     {
-        bubble = Instantiate(speechBubble, canvas.transform.position, Quaternion.identity);
-        bubble.transform.localScale += new Vector3(canvas.transform.localScale.x * 0.8f, canvas.transform.localScale.y * 0.8f, 0);
-
-
+        bubble = Instantiate(speechBubble, canvas.transform/*.position, Quaternion.identity*/);
+        bubble.transform.localScale += new Vector3(chatterText.transform.localScale.x * 2f, chatterText.transform.localScale.y /** 1.2f*/, 0);
+        bubble.transform.position = canvas.transform.position;
         chatterText.text = comments[chosenComment];
         chatterText.enabled = true;
 
@@ -71,5 +82,10 @@ public class NpcComment : MonoBehaviour
         chatterText.enabled = false;
         commentOnShow = false;
         timer = 0;
+
+        if (playerReaction == true && characterDialogue != null)
+        {
+            UIManager.instance.UseGeneralTextbox(characterDialogue, characterName);
+        }
     }
 }

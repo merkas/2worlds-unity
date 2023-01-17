@@ -11,12 +11,15 @@ public class Interactable : MonoBehaviour
     public KeyCode interactKey;
     public UnityEvent interactionAction;
 
+    public bool automatic;
+    bool automaticActivated;
     public GameObject NotificationPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-            NotificationPrefab.SetActive(false);      
+         if (NotificationPrefab != null) NotificationPrefab.SetActive(false);
+         automaticActivated = false;
     }
 
     // Update is called once per frame
@@ -24,9 +27,14 @@ public class Interactable : MonoBehaviour
     {
         if(isInRange)
         {   //Event System triggers event on chosen Keycode
-            if(Input.GetKeyDown(interactKey))
+            if(Input.GetKeyDown(interactKey) && automatic != true)
             {
                 interactionAction.Invoke();
+            }
+            else if (automatic == true && automaticActivated == false)
+            {
+                interactionAction.Invoke();
+                automaticActivated = true;
             }
         }
     }
@@ -37,8 +45,8 @@ public class Interactable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isInRange = true;
-            Debug.Log("Player in Range");
-            NotificationPrefab.SetActive(true);
+            //Debug.Log("Player in Range");
+            if (NotificationPrefab != null) NotificationPrefab.SetActive(true);
         }
     }
     //Is not interactable when exiting the trigger
@@ -47,8 +55,9 @@ public class Interactable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isInRange = false;
-            Debug.Log("Player not in Range");
-            NotificationPrefab.SetActive(false);
+            //Debug.Log("Player not in Range");
+            if (NotificationPrefab != null) NotificationPrefab.SetActive(false);
+            UIManager.instance.OpenTextBox(false);
         }
     }
 

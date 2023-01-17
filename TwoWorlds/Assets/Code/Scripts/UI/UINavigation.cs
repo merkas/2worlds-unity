@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UINavigation : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class UINavigation : MonoBehaviour
             tab.SetActive(false);
         }
         TabButtons(false);
+    }
+    public void ChangeSceneButton() // for testing
+    {
+        SceneManager.LoadScene("DialogueTest");
     }
 
     void Update() // add to input manager?

@@ -24,10 +24,12 @@ public class InventoryUI : MonoBehaviour
     public Text itemTitleText;
     public Text itemInfoText;
     public Text questItemText;
+    public Image itemImage;
 
     public GameObject cardWindow;
     public Text cardTitleText;
     public Text cardInfoText;
+    public Image cardImage;
 
     public Button[] tabButtons;
     public GameObject[] tabs;
@@ -116,6 +118,7 @@ public class InventoryUI : MonoBehaviour
     {
         cardWindow.SetActive(false);
         itemWindow.SetActive(false);
+        selectedObject = null;
 
         ResetDoubleClickedObjects();
 
@@ -136,7 +139,8 @@ public class InventoryUI : MonoBehaviour
         selectedObject = slot;
         activeItem = item;
 
-        itemWindow.GetComponentInChildren<Image>().sprite = item.icon;
+        //itemWindow.GetComponentInChildren<Image>().sprite = item.icon;
+        itemImage.GetComponent<Image>().sprite = item.icon;
         itemTitleText.GetComponent<Text>().text = item.itemName;
         itemInfoText.GetComponent<Text>().text = item.info;
         if (item.isQuestItem) questItemText.enabled = true;
@@ -152,12 +156,17 @@ public class InventoryUI : MonoBehaviour
             {
                 selectedObject.GetComponent<CardSlot>().CardActive(false);
             }
-            else selectedObject.GetComponent<CardDeckSlot>().CardActive(false);
+            else if (selectedObject.GetComponent<CardDeckSlot>() != null)
+            {
+                selectedObject.GetComponent<CardDeckSlot>().CardActive(false);
+            }
+            else selectedObject.GetComponent<InventorySlot>().ItemActive(false);
         }
         selectedObject = slot;
         activeCard = card;
 
-        cardWindow.GetComponentInChildren<Image>().sprite = card.card.cardIcon;
+        //cardWindow.GetComponentInChildren<Image>().sprite = card.card.cardIcon;
+        cardImage.GetComponent<Image>().sprite = card.card.cardIcon;
         cardTitleText.GetComponent<Text>().text = card.card.cardName;
         cardInfoText.GetComponent<Text>().text = card.card.info;
 
@@ -246,6 +255,7 @@ public class InventoryUI : MonoBehaviour
     {
         itemWindow.SetActive(false);
         cardWindow.SetActive(false);
+        selectedObject = null;
     }
 
     public void MoveCardToDeck() // move card to deck with Button

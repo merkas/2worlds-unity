@@ -114,6 +114,7 @@ public class DialogueManager : MonoBehaviour
 
         foreach (Quest playerQuest in player.activeQuests)
         {
+            if (playerQuest.questNpcName == dialoguePartner.npcName) Debug.Log("Player has quest of this npc, can change loop");
             foreach (Quest npcQuest in dialoguePartner.activeQuests)
             {
                 if (playerQuest == npcQuest)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DialoguePartner : MonoBehaviour
 {
@@ -36,15 +37,40 @@ public class DialoguePartner : MonoBehaviour
     [System.NonSerialized]
     public string[] itemText;
 
+    public NpcData thisNpcData;
+
     private void Start()
     {
         allQuests = thisNpcDialogue.quest;
-        //foreach (Quest quest in allQuests)
-        //{
-            //reset quests?
-            //quest.formerQuestProgress = 0;
-            //quest.questProgress = 0;
-        //}
+        //reset quests for new game needed?
+
+        LoadNpcData();
+
+        SceneDataSave.instance.LoadNpcData(thisNpcData, this.gameObject);
+    }
+
+    public void UpdateData(NpcData data)
+    {
+        thisNpcData = data;
+    }
+
+    void LoadNpcData()
+    {
+        thisNpcData.npcName = npcName;
+        thisNpcData.numberOfTalks = thisNPC.numberOfTalks;
+        thisNpcData.npcWithMenu = NpcWithMenu;
+        thisNpcData.getItem = getItem;
+        // ...
+    }
+
+
+    private void OnDestroy()
+    { 
+        if (thisNPC.numberOfTalks >= 1) // check if player talked to npc in current sceneEnter
+        {
+            LoadNpcData(); // load new data in npcData
+            SceneDataSave.instance.SaveNewNpcData(thisNpcData); // save new data
+        }
     }
 
     public void ChooseGreeting(int corruptionStat)
@@ -77,11 +103,6 @@ public class DialoguePartner : MonoBehaviour
                 }
             }
         }
-
-        //foreach (Greeting addition in thisNpcDialogue.additionalGreeting)
-        //{
-        //    
-        //}
     }
 
     public void GetData(int corruptionStat) //choose dialogue based on corrupption and numberOfTalks
@@ -106,8 +127,8 @@ public class DialoguePartner : MonoBehaviour
                 //        //break;
                 //    //}
                 //}
-
-                /*else*/ if (thisNPC.numberOfTalks >= dialogue.minNumberOfTalks &&
+                // else 
+                if (thisNPC.numberOfTalks >= dialogue.minNumberOfTalks &&
                     thisNPC.numberOfTalks <= dialogue.maxNumberOfTalks && dialogue.maxNumber == true ||
                     thisNPC.numberOfTalks >= dialogue.minNumberOfTalks && dialogue.maxNumber != true)
                 {
@@ -115,11 +136,7 @@ public class DialoguePartner : MonoBehaviour
                     break;
                 }
 
-                else
-                {
-                    Debug.Log("No dialogue"); //not called
-                    // This person won´t talk to you anymore
-                }
+                // else this person won´t talk to player anymore
 
             }
         }
@@ -210,5 +227,8 @@ public class DialoguePartner : MonoBehaviour
         {
             NpcWithMenu = true;
         }
+        
+        //LoadNpcData(); // only add if info needed before scene leave
+        //SceneDataSave.instance.SaveNewNpcData(thisNpcData);
     }
 }

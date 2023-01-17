@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4412691971778137543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: 1.19, z: 0}
+  m_LocalPosition: {x: 0.12, y: 1.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 4412691972346702182}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.39, y: -0.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4412691971778137544}
@@ -162,7 +162,9 @@ MonoBehaviour:
   - Hidi saw a cute blobby down siren hill.
   - That guy comes here surprisingly often...
   automatic: 0
-  bubbleSpawn: {fileID: 4412691971778137544}
+  playerReaction: 0
+  characterDialogue: 
+  characterName: 
   speechBubble: {fileID: 1108107219666750413, guid: f7561ae5c6cb0324aad90c9043fa54e0, type: 3}
   canvas: {fileID: 4412691972516566689}
 --- !u!1 &4412691972516566689
@@ -202,8 +204,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.7084999, y: 1.6}
-  m_SizeDelta: {x: 2.4257, y: 1.2366}
+  m_AnchoredPosition: {x: 2.55, y: 1.207}
+  m_SizeDelta: {x: 3.5, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4412691972516566692
 Canvas:
@@ -223,8 +225,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1043977879
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &4412691972516566691
 MonoBehaviour:
@@ -301,7 +303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.037, y: 0.033}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4412691973106884501
@@ -367,7 +369,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
