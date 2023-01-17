@@ -8,9 +8,6 @@ public class Unit : MonoBehaviour // enemy/player object
     public int unitLevel;
     [SerializeField] int _Damage;
 
-    //public static int MCDmg;
-    //public static int Companion1Dmg;
-
     public int maxHP;
     public int currentHP;
     public int maxAP;
@@ -19,7 +16,7 @@ public class Unit : MonoBehaviour // enemy/player object
     private ButtonSwitch BSw;
     private void Start()
     {
-        BSw = FindObjectOfType<ButtonSwitch>();
+
     }
 
     public int Damage

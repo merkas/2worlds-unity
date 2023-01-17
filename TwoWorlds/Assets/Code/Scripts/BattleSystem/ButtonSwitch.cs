@@ -7,56 +7,39 @@ public class ButtonSwitch : MonoBehaviour
     private BattleSystem bs;
     private BattleSystem Un;
     private CharaManager ChM;
+    private BattleHud BH;
     public ButtonNr CurrentButtonNr = ButtonNr.Empty;
 
     public int CharDmg;
+    public int UnitHP;
+    public int UnitAP;
+
+    public string Chara;
 
     public bool buttonisClicked;
 
+    public bool MCTurn;
     // Start is called before the first frame update
     void Start()
     {
         bs = FindObjectOfType<BattleSystem>();
         Un = FindObjectOfType<BattleSystem>();
         ChM = FindObjectOfType<CharaManager>();
+        BH = FindObjectOfType<BattleHud>();
         buttonisClicked = false;
+        MCTurn = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if(buttonisClicked == true)
-        //{
-
-        //CharDmg += Unit.MCDmg;
-        //}
-    }
 
     public void CharaCase()
     {
         ButtonClick(CurrentButtonNr);
+
+        //bs.EnemyATK(Chara);
+
+        BH.SetAP(UnitAP);
+        BH.SetHP(UnitHP);
     }
-
-
-    //public void ButtonNeu()
-    //{
-    //    buttonisClicked = true;
-    //        //CharDmg += Unit.MCDmg;
-    //    CharDmg = ChM.MC.Damage;
-    //        Debug.Log("UnitWert" + ChM.MC.Damage);
-        
-
-        //if (gameObject.name == "Chara2")
-        //{
-        //    CharDmg = Unit.Companion1Dmg;
-        //}
-
-    //    Debug.Log("Charawert" + CharDmg);
-    //    buttonisClicked = false;
-    //}
-
-
-
 
     public void ButtonClick(ButtonNr buttonnr)
     {
@@ -66,8 +49,13 @@ public class ButtonSwitch : MonoBehaviour
         {
             case ButtonNr.MC:
                 CurrentButtonNr = ButtonNr.MC;
-                //CharDmg = Unit.MCDmg;
                 CharDmg = ChM.MC.Damage;
+                UnitAP = ChM.MC.CurrentAP;
+                UnitHP = ChM.MC.currentHP;
+
+                Chara = ChM.MC.unitName;
+
+                MCTurn = true;
                 Debug.Log("Charawert" + CharDmg);
                 break;
 

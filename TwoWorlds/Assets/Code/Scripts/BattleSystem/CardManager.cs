@@ -36,6 +36,11 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     public TemporaryCard Card10;
 
+    [SerializeField]
+    public TemporaryCard Card11;
+
+    [SerializeField]
+    public TemporaryCard Card12;
 
     // Start is called before the first frame update
     void Start()
