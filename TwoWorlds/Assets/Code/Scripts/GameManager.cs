@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     string activeScene;
     PlayableDirector activeDirector;
     bool dialogueMoment;
-
+    public GameObject playerCam;
     public List<GameObject> timelineReferences;
 
     #region Singleton
