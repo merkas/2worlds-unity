@@ -29,6 +29,9 @@ public class SceneManagerScript : MonoBehaviour
             activeScene = SceneManager.GetActiveScene().name;
         }
     }
+
+    private void Start()
+    {
         pauseMenu.SetActive(false);
         pauseGameMenu = false;
         Back.gameObject.SetActive(false);
@@ -37,6 +40,8 @@ public class SceneManagerScript : MonoBehaviour
         MainMenu.gameObject.SetActive(false);
         Sound.gameObject.SetActive(false);
         SoundSlider.gameObject.SetActive(false);
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= SceneLoaded;
@@ -89,14 +94,14 @@ public class SceneManagerScript : MonoBehaviour
 
     public void PauseGame()
     {
-            pauseGameMenu = true;
-            pauseMenu.SetActive(true);
-            Resume.gameObject.SetActive(true);
-            Settings.gameObject.SetActive(true);
-            MainMenu.gameObject.SetActive(true);
-            SoundSlider.gameObject.SetActive(false);
-            Back.gameObject.SetActive(false);
-            Sound.gameObject.SetActive(false); 
+        pauseGameMenu = true;
+        pauseMenu.SetActive(true);
+        Resume.gameObject.SetActive(true);
+        Settings.gameObject.SetActive(true);
+        MainMenu.gameObject.SetActive(true);
+        SoundSlider.gameObject.SetActive(false);
+        Back.gameObject.SetActive(false);
+        Sound.gameObject.SetActive(false);
     }
 
     public void ContinueGame()
