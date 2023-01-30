@@ -1119,7 +1119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1743238803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,8 +1132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83e71afd7c0e7648a39023001914930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SampleScene: 
-  GameSettingsMenu: 
+  activeScene: 
+  pauseMenu: {fileID: 0}
+  Back: {fileID: 0}
+  Resume: {fileID: 0}
+  Settings: {fileID: 0}
+  MainMenu: {fileID: 0}
+  SoundSlider: {fileID: 0}
+  Sound: {fileID: 0}
 --- !u!4 &1743238804
 Transform:
   m_ObjectHideFlags: 0

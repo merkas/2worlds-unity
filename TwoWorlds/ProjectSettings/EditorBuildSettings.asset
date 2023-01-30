@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level/Scenes/BaseScene.unity
     guid: 1b6d131b621ca154986100ea1b198819
+  - enabled: 1
+    path: Assets/TestingMaterial/InventoryWorkspace.unity
+    guid: 571a70a866e2de543b6ef1e79f3ab60a
   m_configObjects: {}
