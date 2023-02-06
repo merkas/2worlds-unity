@@ -13,6 +13,7 @@ public class Unit : MonoBehaviour // enemy/player object
     public int maxAP;
     public int CurrentAP;
 
+    public bool NoAP;
     private ButtonSwitch BSw;
     private void Start()
     {
@@ -49,6 +50,11 @@ public class Unit : MonoBehaviour // enemy/player object
     {
         Debug.Log("Amount" + amount);
         CurrentAP -= amount;
+
+        if (CurrentAP <= 0)
+        {
+            NoAP = true;
+        }
     }
 
     public void GetAP(int amount)

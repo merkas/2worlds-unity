@@ -34,7 +34,7 @@ public class ButtonSwitch : MonoBehaviour
     {
         ButtonClick(CurrentButtonNr);
 
-        //bs.EnemyATK(Chara);
+        
 
         BH.SetAP(UnitAP);
         BH.SetHP(UnitHP);
@@ -56,13 +56,21 @@ public class ButtonSwitch : MonoBehaviour
 
                 MCTurn = true;
                 Debug.Log("Charawert" + CharDmg);
+
+                bs.EnemyATK(Chara);
                 break;
 
             case ButtonNr.Companion1:
                 CurrentButtonNr = ButtonNr.Companion1;
                 CharDmg = ChM.Companion1.Damage;
-   
+                UnitAP = ChM.Companion1.CurrentAP;
+                UnitHP = ChM.Companion1.currentHP;
+
+                Chara = ChM.Companion1.unitName;
+
                 Debug.Log("Charawert" + CharDmg);
+
+                bs.EnemyATK(Chara);
                 break;
 
                 //case ButtonNr.Companion2:

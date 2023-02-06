@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e865a864e80a069418149502fa8acd70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Chara 1
+  unitName: Companion1
   unitLevel: 50
   _Damage: 10
   maxHP: 100

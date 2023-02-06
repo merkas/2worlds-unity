@@ -50,8 +50,9 @@ MonoBehaviour:
   _Damage: 5
   maxHP: 200
   currentHP: 200
-  maxAP: 50
-  CurrentAP: 50
+  maxAP: 20
+  CurrentAP: 3
+  NoAP: 0
 --- !u!1 &4407637376961712034
 GameObject:
   m_ObjectHideFlags: 0

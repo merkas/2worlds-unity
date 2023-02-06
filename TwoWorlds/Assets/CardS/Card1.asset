@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card1
   m_EditorClassIdentifier: 
   _ATKValue: 30
-  _APDrain: 10
+  _APDrain: 5
   _HealHP: 0
   cardName: Mesons Ire
   cardIcon: {fileID: 7482667652216324306, guid: 7c2d6af1d7274c941b749e3c45569c5c, type: 3}

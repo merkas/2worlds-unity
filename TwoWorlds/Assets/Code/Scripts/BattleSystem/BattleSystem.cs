@@ -37,12 +37,19 @@ public class BattleSystem : MonoBehaviour
 
     private Card Cd;
     private ButtonSwitch BSw;
+    private Unit Un;
 
     private int DmgDealt;
-    private int APCost;
+    public int APCost;
     private int Heals;
+    public Unit ChosenChara;
+    private BattleHud ChosenHud;
 
     public bool Cardsplayable;
+    public bool NoAPLeft;
+    bool MCDead = false;
+    bool Comp1Dead = false;
+    bool Comp2Dead = false;
 
     public Text discardText;
     public Text deckText;
@@ -69,6 +76,7 @@ public class BattleSystem : MonoBehaviour
     {
         Cd = FindObjectOfType<Card>();
         BSw = FindObjectOfType<ButtonSwitch>();
+        Un = FindObjectOfType<Unit>();
         CharaSelectPanel.gameObject.SetActive(false);
         Cardsplayable = false;
 
@@ -116,6 +124,14 @@ public class BattleSystem : MonoBehaviour
         InvokeRepeating(nameof(Cardpull), 0.3f, 0.3f);
 
 
+
+       
+       
+           // StartCoroutine(MyCounter(5));
+        
+
+
+
         yield return new WaitForSeconds(4f);
         state = BattleState.CHARSELECT;
         CharaSelect();
@@ -136,6 +152,16 @@ public class BattleSystem : MonoBehaviour
         //}
     }
 
+        //IEnumerator MyCounter(int number)
+        //{
+        //    int i = 0;
+        //    while (i < number)
+        //    {
+        //    Cardpull();
+        //    //yield return 0; //Wait 1 Frame
+        //    yield return new WaitForSeconds(1.0f); //wait 1 second per interval
+        //    }
+        //}
 
     void Cardpull()
     {
@@ -147,15 +173,24 @@ public class BattleSystem : MonoBehaviour
             {
                 if (availableCardSlots[i] == true)
                 {
-                    randomCard.gameObject.SetActive(true);
-                    randomCard.handindex = i;
-                    randomCard.transform.position = cardSlots[i].position;
-                    randomCard.hasBeenPlayed = false;
+                    //if (Cd.CardSet != true && CardSet2 != true)
+                    //{ 
 
-                    availableCardSlots[i] = false;
-                    deck.Remove(randomCard);
-                    Debug.Log("Card" + i);
-                    return;
+                    //}
+
+                        randomCard.gameObject.SetActive(true);
+                    //bool CardSet2 = true;
+
+
+                        randomCard.handindex = i;
+                        randomCard.transform.position = cardSlots[i].position;
+                        randomCard.hasBeenPlayed = false;
+
+                        availableCardSlots[i] = false;
+                        deck.Remove(randomCard);
+                        return;
+
+                    // Debug.Log("Card" + i);
                 }
             }
         }
@@ -183,7 +218,9 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerAttack()
     {
-        playerUnit.DrainAP(APCost);
+        ChosenChara.DrainAP(APCost);
+        ChosenHud.SetAP(ChosenChara.CurrentAP);
+
 
         DmgDealt += BSw.CharDmg;
 
@@ -215,12 +252,11 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerHeal()
     {
         Debug.Log("HealingRec:" + Heals);
-        playerUnit.DrainAP(APCost);
-        playerHud.SetAP(playerUnit.CurrentAP);
+        ChosenChara.DrainAP(APCost);
+        ChosenHud.SetAP(ChosenChara.CurrentAP);
 
-        playerUnit.Heal(Heals);
-
-        playerHud.SetHP(playerUnit.currentHP);
+        ChosenChara.Heal(Heals);
+        ChosenHud.SetHP(ChosenChara.currentHP);
 
         dialogueText.text = "You feel renewed strength";
 
@@ -233,8 +269,8 @@ public class BattleSystem : MonoBehaviour
     IEnumerator SkipMove()
     {
 
-        playerUnit.GetAP(5);
-        playerHud.SetAP(playerUnit.CurrentAP);
+        ChosenChara.GetAP(10);
+        ChosenHud.SetAP(ChosenChara.CurrentAP);
 
         Cardsplayable = false;
 
@@ -248,30 +284,44 @@ public class BattleSystem : MonoBehaviour
 
 
 
-    //public void EnemyATK(string Char)
-    //{  
-    //    if (Char == "MC")
-    //    { 
-    //        bool isDead = playerUnit.TakeDamage(5);
-    //        playerHud.SetHP(playerUnit.currentHP);
-    //    }
+    public void EnemyATK(string Char)
+    {  
+        if (Char == "MC")
+        {
+            //Setzt je nach gewähltem Charakter, das Hud oder Unit auf die zutreffende Unit oder Hud
 
-    //    if (Char == "Companion1")
-    //    {
-    //        bool isDead = Companion1Unit.TakeDamage(5);
-    //       Companion1Hud.SetHP(Companion1Unit.currentHP);
-    //    }
+            ChosenChara = playerUnit;
+            ChosenHud = playerHud;
+           
+            
+            Debug.Log("Unit =" + ChosenChara);
+        }
 
-    //    if (Char == "Companion2")
-    //    {
-    //        bool isDead = Companion2Unit.TakeDamage(5);
-    //        Companion2Hud.SetHP(Companion2Unit.currentHP);
-    //    }
+        if (Char == "Companion1")
+        {
+            ChosenChara = Companion1Unit;
+            ChosenHud = Companion1Hud;
+
+           // NoAPLeft = true;
+            Debug.Log("Unit =" + ChosenChara);
+        }
+
+        if (Char == "Companion2")
+        {
+            ChosenChara = Companion2Unit;
+            ChosenHud = Companion2Hud;
+
+           // NoAPLeft = true;
+            Debug.Log("Unit =" + ChosenChara);
+        }
+            //if(ChosenChara.CurrentAP <= 0)
+            //{
+
+            //    NoAPLeft = true;
+
+            //}
    
-    //}
-
-
-
+    }
 
 
     IEnumerator EnemyTurn()
@@ -281,39 +331,63 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
 
-       //if (BSw.MCTurn == true)
-       //{
-       //     bool isDead = playerUnit.TakeDamage(5);
-       //     playerHud.SetHP(playerUnit.currentHP);
-       //}
-
-
-
         //Randomized Enemy Attack, 1 of 3
         int randomNumber;
         randomNumber = Random.Range(0, 3);
 
         //dialogueText.text = "Number: " + randomNumber;
 
+        NoAPLeft = false;
+
+
         if (randomNumber == 0)
         {
-            bool isDead = playerUnit.TakeDamage(5);
-            Companion1Unit.TakeDamage(5);
-            Companion2Unit.TakeDamage(5);
 
-            playerHud.SetHP(playerUnit.currentHP);
+            bool isDead = ChosenChara.TakeDamage(5);
+            ChosenHud.SetHP(ChosenChara.currentHP);
+            Debug.Log("Dmg1 to: " + ChosenChara);
+
+
             yield return new WaitForSeconds(2f);
 
-            if (isDead)//zB. Companion1 dead
+            if (isDead)
             {
 
+                if(ChosenChara == playerUnit)
+                {
+                    MCDead = true;
+                    Debug.Log("MCDead");
+                }
 
-                //Companion1 died.
+                if (ChosenChara == Companion1Unit)
+                {
+                    Comp1Dead = true;
+                    Debug.Log("CompanionDead");
+                }
 
-                //if(alldead) EndBattle();
+                if (ChosenChara == Companion2Unit)
+                {
+                    Comp2Dead = true;
+                    Debug.Log("Companion2Dead");
+                }
 
-                state = BattleState.LOST;
-                EndBattle();
+
+                dialogueText.text = "Your Character is down!";
+
+                if (MCDead == true && Comp1Dead == true && Comp2Dead == true)
+                {
+                    Debug.Log("LOST");
+                    state = BattleState.LOST;
+                    EndBattle();
+                }
+
+                else
+                {
+                    Shuffle();
+                    yield return new WaitForSeconds(4f); //Time before Character selection starts
+                    state = BattleState.CHARSELECT;
+                    CharaSelect();
+                }
             }
             else
             {
@@ -326,14 +400,50 @@ public class BattleSystem : MonoBehaviour
 
         if (randomNumber == 1)
         {
-            bool isDead = playerUnit.TakeDamage(10);
-            playerHud.SetHP(playerUnit.currentHP);
+            bool isDead = ChosenChara.TakeDamage(10);
+            ChosenHud.SetHP(ChosenChara.currentHP);
+
+            Debug.Log("Dmg2 to: " + ChosenChara);
+
             yield return new WaitForSeconds(2f);
 
             if (isDead)
             {
-                state = BattleState.LOST;
-                EndBattle();
+
+                if (ChosenChara == playerUnit)
+                {
+                    MCDead = true;
+                    Debug.Log("MCDead");
+                }
+
+                if (ChosenChara == Companion1Unit)
+                {
+                    Comp1Dead = true;
+                    Debug.Log("CompanionDead");
+                }
+
+                if (ChosenChara == Companion2Unit)
+                {
+                    Comp2Dead = true;
+                    Debug.Log("Companion2Dead");
+                }
+
+                dialogueText.text = "Your Character is down!";
+
+                if (MCDead == true && Comp1Dead == true && Comp2Dead == true)
+                {
+                    Debug.Log("LOST");
+                    state = BattleState.LOST;
+                    EndBattle();
+                }
+
+                else
+                {
+                    Shuffle();
+                    yield return new WaitForSeconds(4f); //Time before Character selection starts
+                    state = BattleState.CHARSELECT;
+                    CharaSelect();
+                }
             }
             else
             {
@@ -346,14 +456,50 @@ public class BattleSystem : MonoBehaviour
 
         if (randomNumber == 2)
         {
-            bool isDead = playerUnit.TakeDamage(15);
-            playerHud.SetHP(playerUnit.currentHP);
+            bool isDead = ChosenChara.TakeDamage(15);
+            ChosenHud.SetHP(ChosenChara.currentHP);
+
+            Debug.Log("Dmg3 to: " + ChosenChara);
+
             yield return new WaitForSeconds(2f);
 
             if (isDead)
             {
-                state = BattleState.LOST;
-                EndBattle();
+
+                if (ChosenChara == playerUnit)
+                {
+                    MCDead = true;
+                    Debug.Log("MCDead");
+                }
+
+                if (ChosenChara == Companion1Unit)
+                {
+                    Comp1Dead = true;
+                    Debug.Log("CompanionDead");
+                }
+
+                if (ChosenChara == Companion2Unit)
+                {
+                    Comp2Dead = true;
+                    Debug.Log("Companion2Dead");
+                }
+
+                dialogueText.text = "Your Character is down!";
+
+                if (MCDead == true && Comp1Dead == true && Comp2Dead == true)
+                {
+                    Debug.Log("LOST");
+                    state = BattleState.LOST;
+                    EndBattle();
+                }
+
+                else
+                {
+                    Shuffle();
+                    yield return new WaitForSeconds(4f); //Time before Character selection starts
+                    state = BattleState.CHARSELECT;
+                    CharaSelect();
+                }
             }
             else
             {
@@ -381,13 +527,25 @@ public class BattleSystem : MonoBehaviour
 
     public void OnCharaSelect()
     {
+        CancelInvoke();
         CharaSelectPanel.gameObject.SetActive(false);
         //Atk Button enable oder SetActive
         //Karten als Sprite an Position und Panel mit jeweiligen Button wird aktiviert
+
         Cardsplayable = true;
+
+
+
+        //Cd.NOAP = false;
+        //Cd.CardAvailable();
+        //if (ChosenChara.CurrentAP < 0)
+        //{
+        //    Cardsplayable = false;
+        //}
+
+
         state = BattleState.PLAYERTURN;
         PlayerTurn();
-        CancelInvoke();
     }
 
     public void OnAttackButton(int CaaardDmg, int APStat)
@@ -397,6 +555,8 @@ public class BattleSystem : MonoBehaviour
         DmgDealt = CaaardDmg;
         APCost = APStat;
         Debug.Log("AP" + APCost);
+
+
         StartCoroutine(PlayerAttack());
 
         DisableButtonOnClick();

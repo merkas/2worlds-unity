@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card3
   m_EditorClassIdentifier: 
   _ATKValue: 7
-  _APDrain: 4
+  _APDrain: 3
   _HealHP: 0
   cardName: 
   cardIcon: {fileID: 0}

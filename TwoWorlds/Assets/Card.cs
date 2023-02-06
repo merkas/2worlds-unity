@@ -7,6 +7,9 @@ public class Card : MonoBehaviour
 
 
     public bool hasBeenPlayed;
+    public bool CardSet;
+    public bool NOAP;
+    public bool playedCD;
 
     public int handindex;
 
@@ -20,14 +23,37 @@ public class Card : MonoBehaviour
 
     private void Update()
     {
+
+        //if (NOAP == true)
+        //{
+        //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        //}
+
         if (bs.Cardsplayable == true)
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
+
+
+
+            //    //else
+            //    //{
+            //    //    gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            //    //}
         }
+
+
         else
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
+
+
+        //if (bs.NoAPLeft == true)
+        //{
+        //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        //}
+
     }
 
     private void Start()
@@ -35,6 +61,11 @@ public class Card : MonoBehaviour
         bs = FindObjectOfType<BattleSystem>();
         CM = FindObjectOfType<CardManager>();
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+        Debug.Log(CurrentCardNr);
+
+
+        CardSet = true;
     }
     public void OnMouseDown()
     {
@@ -45,19 +76,35 @@ public class Card : MonoBehaviour
             if(gameObject.name == "Card6")
             {
                 CardClick(CurrentCardNr);
-                bs.OnHealButton(HP, AP);
 
-                bs.Cardsplayable = false;
-                transform.position += Vector3.up * 1;
-                hasBeenPlayed = true;
-                bs.availableCardSlots[handindex] = true;
-                Invoke(nameof(MoveToDiscard), 1);
+                if (bs.ChosenChara.CurrentAP >= AP)
+                {
+                    bs.OnHealButton(HP, AP);
+
+                    bs.Cardsplayable = false;
+                    transform.position += Vector3.up * 1;
+                    hasBeenPlayed = true;
+                    bs.availableCardSlots[handindex] = true;
+                    Invoke(nameof(MoveToDiscard), 1);
+
+                    CardSet = false;
+                }
+
+                else
+                {
+                    //Debug.Log("Not enough AP");
+                    bs.dialogueText.text = "Not enough AP!";
+                }
+
             }
 
 
             else
             {
                 CardClick(CurrentCardNr);
+
+                if( bs.ChosenChara.CurrentAP >= AP)
+                {
                 Debug.Log("ATK Wert" + CardDmg);
                 bs.OnAttackButton(CardDmg, AP);
 
@@ -66,6 +113,16 @@ public class Card : MonoBehaviour
                 hasBeenPlayed = true;
                 bs.availableCardSlots[handindex] = true;
                 Invoke(nameof(MoveToDiscard), 1);
+
+                CardSet = false;
+
+                }
+
+                else
+                {
+                    bs.dialogueText.text = "Not enough AP!";
+                }
+
             }
         }
     }
@@ -81,15 +138,77 @@ public class Card : MonoBehaviour
 
     void OnMouseEnter()
     {
+        CardClick(CurrentCardNr);
+        //CardAvailable();
+
+
+        //if (bs.ChosenChara.CurrentAP < 0)
+        //{
+        //    NOAP = true;
+        //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        //}
+        //else
+        //{
+        //    NOAP = false;
+        //}
+
+        //if (bs.ChosenChara.CurrentAP <= 0)
+        //{
+        //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        //}
+
+        //NOAP = false;
+
         transform.position += Vector3.up * 0.2f;
         //transform.position += Vector3.right * 0.1f;
+
+      
     }
 
     void OnMouseExit()
     {
+        //if (bs.ChosenChara.CurrentAP > 0)
+        //{
+        //    gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        //}
         transform.position += Vector3.up * -0.2f;
         //transform.position += Vector3.right * -0.1f;
     }
+
+
+
+
+
+    public void CardAvailable()
+    {
+        //if (NOAP == false)
+        //{
+            //gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        //}
+
+        //else
+        //{
+            if (bs.ChosenChara.CurrentAP < 0)
+            {
+            NOAP = true;
+            }
+
+        //}
+
+    }
+
+
+
+    public void PlayAbleCards()
+    {
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
+        //if(playedCD != false)
+        //{
+        //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        //}
+    }
+
 
 
     public void CardClickStart()
