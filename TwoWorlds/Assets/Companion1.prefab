@@ -133,6 +133,7 @@ MonoBehaviour:
   unitLevel: 50
   _Damage: 10
   maxHP: 100
-  currentHP: 100
-  maxAP: 20
+  currentHP: 50
+  maxAP: 100
   CurrentAP: 20
+  NoAP: 0

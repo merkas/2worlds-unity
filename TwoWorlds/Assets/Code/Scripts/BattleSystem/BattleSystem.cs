@@ -57,6 +57,9 @@ public class BattleSystem : MonoBehaviour
     public Button AttackButton;
     public Button HealButton;
     public Button SkipButton;
+    public Button playerButton;
+    public Button Comp1Button;
+    public Button Comp2Button;
 
     public BattleHud playerHud;
     public BattleHud Companion1Hud;
@@ -121,7 +124,7 @@ public class BattleSystem : MonoBehaviour
 
         dialogueText.text = "Here are your Cards";
         //Cardpull();
-        InvokeRepeating(nameof(Cardpull), 0.3f, 0.3f);
+        InvokeRepeating(nameof(Cardpull), 1f, 0.3f);
 
 
 
@@ -143,6 +146,25 @@ public class BattleSystem : MonoBehaviour
 
     void CharaSelect()
     {
+
+        if (MCDead == true)
+        {
+            playerButton.interactable = false;
+        }
+
+        if (Comp1Dead == true)
+        {
+            Comp1Button.interactable = false;
+        }
+
+        if (Comp2Dead == true)
+        {
+            Comp2Button.interactable = false;
+        }
+        
+
+
+
         CharaSelectPanel.gameObject.SetActive(true);
         //Auf Charawahl warten per Button
 
@@ -353,7 +375,7 @@ public class BattleSystem : MonoBehaviour
             if (isDead)
             {
 
-                if(ChosenChara == playerUnit)
+                if (ChosenChara == playerUnit)
                 {
                     MCDead = true;
                     Debug.Log("MCDead");
@@ -589,7 +611,6 @@ public class BattleSystem : MonoBehaviour
     { 
         HealButton.interactable = false;
         SkipButton.interactable = false;
-
     }
 
     public void EnableButton()

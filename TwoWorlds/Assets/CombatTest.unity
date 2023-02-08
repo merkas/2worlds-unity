@@ -998,6 +998,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 0
   CardDmg: 0
@@ -1128,6 +1131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 7
   CardDmg: 0
@@ -2097,6 +2103,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 1
   CardDmg: 0
@@ -4505,13 +4514,19 @@ MonoBehaviour:
   Companion2BattleStation: {fileID: 1189215572}
   enemyBattleStation: {fileID: 417890663}
   state: 0
+  APCost: 0
+  ChosenChara: {fileID: 0}
   Cardsplayable: 0
+  NoAPLeft: 0
   discardText: {fileID: 1637873868}
   deckText: {fileID: 823838510}
   dialogueText: {fileID: 1165165331}
   AttackButton: {fileID: 350036953}
   HealButton: {fileID: 1777448409}
   SkipButton: {fileID: 2013841128}
+  playerButton: {fileID: 1169466492}
+  Comp1Button: {fileID: 1662095230}
+  Comp2Button: {fileID: 1696388986}
   playerHud: {fileID: 1466197221}
   Companion1Hud: {fileID: 29833761}
   Companion2Hud: {fileID: 1519858712}
@@ -4744,6 +4759,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 8
   CardDmg: 0
@@ -4848,6 +4866,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 3
   CardDmg: 0
@@ -6713,6 +6734,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 9
   CardDmg: 0
@@ -8874,6 +8898,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 6
   CardDmg: 0
@@ -9621,6 +9648,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 5
   CardDmg: 0
@@ -9827,6 +9857,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 4
   CardDmg: 0
@@ -9957,6 +9990,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenPlayed: 0
+  CardSet: 0
+  NOAP: 0
+  playedCD: 0
   handindex: 0
   CurrentCardNr: 2
   CardDmg: 0

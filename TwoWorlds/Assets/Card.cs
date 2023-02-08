@@ -139,65 +139,27 @@ public class Card : MonoBehaviour
     void OnMouseEnter()
     {
         CardClick(CurrentCardNr);
-        //CardAvailable();
 
 
-        //if (bs.ChosenChara.CurrentAP < 0)
+        //if (bs.ChosenChara.CurrentAP >= AP)
         //{
-        //    NOAP = true;
-        //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            transform.position += Vector3.up * 0.2f;
+            //transform.position += Vector3.right * 0.1f;
         //}
-        //else
-        //{
-        //    NOAP = false;
-        //}
-
-        //if (bs.ChosenChara.CurrentAP <= 0)
-        //{
-        //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        //}
-
-        //NOAP = false;
-
-        transform.position += Vector3.up * 0.2f;
-        //transform.position += Vector3.right * 0.1f;
 
       
     }
 
     void OnMouseExit()
     {
-        //if (bs.ChosenChara.CurrentAP > 0)
+        //CardClick(CurrentCardNr);
+
+        //if (bs.ChosenChara.CurrentAP >= AP)
         //{
-        //    gameObject.GetComponent<BoxCollider2D>().enabled = true;
-        //}
         transform.position += Vector3.up * -0.2f;
+        //}
         //transform.position += Vector3.right * -0.1f;
     }
-
-
-
-
-
-    public void CardAvailable()
-    {
-        //if (NOAP == false)
-        //{
-            //gameObject.GetComponent<BoxCollider2D>().enabled = true;
-        //}
-
-        //else
-        //{
-            if (bs.ChosenChara.CurrentAP < 0)
-            {
-            NOAP = true;
-            }
-
-        //}
-
-    }
-
-
 
     public void PlayAbleCards()
     {
@@ -208,8 +170,6 @@ public class Card : MonoBehaviour
         //    gameObject.GetComponent<BoxCollider2D>().enabled = false;
         //}
     }
-
-
 
     public void CardClickStart()
     {
