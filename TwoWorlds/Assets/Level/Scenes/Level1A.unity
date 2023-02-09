@@ -1292,6 +1292,107 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &550434655
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 26022498}
+    m_Modifications:
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 942861184784605360, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112679029826987088, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_Size.x
+      value: 0.3393476
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112679029826987088, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_Size.y
+      value: 0.09327486
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112679029826987088, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0013371706
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112679029826987088, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.12437378
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215268709940570554, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: m_Name
+      value: InteractBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529799132857109158, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: interactionAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529799132857109158, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: interactionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529799132857109158, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: interactionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1631600632}
+    - target: {fileID: 7529799132857109158, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: interactionAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529799132857109158, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: interactionAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GiveDescription
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529799132857109158, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: interactionAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TestControllerInteract, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529799132857109158, guid: 67325411f287a3041af174598a681d58, type: 3}
+      propertyPath: interactionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 67325411f287a3041af174598a681d58, type: 3}
 --- !u!1 &556567564
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,10 +6627,10 @@ MonoBehaviour:
   isOpen: 0
   isDoorOpen: 0
   description:
-  - Oh... how I'd love to see Mom again....
-  - She's just busy with her work all the time.
-  - Sure... she only does it for me, at least that's what she always says... Still,
-    I feel so alone since dad died...
+  - I would like to see mom once in a while...
+  - She is just so busy with work all the time.
+  - "Right... she only does it for me, as she always says\u2026 And yet I feel so
+    alone since Dad died."
   sceneIndexToLoad: 0
   spawnPointIndex: 0
 --- !u!1 &1341300353
@@ -7210,6 +7311,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 716ea68af6e60ab41bd18fe8d190a65a, type: 3}
+--- !u!1 &1631600631 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5498835087596819299, guid: cc6a1165601004440b6687145c5eb18a, type: 3}
+  m_PrefabInstance: {fileID: 732055064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1631600632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631600631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca008ccf2ff6bb84482f85731ef06931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOpen: 0
+  isDoorOpen: 0
+  description:
+  - '*Looks at old picture*'
+  - It was so beautiful back then. Now Dad's death casts a shadow over our family.
+  - Somehow, Mom and big brother are just holed up in their work. This leaves no
+    room for being a family.
+  - I wish dad was still here... I have so many questions. Why did all this happen?
+    And how?
+  sceneIndexToLoad: 0
+  spawnPointIndex: 0
 --- !u!1 &1679880903
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16f05274eb3c1e489109797b6050c3e, type: 3}
+  m_Name: Talk1
+  m_EditorClassIdentifier: 
+  minCorruption: 0
+  maxCorruption: 3
+  minNumberOfTalks: 0
+  maxNumber: 1
+  maxNumberOfTalks: 0
+  itemWanted: 0
+  wantedItem: {fileID: 0}
+  dialogueParts:
+  - {fileID: 11400000, guid: bc1665f9e3be5cc4597d4d32db93f50b, type: 2}
+  - {fileID: 11400000, guid: 70a804875ffbc9843b8b1ad4698bc358, type: 2}
+  - {fileID: 0}

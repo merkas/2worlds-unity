@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
+  m_Name: Talk1Part2
+  m_EditorClassIdentifier: 
+  reusable: 0
+  playerChoice: 0
+  responseNumbers: 1
+  npcText:
+  - Yes, it's that luminescent flower honey that everyone is going on about. I myself
+    set out a long time ago to collect this special kind of honey. I didn't manage
+    to fill up a whole jar, but I did get to taste a fingertip. So a glass of it
+    is really hard to come by. Your friend is very lucky to have you!
+  playerResponse:
+  - answer: That's so sweet of you. I really hope he enjoys my gift! Next time I'll
+      bring you a glass too, if there is the chance of getting some again!
+    endConversation: 1
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    changedQuest: {fileID: 0}
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem:
+      item: {fileID: 0}
+      amount: 0
+    giveItem:
+      item: {fileID: 0}
+      amount: 0
+    changeToMenuInNextConversation: 0
+    becomesCompanion: 0
+  nextNpcText: []
