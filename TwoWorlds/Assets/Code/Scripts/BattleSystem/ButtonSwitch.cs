@@ -33,9 +33,6 @@ public class ButtonSwitch : MonoBehaviour
     public void CharaCase()
     {
         ButtonClick(CurrentButtonNr);
-
-        
-
         BH.SetAP(UnitAP);
         BH.SetHP(UnitHP);
     }
@@ -60,7 +57,7 @@ public class ButtonSwitch : MonoBehaviour
                 bs.EnemyATK(Chara);
                 break;
 
-            case ButtonNr.Companion1:
+                case ButtonNr.Companion1:
                 CurrentButtonNr = ButtonNr.Companion1;
                 CharDmg = ChM.Companion1.Damage;
                 UnitAP = ChM.Companion1.CurrentAP;
@@ -73,19 +70,25 @@ public class ButtonSwitch : MonoBehaviour
                 bs.EnemyATK(Chara);
                 break;
 
-                //case ButtonNr.Companion2:
-                //    CurrentButtonNr = ButtonNr.Companion2;
-                //    CharDmg = ChM.Companion2.Damage;
+                    case ButtonNr.Companion2:
+                    CurrentButtonNr = ButtonNr.Companion2;
+                    CharDmg = ChM.Companion2.Damage;
+                    UnitAP = ChM.Companion2.CurrentAP;
+                    UnitHP = ChM.Companion2.currentHP;
 
-                //    Debug.Log("Charawert" + CharDmg);
-                //    break;
+                    Chara = ChM.Companion2.unitName;
 
-                //case ButtonNr.Companion3:
-                //    CurrentButtonNr = ButtonNr.Companion3;
-                //    CharDmg = ChM.Companion3.Damage;
+                    Debug.Log("Charawert" + CharDmg);
 
-                //    Debug.Log("Charawert" + CharDmg);
-                //    break;
+                    bs.EnemyATK(Chara);
+                    break;
+
+                    //case ButtonNr.Companion3:
+                    //  CurrentButtonNr = ButtonNr.Companion3;
+                    //  CharDmg = ChM.Companion3.Damage;
+
+                    //    Debug.Log("Charawert" + CharDmg);
+                    //    break;
         }
 
     }

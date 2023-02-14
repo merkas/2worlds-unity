@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-
-
     [SerializeField]
     public TemporaryCard Card1;
 
@@ -41,16 +39,4 @@ public class CardManager : MonoBehaviour
 
     [SerializeField]
     public TemporaryCard Card12;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

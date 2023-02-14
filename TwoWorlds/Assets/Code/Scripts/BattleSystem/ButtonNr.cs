@@ -10,8 +10,6 @@ using UnityEngine;
         Companion1,
         Companion2,
         Empty
-
-
     }
 
 

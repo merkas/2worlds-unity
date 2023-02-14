@@ -15,17 +15,12 @@ public class Unit : MonoBehaviour // enemy/player object
 
     public bool NoAP;
     private ButtonSwitch BSw;
-    private void Start()
-    {
-
-    }
 
     public int Damage
     {
         get { return _Damage; }
         set { _Damage = Damage; }
     }
-
 
     public bool TakeDamage(int dmg)
     {
@@ -45,7 +40,6 @@ public class Unit : MonoBehaviour // enemy/player object
             currentHP = maxHP;
     }
 
-
     public void DrainAP(int amount)
     {
         Debug.Log("Amount" + amount);
@@ -64,7 +58,6 @@ public class Unit : MonoBehaviour // enemy/player object
         if (CurrentAP > maxAP)
             CurrentAP = maxAP;
     }
-
 
 }
 
