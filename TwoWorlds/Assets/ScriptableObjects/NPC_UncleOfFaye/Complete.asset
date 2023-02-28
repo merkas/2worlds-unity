@@ -16,7 +16,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7dfd21edf1450e643bb772be5097866e, type: 2}
   - {fileID: 11400000, guid: 148019aef6e75e2448029ffecb768961, type: 2}
   dialogueMenu: {fileID: 0}
-  greeting: []
+  greeting:
+  - greetingText: '*Hicks*'
+    minCorruption: 0
+    maxCorruption: 0
+    minNumberOfTalks: 0
+    maxNumberOfTalks: 0
+    maxTalks: 0
+    maxCor: 0
+    triggerItem: {fileID: 0}
   item:
     item: {fileID: 0}
     amount: 0

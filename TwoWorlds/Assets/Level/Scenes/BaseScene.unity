@@ -8334,7 +8334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83e71afd7c0e7648a39023001914930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeScene: Whitebox
+  activeScene: 
   pauseMenu: {fileID: 0}
   Back: {fileID: 0}
   Resume: {fileID: 0}

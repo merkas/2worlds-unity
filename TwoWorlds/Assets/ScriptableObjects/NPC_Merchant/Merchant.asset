@@ -14,8 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completeDialogue:
   - {fileID: 11400000, guid: 85ac6c504500dde4d9f6478889efcff7, type: 2}
+  - {fileID: 11400000, guid: 7cd13bef421237c4fb07585ad257258f, type: 2}
   dialogueMenu: {fileID: 0}
-  greeting: []
+  greeting:
+  - greetingText: Fresh apples, plucked this morning!
+    minCorruption: 0
+    maxCorruption: 0
+    minNumberOfTalks: 0
+    maxNumberOfTalks: 0
+    maxTalks: 0
+    maxCor: 0
+    triggerItem: {fileID: 0}
   item:
     item: {fileID: 0}
     amount: 0

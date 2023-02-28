@@ -41,7 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level/Scenes/CreditScene.unity
     guid: 8092a72cc0e8af743a877632f246ddcc
-  - enabled: 1
+  - enabled: 0
     path: Assets/TestingMaterial/SaveSystemTest.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

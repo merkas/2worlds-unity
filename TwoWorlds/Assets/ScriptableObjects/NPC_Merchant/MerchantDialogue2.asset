@@ -19,4 +19,5 @@ MonoBehaviour:
   maxNumberOfTalks: 0
   itemWanted: 0
   wantedItem: {fileID: 0}
-  dialogueParts: []
+  dialogueParts:
+  - {fileID: 11400000, guid: 63467222bf95a2d4897842742200f47c, type: 2}

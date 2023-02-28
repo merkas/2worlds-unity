@@ -14,7 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reusable: 0
   playerChoice: 0
-  responseNumbers: 0
-  npcText: []
-  playerResponse: []
+  responseNumbers: 1
+  npcText:
+  - Did you need anything else?
+  playerResponse:
+  - answer: No, thank you.
+    endConversation: 1
+    corruptionStatChange: 0
+    questTrigger: 0
+    abandonedQuest: 0
+    questComplete: 0
+    changedQuest: {fileID: 0}
+    questTitle: 
+    questProgress: 0
+    startAFight: 0
+    getAnItem: 0
+    giveAnItem: 0
+    getItem:
+      item: {fileID: 0}
+      amount: 0
+    giveItem:
+      item: {fileID: 0}
+      amount: 0
+    changeToMenuInNextConversation: 0
+    becomesCompanion: 0
   nextNpcText: []

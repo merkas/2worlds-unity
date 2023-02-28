@@ -19,7 +19,7 @@ MonoBehaviour:
   - Yeah, here you go. I'm sure  your friend will be quite happy with it.
   playerResponse:
   - answer: Thanks again. See you soon!
-    endConversation: 0
+    endConversation: 1
     corruptionStatChange: 0
     questTrigger: 0
     abandonedQuest: 0
