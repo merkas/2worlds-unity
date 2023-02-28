@@ -2340,7 +2340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491043530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.242, y: 0.0030000298, z: -10}
+  m_LocalPosition: {x: 0.82799995, y: 1.106, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6678,7 +6678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322053678}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.242, y: 0.0030000298, z: -10}
+  m_LocalPosition: {x: 0.82799995, y: 1.106, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8335,7 +8335,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeScene: Whitebox
-  GameSettingsMenu: PauseMenu
+  pauseMenu: {fileID: 0}
+  Back: {fileID: 0}
+  Resume: {fileID: 0}
+  Settings: {fileID: 0}
+  MainMenu: {fileID: 0}
+  SoundSlider: {fileID: 0}
+  Sound: {fileID: 0}
 --- !u!114 &1756415308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9729,11 +9735,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7939537805920286020, guid: 4cbc40d93826eee49a37b57a2af620c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.242
+      value: 0.828
       objectReference: {fileID: 0}
     - target: {fileID: 7939537805920286020, guid: 4cbc40d93826eee49a37b57a2af620c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.003
+      value: 1.106
       objectReference: {fileID: 0}
     - target: {fileID: 7939537805920286020, guid: 4cbc40d93826eee49a37b57a2af620c5, type: 3}
       propertyPath: m_LocalPosition.z
