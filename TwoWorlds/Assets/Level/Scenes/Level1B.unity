@@ -571,7 +571,7 @@ MonoBehaviour:
   isOpen: 0
   isDoorOpen: 0
   description: []
-  sceneIndexToLoad: 11
+  sceneIndexToLoad: 5
   spawnPointIndex: 0
 --- !u!4 &31019443
 Transform:
@@ -17330,7 +17330,7 @@ MonoBehaviour:
   isOpen: 0
   isDoorOpen: 0
   description: []
-  sceneIndexToLoad: 13
+  sceneIndexToLoad: 7
   spawnPointIndex: 0
 --- !u!4 &1293440981
 Transform:
