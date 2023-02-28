@@ -63,14 +63,19 @@ public class GameManager : MonoBehaviour
 
     private void Update() // implement in an input manager instead?
     {
-        if (dialogueMoment == true && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            ResumeTimeline();
+            if (dialogueMoment == true) ResumeTimeline();
+            else UIManager.instance.NextText();
         }
-        else if (dialogueMoment == false && Input.GetKeyDown(KeyCode.Space))
-        {
-            UIManager.instance.NextText();
-        }
+        //if (dialogueMoment == true && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    ResumeTimeline();
+        //}
+        //else if (dialogueMoment == false && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    UIManager.instance.NextText();
+        //}
     }
 
     public void PauseTimeline(PlayableDirector activeOne)

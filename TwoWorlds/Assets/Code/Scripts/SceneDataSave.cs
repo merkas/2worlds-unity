@@ -171,37 +171,30 @@ public class SceneDataSave : MonoBehaviour
                 objectsToCheck.Remove(obj);
                 return;
             }
-            
-            if (obj.sceneProgressMin <= activeSceneData.sceneProgress && obj.sceneEntersMin <= activeSceneData.sceneEnters) // check min conditions
-            {
-                if (obj.sceneProgressMax >= activeSceneData.sceneProgress && obj.sceneEntersMax >= activeSceneData.sceneEnters
-                   /* && obj.corruptionMin <= corruption && obj.corruptionMax >= corruption*/) // check max conditions, implement, when corruption stat script stands
-                {
-                    ChangeObjectWhenConditionsMet(obj);
 
-                }
-            }
+            if (obj.sceneProgressMin > activeSceneData.sceneProgress || obj.sceneProgressMax < activeSceneData.sceneProgress) return;
+            if (obj.sceneEntersMin > activeSceneData.sceneEnters || obj.sceneEntersMax < activeSceneData.sceneEnters) return;
+            //if (obj.corruptionMin > corruption && obj.corruptionMax < corruption) return; // implement, when corruption stat script stands
+
+            ChangeObjectWhenConditionsMet(obj);
         }
     }
 
     void ChangeObjectWhenConditionsMet(ObjectChange obj) // change object depending on its bools
     {
-
         if (obj.doThis == DoThis.TRIGGER) // collider is enabled or disabled
         {
             if (obj.activateTrigger == true) obj.objectToChange.GetComponent<Collider2D>().enabled = true;
             else obj.objectToChange.GetComponent<Collider2D>().enabled = false;
         }
-
         else if (obj.doThis == DoThis.SETACTIVE)
         {
             if (obj.setActive == true) obj.objectToChange.SetActive(true);
             else obj.objectToChange.SetActive(false);
         }
-
         else if (obj.doThis == DoThis.OTHER)
         {
-            if (obj.changeSprite == true) // only one-time use for now
+            if (obj.changeSprite == true)
             {
                 obj.objectToChange.GetComponent<SpriteRenderer>().sprite = obj.changeToThisSprite;
             }

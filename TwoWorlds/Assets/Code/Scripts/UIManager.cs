@@ -109,17 +109,16 @@ public class UIManager : MonoBehaviour
 
     public void NextText() //ContinueButton
     {
-        if (sentencesToDisplay != null)
-        {
-            if (sentencesToDisplay.Count == 0)
-            {
-                sentencesToDisplay.Clear();
-                OpenTextBox(false);
-                return;
-            }
+        if (sentencesToDisplay == null) return;
 
-            string sentence = sentencesToDisplay.Dequeue();
-            dialogueText.text = sentence;
+        if (sentencesToDisplay.Count == 0)
+        {
+            sentencesToDisplay.Clear();
+            OpenTextBox(false);
+            return;
         }
+
+        string sentence = sentencesToDisplay.Dequeue();
+        dialogueText.text = sentence;
     }
 }

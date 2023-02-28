@@ -117,8 +117,10 @@ public class DialogueManager : MonoBehaviour
             if (playerQuest.questNpcName == dialoguePartner.npcName) Debug.Log("Player has quest of this npc, can change loop");
             foreach (Quest npcQuest in dialoguePartner.activeQuests)
             {
-                if (playerQuest == npcQuest)
-                {
+                if (playerQuest != npcQuest) return;
+
+                //if (playerQuest == npcQuest)
+                //{
                     if (playerQuest.questProgress >= playerQuest.formerQuestProgress)
                     {
                         if (playerQuest.questProgress == playerQuest.maxProgress) // quest completed
@@ -145,7 +147,7 @@ public class DialogueManager : MonoBehaviour
                             sentences.Enqueue(npcQuest.reactionToProgress[npcQuest.questProgress]);
                             NextText();
                         }
-                    }
+                    //}
                     
                 }
             }
@@ -216,8 +218,7 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(dialoguePartner.chosenGreeting);
             NextText();
         }  
-
-        else if (dialoguePartner.NpcWithMenu == true)
+        else
         {
             state = DialogueState.NPCTALKING;
             responseField.SetActive(false);
@@ -228,6 +229,7 @@ public class DialogueManager : MonoBehaviour
 
     void NpcTalking(int index = default)
     {
+        Debug.Log("NpcTalking");
         state = DialogueState.NPCTALKING;
         UpdateUI();
 
@@ -238,13 +240,12 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(dialoguePartner.thisNpcDialogue.dialogueMenu.menuOption[index].npcAnswer);
             NextText();
         }
-        else if (dialoguePartner.NpcWithMenu != true)
+        else
         {
             foreach (string text in dialoguePartner.activeDialoguePart.npcText)
             {
                 sentences.Enqueue(text);
             }
-
             NextText();
         }
     }
@@ -262,7 +263,8 @@ public class DialogueManager : MonoBehaviour
             }
 
             string sentence = sentences.Dequeue();
-            StartCoroutine(TypeSentence(sentence));
+            dialogueText.text = sentence;
+            //StartCoroutine(TypeSentence(sentence));
         }
         else if (state == DialogueState.AUTOPLAYERRESPONSE)
             SelectedResponse();
@@ -278,35 +280,36 @@ public class DialogueManager : MonoBehaviour
             state = DialogueState.PLAYERTURN;
             responseField.SetActive(true);
         }
-        if (dialoguePartner.NpcWithMenu != true
-            && dialoguePartner.activeDialoguePart.playerChoice != true) // automatic response
+        else
         {
-            state = DialogueState.AUTOPLAYERRESPONSE;
-            if (dialoguePartner.activeDialoguePart.playerResponse.Length == 0) ConversationEnd();
+            if(dialoguePartner.activeDialoguePart.playerChoice != true) // automatic response
+            {
+                state = DialogueState.AUTOPLAYERRESPONSE;
+                if (dialoguePartner.activeDialoguePart.playerResponse.Length == 0) ConversationEnd();
+                else
+                {
+                    sentences.Enqueue(dialoguePartner.activeDialoguePart.playerResponse[0].answer);
+                    NextText();
+                }
+            }
             else
             {
-                sentences.Enqueue(dialoguePartner.activeDialoguePart.playerResponse[0].answer);
-                NextText();
-            }
-        }
-        else if (dialoguePartner.NpcWithMenu != true
-            && dialoguePartner.activeDialoguePart.playerChoice == true)// choice
-        {
-            state = DialogueState.PLAYERRESPONSE;
-            responseField.SetActive(true);
-            CreateResponseUI(dialoguePartner.activeDialoguePart.responseNumbers);
+                state = DialogueState.PLAYERRESPONSE;
+                responseField.SetActive(true);
+                CreateResponseUI(dialoguePartner.activeDialoguePart.responseNumbers);
 
-            choices = responseField.GetComponentsInChildren<Button>();
-            int selection = 0;
+                choices = responseField.GetComponentsInChildren<Button>();
+                int selection = 0;
 
-            foreach (Answer response in dialoguePartner.activeDialoguePart.playerResponse)
-            {
-                int a = selection;
-                choices[selection].GetComponentInChildren<Text>().text = response.answer;
-                choices[selection].GetComponentInChildren<Button>().onClick.AddListener(delegate { ReturnButtonIndex(a); });
-                choices[selection].GetComponentInChildren<Button>().onClick.AddListener(ResponseButton);
+                foreach (Answer response in dialoguePartner.activeDialoguePart.playerResponse)
+                {
+                    int a = selection;
+                    choices[selection].GetComponentInChildren<Text>().text = response.answer;
+                    choices[selection].GetComponentInChildren<Button>().onClick.AddListener(delegate { ReturnButtonIndex(a); });
+                    choices[selection].GetComponentInChildren<Button>().onClick.AddListener(ResponseButton);
 
-                selection++;
+                    selection++;
+                }
             }
         }
     }
@@ -351,10 +354,7 @@ public class DialogueManager : MonoBehaviour
 
                     dialoguePartner.LoadNextDialoguePart(chosenIndex);
                     if (dialoguePartner.activeDialoguePart == null) ConversationEnd();
-                    if (messageBeforeNpc == false)
-                    {
-                        NpcTalking();
-                    }
+                    if (messageBeforeNpc == false) NpcTalking();
                 }
             }
         }
@@ -364,15 +364,10 @@ public class DialogueManager : MonoBehaviour
             if (dialoguePartner.thisNpcDialogue.dialogueMenu.menuOption[chosenIndex].endConversation == true)
                 ConversationEnd();
             else
-                NpcTalking(chosenIndex);
-
-            
+                NpcTalking(chosenIndex);  
         }
 
-        if (dialoguePartner.noDialogueLeft == true)
-        {
-            ConversationEnd();
-        }
+        if (dialoguePartner.noDialogueLeft == true) ConversationEnd();
     }
 
     void CheckReactionToPlayerResponse(int index)
@@ -385,7 +380,6 @@ public class DialogueManager : MonoBehaviour
             SystemMessage(message, dialoguePartner.activeDialoguePart.playerResponse[index].getItem.item);
 
             Inventory.instance.AddItem(dialoguePartner.activeDialoguePart.playerResponse[index].getItem);
-
             messageBeforeNpc = true;
         }
         if (dialoguePartner.activeDialoguePart.playerResponse[index].giveAnItem == true) // give npc an item
@@ -425,13 +419,14 @@ public class DialogueManager : MonoBehaviour
         {
             foreach(Quest quest in dialoguePartner.thisNpcDialogue.quest)
             {
-                if (quest.title == dialoguePartner.activeDialoguePart.playerResponse[index].questTitle)
-                {
+                if (quest.title == dialoguePartner.activeDialoguePart.playerResponse[index].questTitle) return;
+                //if (quest.title == dialoguePartner.activeDialoguePart.playerResponse[index].questTitle)
+                //{
                     message[0] = quest.reactionToProgress[quest.questProgress];
                     quest.questProgress += dialoguePartner.activeDialoguePart.playerResponse[index].questProgress;
                     SystemMessage(message); //Npc reaction to current quest progress
                     // noch unvollständig?
-                }
+                //}
             }
         }
         if (dialoguePartner.activeDialoguePart.playerResponse[index].changeToMenuInNextConversation == true)
@@ -485,7 +480,7 @@ public class DialogueManager : MonoBehaviour
         player.ConversationEnded();
     }
 
-    void CheckForQuestItem()
+    void CheckForQuestItem() // still needed?
     {
         // get quest item in database
         // get player inventory
@@ -500,14 +495,14 @@ public class DialogueManager : MonoBehaviour
         //show item Sprite
     }
 
-    IEnumerator TypeSentence(string sentence) //animate every letter to appear one after one
-    {
-        dialogueText.text = "";
-        foreach (char letter in sentence.ToCharArray())
-        {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(0.02f);
-            yield return null; // = wait for next frame
-        }
-    }
+    //IEnumerator TypeSentence(string sentence) //animate every letter to appear one after one
+    //{
+    //    dialogueText.text = "";
+    //    foreach (char letter in sentence.ToCharArray())
+    //    {
+    //        dialogueText.text += letter;
+    //        yield return new WaitForSeconds(0.02f);
+    //        yield return null; // = wait for next frame
+    //    }
+    //}
 }

@@ -175,8 +175,9 @@ public class DialoguePartner : MonoBehaviour
     {
         foreach (Quest quest in thisNpcDialogue.quest)
         {
-            if (quest == changedQuest)
-            {
+            if (quest != changedQuest) return;
+            //if (quest == changedQuest)
+            //{
                 changedQuest = quest;
                 if (questStatus == "abandoned")
                 {
@@ -192,7 +193,7 @@ public class DialoguePartner : MonoBehaviour
                     completedQuests.Add(changedQuest);
                 }
                 break;
-            }
+            //}
         }
     }
 
