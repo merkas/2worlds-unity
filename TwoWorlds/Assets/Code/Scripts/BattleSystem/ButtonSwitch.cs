@@ -82,13 +82,6 @@ public class ButtonSwitch : MonoBehaviour
 
                     bs.EnemyATK(Chara);
                     break;
-
-                    //case ButtonNr.Companion3:
-                    //  CurrentButtonNr = ButtonNr.Companion3;
-                    //  CharDmg = ChM.Companion3.Damage;
-
-                    //    Debug.Log("Charawert" + CharDmg);
-                    //    break;
         }
 
     }

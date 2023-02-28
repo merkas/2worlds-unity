@@ -59,6 +59,16 @@ public class Interactable : MonoBehaviour
     }
 
 
+
+
+
+
+
+
+
+
+
+
     //public void ChestOpened(GameObject obj)
     //{
          
