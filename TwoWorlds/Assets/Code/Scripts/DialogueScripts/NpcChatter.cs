@@ -58,14 +58,14 @@ public class NpcChatter : MonoBehaviour //needs own tag for player as trigger
     {
         if (bubbleTurn == false)
         {
-            bubble = Instantiate(speechBubble, canvas.transform/*.position, Quaternion.identity*/);
-            bubble.transform.localScale += new Vector3(chatterText.transform.localScale.x * 1.2f, chatterText.transform.localScale.y * 0.8f, 0);
+            bubble = Instantiate(speechBubble, canvas.transform);
+            bubble.transform.localScale -= new Vector3(chatterText.transform.localScale.x * .5f, chatterText.transform.localScale.y * .5f, 0);
             bubble.transform.position = canvas.transform.position;
         }
         else
         {
-            bubble = Instantiate(speechBubble, canvas2.transform/*.position, Quaternion.identity*/);
-            bubble.transform.localScale += new Vector3(chatterText2.transform.localScale.x * 1.2f, chatterText2.transform.localScale.y * 0.8f, 0);
+            bubble = Instantiate(speechBubble, canvas2.transform);
+            bubble.transform.localScale -= new Vector3(chatterText2.transform.localScale.x * .5f, chatterText2.transform.localScale.y * .5f, 0);
             bubble.transform.position = canvas2.transform.position;
         }
        

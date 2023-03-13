@@ -22,4 +22,3 @@ MonoBehaviour:
   dialogueParts:
   - {fileID: 11400000, guid: bc1665f9e3be5cc4597d4d32db93f50b, type: 2}
   - {fileID: 11400000, guid: 70a804875ffbc9843b8b1ad4698bc358, type: 2}
-  - {fileID: 0}

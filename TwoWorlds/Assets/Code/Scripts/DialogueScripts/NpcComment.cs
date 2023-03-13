@@ -51,8 +51,8 @@ public class NpcComment : MonoBehaviour
 
     void ShowComment()
     {
-        bubble = Instantiate(speechBubble, canvas.transform/*.position, Quaternion.identity*/);
-        bubble.transform.localScale += new Vector3(chatterText.transform.localScale.x * 2f, chatterText.transform.localScale.y /** 1.2f*/, 0);
+        bubble = Instantiate(speechBubble, canvas.transform);
+        bubble.transform.localScale -= new Vector3(chatterText.transform.localScale.x * .5f, chatterText.transform.localScale.y * .5f, 0);
         bubble.transform.position = canvas.transform.position;
         chatterText.text = comments[chosenComment];
         chatterText.enabled = true;

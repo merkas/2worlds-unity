@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ab9171fc864ff34da192d5f8b7aea8d, type: 3}
-  m_Name: GeneralDialoguePart
+  m_Name: UncleGeneralDialoguePart
   m_EditorClassIdentifier: 
   reusable: 0
   playerChoice: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minCorruption: 0
   maxCorruption: 0
-  minNumberOfTalks: 0
+  minNumberOfTalks: 1
   maxNumber: 0
   maxNumberOfTalks: 0
   itemWanted: 0

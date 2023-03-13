@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c16f05274eb3c1e489109797b6050c3e, type: 3}
-  m_Name: GeneralDialogue
+  m_Name: UncleGeneralDialogue
   m_EditorClassIdentifier: 
   minCorruption: 0
   maxCorruption: 5
   minNumberOfTalks: 1
   maxNumber: 0
   maxNumberOfTalks: 0
+  itemWanted: 0
+  wantedItem: {fileID: 0}
   dialogueParts:
-  - {fileID: 11400000, guid: cdbcdc206661b7940844644ed25e20cc, type: 2}
+  - {fileID: 11400000, guid: 5ab7dd80763c21e47b2dfc54801bbd4d, type: 2}
