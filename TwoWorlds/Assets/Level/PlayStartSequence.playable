@@ -792,8 +792,8 @@ MonoBehaviour:
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
   template:
-    dialogueText: Ich sollte langsam mal losgehen, um bei Brunhold kurz vorbeizuschauen,
-      bevor ich mich nach Akanthos zu meinem Bruder aufmache.
+    dialogueText: I should get going eventually so I can stop by Brunhold's for a
+      bit before I head off to Akanthos to see my brother.
     characterSprite: {fileID: 0}
     characterName: Faye
     pauseThis: 1
